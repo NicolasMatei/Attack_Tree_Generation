@@ -1,0 +1,309 @@
+Process 0 (that is, the initial process):
+(
+    {1}in(c, x: bitstring);
+    {2}if ((hash(nonce,seed) = x) || (enc(nonce,sk) = x)) then
+    {3}out(c, success)
+) | (
+    {4}in(c, x_1: bitstring);
+    {5}in(c, y: bitstring);
+    {6}if ((hash(nonce2,seed) = x_1) && (enc(nonce3,sk) = y)) then
+    {7}out(c, success2)
+) | (
+    {8}out(c, secretcondition)
+) | (
+    {9}in(c, x_2: bitstring);
+    {10}in(c, y_1: bitstring);
+    {11}if (y_1 = secretcondition) then
+    {12}out(c, enc(x_2,sk))
+) | (
+    {13}in(c, x_3: bitstring);
+    {14}in(c, y_2: bitstring);
+    {15}if (y_2 = secretcondition) then
+    {16}out(c, hash(x_3,seed))
+) | (
+    {17}out(c, nonce)
+) | (
+    {18}out(c, nonce2)
+) | (
+    {19}out(c, nonce3)
+)
+
+-- Query not attacker(success[]) in process 0.
+Translating the process into Horn clauses...
+Initial clauses:
+Clause 0: attacker(hash(m,k)) && attacker(k) -> attacker(m)
+(The attacker applies function unhash.)
+
+Clause 1: attacker(true)
+(The attacker applies function true.)
+
+Clause 2: attacker(v) && attacker(v_1) -> attacker(hash(v,v_1))
+(The attacker applies function hash.)
+
+Clause 3: attacker(false)
+(The attacker applies function false.)
+
+Clause 4: attacker(v) && attacker(v_1) -> attacker(enc(v,v_1))
+(The attacker applies function enc.)
+
+Clause 5: attacker(enc(m,k)) && attacker(k) -> attacker(m)
+(The attacker applies function dec.)
+
+Clause 6: attacker(0)
+(The attacker applies function 0.)
+
+Clause 7: attacker(v) -> attacker(v + 1)
+(The attacker applies function +.)
+
+Clause 8: attacker(v + 1) -> attacker(v)
+(The attacker applies function - 1.)
+
+Clause 9: attacker(v) && attacker(v_1) -> attacker((v,v_1))
+(The attacker applies function 2-tuple.)
+
+Clause 10: attacker((v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-2-tuple.)
+
+Clause 11: attacker((v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-2-tuple.)
+
+Clause 12: mess(v,v_1) && attacker(v) -> attacker(v_1)
+(The attacker can listen on all channels it has.)
+
+Clause 13: attacker(v) && attacker(v_1) -> mess(v,v_1)
+(The attacker can send messages it has on all channels it has.)
+
+Clause 14: attacker(fail-any_type)
+(Initial knowledge of the attacker.)
+
+Clause 15: attacker(c[])
+(Initial knowledge of the attacker.)
+
+Clause 16: equal(v,v)
+(Definition of equal.)
+
+Clause 17: attacker(new-name_1)
+(The attacker can create new names.)
+Abbreviations:
+new-name_1 = new-name[!att = v]
+
+Clause 18: attacker(enc(nonce[],sk[])) -> attacker(success[])
+(If the message enc(nonce[],sk[]) is received from the attacker at input {1},
+then the message success[] may be sent to the attacker at output {3}.)
+
+Clause 19: attacker(hash(nonce[],seed[])) -> attacker(success[])
+(If the message hash(nonce[],seed[]) is received from the attacker at input {1},
+then the message success[] may be sent to the attacker at output {3}.)
+
+Clause 20: attacker(enc(nonce3[],sk[])) && attacker(hash(nonce2[],seed[])) -> attacker(success2[])
+(If the message hash(nonce2[],seed[]) is received from the attacker at input {4},
+the message enc(nonce3[],sk[]) is received from the attacker at input {5},
+then the message success2[] may be sent to the attacker at output {7}.)
+
+Clause 21: attacker(secretcondition[])
+(The message secretcondition[] may be sent to the attacker at output {8}.)
+
+Clause 22: attacker(secretcondition[]) && attacker(x_4) -> attacker(enc(x_4,sk[]))
+(If the message x_4 is received from the attacker at input {9},
+the message secretcondition[] is received from the attacker at input {10},
+then the message enc(x_4,sk[]) may be sent to the attacker at output {12}.)
+
+Clause 23: attacker(secretcondition[]) && attacker(x_4) -> attacker(hash(x_4,seed[]))
+(If the message x_4 is received from the attacker at input {13},
+the message secretcondition[] is received from the attacker at input {14},
+then the message hash(x_4,seed[]) may be sent to the attacker at output {16}.)
+
+Clause 24: attacker(nonce[])
+(The message nonce[] may be sent to the attacker at output {17}.)
+
+Clause 25: attacker(nonce2[])
+(The message nonce2[] may be sent to the attacker at output {18}.)
+
+Clause 26: attacker(nonce3[])
+(The message nonce3[] may be sent to the attacker at output {19}.)
+
+Completing...
+Starting query not attacker(success[])
+goal reachable: attacker(success[])
+
+Derivation:
+goal  attacker(success[])
+    "If the message hash(nonce[],seed[]) is received from the attacker at input {1}, then the message success[] may be sent to the attacker at output {3}." [clause 19] attacker(success[])
+        "If the message x_4 is received from the attacker at input {13}, the message secretcondition[] is received from the attacker at input {14}, then the message hash(x_4,seed[]) may be sent to the attacker at output {16}." [clause 23] attacker(hash(nonce[],seed[]))
+            "The message secretcondition[] may be sent to the attacker at output {8}." [clause 21] attacker(secretcondition[])
+            "The message nonce[] may be sent to the attacker at output {17}." [clause 24] attacker(nonce[])
+
+A more detailed output of the traces is available with
+  set traceDisplay = long.
+
+out(c, ~M) with ~M = nonce3 at {19}
+
+out(c, ~M_1) with ~M_1 = nonce2 at {18}
+
+out(c, ~M_2) with ~M_2 = nonce at {17}
+
+out(c, ~M_3) with ~M_3 = secretcondition at {8}
+
+in(c, ~M_2) with ~M_2 = nonce at {13}
+
+in(c, ~M_3) with ~M_3 = secretcondition at {14}
+
+out(c, ~M_4) with ~M_4 = hash(nonce,seed) at {16}
+
+in(c, ~M_4) with ~M_4 = hash(nonce,seed) at {1}
+
+out(c, ~M_5) with ~M_5 = success at {3}
+
+The attacker has the message ~M_5 = success.
+A trace has been found.
+RESULT not attacker(success[]) is false.
+-- Query not attacker(success2[]) in process 0.
+Translating the process into Horn clauses...
+Initial clauses:
+Clause 0: attacker(hash(m,k)) && attacker(k) -> attacker(m)
+(The attacker applies function unhash.)
+
+Clause 1: attacker(true)
+(The attacker applies function true.)
+
+Clause 2: attacker(v) && attacker(v_1) -> attacker(hash(v,v_1))
+(The attacker applies function hash.)
+
+Clause 3: attacker(false)
+(The attacker applies function false.)
+
+Clause 4: attacker(v) && attacker(v_1) -> attacker(enc(v,v_1))
+(The attacker applies function enc.)
+
+Clause 5: attacker(enc(m,k)) && attacker(k) -> attacker(m)
+(The attacker applies function dec.)
+
+Clause 6: attacker(0)
+(The attacker applies function 0.)
+
+Clause 7: attacker(v) -> attacker(v + 1)
+(The attacker applies function +.)
+
+Clause 8: attacker(v + 1) -> attacker(v)
+(The attacker applies function - 1.)
+
+Clause 9: attacker(v) && attacker(v_1) -> attacker((v,v_1))
+(The attacker applies function 2-tuple.)
+
+Clause 10: attacker((v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-2-tuple.)
+
+Clause 11: attacker((v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-2-tuple.)
+
+Clause 12: mess(v,v_1) && attacker(v) -> attacker(v_1)
+(The attacker can listen on all channels it has.)
+
+Clause 13: attacker(v) && attacker(v_1) -> mess(v,v_1)
+(The attacker can send messages it has on all channels it has.)
+
+Clause 14: attacker(fail-any_type)
+(Initial knowledge of the attacker.)
+
+Clause 15: attacker(c[])
+(Initial knowledge of the attacker.)
+
+Clause 16: equal(v,v)
+(Definition of equal.)
+
+Clause 17: attacker(new-name_1)
+(The attacker can create new names.)
+Abbreviations:
+new-name_1 = new-name[!att = v]
+
+Clause 18: attacker(enc(nonce[],sk[])) -> attacker(success[])
+(If the message enc(nonce[],sk[]) is received from the attacker at input {1},
+then the message success[] may be sent to the attacker at output {3}.)
+
+Clause 19: attacker(hash(nonce[],seed[])) -> attacker(success[])
+(If the message hash(nonce[],seed[]) is received from the attacker at input {1},
+then the message success[] may be sent to the attacker at output {3}.)
+
+Clause 20: attacker(enc(nonce3[],sk[])) && attacker(hash(nonce2[],seed[])) -> attacker(success2[])
+(If the message hash(nonce2[],seed[]) is received from the attacker at input {4},
+the message enc(nonce3[],sk[]) is received from the attacker at input {5},
+then the message success2[] may be sent to the attacker at output {7}.)
+
+Clause 21: attacker(secretcondition[])
+(The message secretcondition[] may be sent to the attacker at output {8}.)
+
+Clause 22: attacker(secretcondition[]) && attacker(x_4) -> attacker(enc(x_4,sk[]))
+(If the message x_4 is received from the attacker at input {9},
+the message secretcondition[] is received from the attacker at input {10},
+then the message enc(x_4,sk[]) may be sent to the attacker at output {12}.)
+
+Clause 23: attacker(secretcondition[]) && attacker(x_4) -> attacker(hash(x_4,seed[]))
+(If the message x_4 is received from the attacker at input {13},
+the message secretcondition[] is received from the attacker at input {14},
+then the message hash(x_4,seed[]) may be sent to the attacker at output {16}.)
+
+Clause 24: attacker(nonce[])
+(The message nonce[] may be sent to the attacker at output {17}.)
+
+Clause 25: attacker(nonce2[])
+(The message nonce2[] may be sent to the attacker at output {18}.)
+
+Clause 26: attacker(nonce3[])
+(The message nonce3[] may be sent to the attacker at output {19}.)
+
+Completing...
+Starting query not attacker(success2[])
+goal reachable: attacker(success2[])
+
+Derivation:
+goal  attacker(success2[])
+    "If the message hash(nonce2[],seed[]) is received from the attacker at input {4}, the message enc(nonce3[],sk[]) is received from the attacker at input {5}, then the message success2[] may be sent to the attacker at output {7}." [clause 20] attacker(success2[])
+        "If the message x_4 is received from the attacker at input {9}, the message secretcondition[] is received from the attacker at input {10}, then the message enc(x_4,sk[]) may be sent to the attacker at output {12}." [clause 22] attacker(enc(nonce3[],sk[]))
+            duplicate attacker(secretcondition[])
+            "The message nonce3[] may be sent to the attacker at output {19}." [clause 26] attacker(nonce3[])
+        "If the message x_4 is received from the attacker at input {13}, the message secretcondition[] is received from the attacker at input {14}, then the message hash(x_4,seed[]) may be sent to the attacker at output {16}." [clause 23] attacker(hash(nonce2[],seed[]))
+            "The message secretcondition[] may be sent to the attacker at output {8}." [clause 21] attacker(secretcondition[])
+            "The message nonce2[] may be sent to the attacker at output {18}." [clause 25] attacker(nonce2[])
+
+A more detailed output of the traces is available with
+  set traceDisplay = long.
+
+out(c, ~M) with ~M = nonce3 at {19}
+
+out(c, ~M_1) with ~M_1 = nonce2 at {18}
+
+out(c, ~M_2) with ~M_2 = nonce at {17}
+
+out(c, ~M_3) with ~M_3 = secretcondition at {8}
+
+in(c, ~M) with ~M = nonce3 at {9}
+
+in(c, ~M_3) with ~M_3 = secretcondition at {10}
+
+out(c, ~M_4) with ~M_4 = enc(nonce3,sk) at {12}
+
+in(c, ~M_1) with ~M_1 = nonce2 at {13}
+
+in(c, ~M_3) with ~M_3 = secretcondition at {14}
+
+out(c, ~M_5) with ~M_5 = hash(nonce2,seed) at {16}
+
+in(c, ~M_5) with ~M_5 = hash(nonce2,seed) at {4}
+
+in(c, ~M_4) with ~M_4 = enc(nonce3,sk) at {5}
+
+out(c, ~M_6) with ~M_6 = success2 at {7}
+
+The attacker has the message ~M_6 = success2.
+A trace has been found.
+RESULT not attacker(success2[]) is false.
+
+--------------------------------------------------------------
+Verification summary:
+
+Query not attacker(success[]) is false.
+
+Query not attacker(success2[]) is false.
+
+--------------------------------------------------------------
+

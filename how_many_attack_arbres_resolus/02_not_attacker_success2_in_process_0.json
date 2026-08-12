@@ -1,0 +1,120 @@
+{
+  "index": 2,
+  "query": "not attacker(success2[]) in process 0.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "attacker(success2[])",
+    "children": [
+      {
+        "type": "step",
+        "description": "then the message success2[] may be sent to the attacker at output {7}",
+        "clause": 20,
+        "fact": "attacker(success2[])",
+        "children": [
+          {
+            "type": "premise",
+            "description": "the message enc(nonce3[],sk[]) is received from the attacker at input {5}",
+            "input_index": 5,
+            "fact": "attacker(enc(nonce3[],sk[]))",
+            "clause": 20,
+            "children": [
+              {
+                "type": "step",
+                "description": "then the message enc(x_4,sk[]) may be sent to the attacker at output {12}",
+                "clause": 22,
+                "fact": "attacker(enc(nonce3[],sk[]))",
+                "children": [
+                  {
+                    "type": "premise",
+                    "description": "the message secretcondition[] is received from the attacker at input {10}",
+                    "input_index": 10,
+                    "fact": "attacker(secretcondition[])",
+                    "clause": 22,
+                    "children": [
+                      {
+                        "type": "step",
+                        "description": "The message secretcondition[] may be sent to the attacker at output {8}.",
+                        "clause": 21,
+                        "fact": "attacker(secretcondition[])",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "premise",
+                    "description": "If the message x_4 is received from the attacker at input {9}",
+                    "input_index": 9,
+                    "fact": "attacker(nonce3[])",
+                    "clause": 22,
+                    "children": [
+                      {
+                        "type": "step",
+                        "description": "The message nonce3[] may be sent to the attacker at output {19}.",
+                        "clause": 26,
+                        "fact": "attacker(nonce3[])",
+                        "children": []
+                      }
+                    ]
+                  }
+                ],
+                "output_index": 12
+              }
+            ]
+          },
+          {
+            "type": "premise",
+            "description": "If the message hash(nonce2[],seed[]) is received from the attacker at input {4}",
+            "input_index": 4,
+            "fact": "attacker(hash(nonce2[],seed[]))",
+            "clause": 20,
+            "children": [
+              {
+                "type": "step",
+                "description": "then the message hash(x_4,seed[]) may be sent to the attacker at output {16}",
+                "clause": 23,
+                "fact": "attacker(hash(nonce2[],seed[]))",
+                "children": [
+                  {
+                    "type": "premise",
+                    "description": "the message secretcondition[] is received from the attacker at input {14}",
+                    "input_index": 14,
+                    "fact": "attacker(secretcondition[])",
+                    "clause": 23,
+                    "children": [
+                      {
+                        "type": "step",
+                        "description": "The message secretcondition[] may be sent to the attacker at output {8}.",
+                        "clause": 21,
+                        "fact": "attacker(secretcondition[])",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "premise",
+                    "description": "If the message x_4 is received from the attacker at input {13}",
+                    "input_index": 13,
+                    "fact": "attacker(nonce2[])",
+                    "clause": 23,
+                    "children": [
+                      {
+                        "type": "step",
+                        "description": "The message nonce2[] may be sent to the attacker at output {18}.",
+                        "clause": 25,
+                        "fact": "attacker(nonce2[])",
+                        "children": []
+                      }
+                    ]
+                  }
+                ],
+                "output_index": 16
+              }
+            ]
+          }
+        ],
+        "output_index": 7
+      }
+    ]
+  }
+}

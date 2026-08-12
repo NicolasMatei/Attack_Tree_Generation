@@ -1,0 +1,896 @@
+File "NS-PK.pv", line 61, characters 22-23:
+Warning: identifier Nb rebound.
+Process 0 (that is, the initial process):
+{1}new skA: skey;
+{2}new skB: skey;
+{3}new skI: skey;
+{4}out(c, (pk(skA),pk(skB),skI));
+(
+    {5}!
+    {6}let a: host = A in
+    {7}let skA_1: skey = skA in
+    {8}let b: host = B in
+    {9}let pkB: pkey = pk(skB) in
+    {10}new Na: nonce;
+    {11}out(c, encrypt(msg1(a,Na),pkB));
+    {12}in(c, x: bitstring);
+    {13}let msg2(=Na,Nb_1: nonce) = decrypt(x,skA_1) in
+    {14}event ADone(a,b,Na,Nb_1);
+    {15}out(c, encrypt(msg3(Nb_1),pkB))
+) | (
+    {16}!
+    {17}let b_1: host = B in
+    {18}let skB_1: skey = skB in
+    {19}let a_1: host = A in
+    {20}let pkA: pkey = pk(skA) in
+    {21}in(c, x_1: bitstring);
+    {22}let msg1(=a_1,Na_1: nonce) = decrypt(x_1,skB_1) in
+    {23}out(c, encrypt(msg2(Na_1,Nb),pkA));
+    {24}in(c, y: bitstring);
+    {25}let msg3(=Nb) = decrypt(y,skB_1) in
+    {26}event BDone(a_1,b_1,Na_1,Nb)
+) | (
+    {27}!
+    {28}let a_2: host = A in
+    {29}let skA_2: skey = skA in
+    {30}let b_2: host = I in
+    {31}let pkB_1: pkey = pk(skI) in
+    {32}new Na_2: nonce;
+    {33}out(c, encrypt(msg1(a_2,Na_2),pkB_1));
+    {34}in(c, x_2: bitstring);
+    {35}let msg2(=Na_2,Nb_2: nonce) = decrypt(x_2,skA_2) in
+    {36}event ADone(a_2,b_2,Na_2,Nb_2);
+    {37}out(c, encrypt(msg3(Nb_2),pkB_1))
+) | (
+    {38}!
+    {39}let b_3: host = B in
+    {40}let skB_2: skey = skB in
+    {41}let a_3: host = I in
+    {42}let pkA_1: pkey = pk(skI) in
+    {43}in(c, x_3: bitstring);
+    {44}let msg1(=a_3,Na_3: nonce) = decrypt(x_3,skB_2) in
+    {45}out(c, encrypt(msg2(Na_3,Nb),pkA_1));
+    {46}in(c, y_1: bitstring);
+    {47}let msg3(=Nb) = decrypt(y_1,skB_2) in
+    {48}event BDone(a_3,b_3,Na_3,Nb)
+)
+
+--  Process 1 (that is, process 0, with let moved downwards):
+{1}new skA: skey;
+{2}new skB: skey;
+{3}new skI: skey;
+{4}out(c, (pk(skA),pk(skB),skI));
+(
+    {5}!
+    {10}new Na: nonce;
+    {9}let pkB: pkey = pk(skB) in
+    {6}let a: host = A in
+    {11}out(c, encrypt(msg1(a,Na),pkB));
+    {12}in(c, x: bitstring);
+    {7}let skA_1: skey = skA in
+    {13}let msg2(=Na,Nb_1: nonce) = decrypt(x,skA_1) in
+    {8}let b: host = B in
+    {14}event ADone(a,b,Na,Nb_1);
+    {15}out(c, encrypt(msg3(Nb_1),pkB))
+) | (
+    {16}!
+    {21}in(c, x_1: bitstring);
+    {19}let a_1: host = A in
+    {18}let skB_1: skey = skB in
+    {22}let msg1(=a_1,Na_1: nonce) = decrypt(x_1,skB_1) in
+    {20}let pkA: pkey = pk(skA) in
+    {23}out(c, encrypt(msg2(Na_1,Nb),pkA));
+    {24}in(c, y: bitstring);
+    {25}let msg3(=Nb) = decrypt(y,skB_1) in
+    {17}let b_1: host = B in
+    {26}event BDone(a_1,b_1,Na_1,Nb)
+) | (
+    {27}!
+    {32}new Na_2: nonce;
+    {31}let pkB_1: pkey = pk(skI) in
+    {28}let a_2: host = A in
+    {33}out(c, encrypt(msg1(a_2,Na_2),pkB_1));
+    {34}in(c, x_2: bitstring);
+    {29}let skA_2: skey = skA in
+    {35}let msg2(=Na_2,Nb_2: nonce) = decrypt(x_2,skA_2) in
+    {30}let b_2: host = I in
+    {36}event ADone(a_2,b_2,Na_2,Nb_2);
+    {37}out(c, encrypt(msg3(Nb_2),pkB_1))
+) | (
+    {38}!
+    {43}in(c, x_3: bitstring);
+    {41}let a_3: host = I in
+    {40}let skB_2: skey = skB in
+    {44}let msg1(=a_3,Na_3: nonce) = decrypt(x_3,skB_2) in
+    {42}let pkA_1: pkey = pk(skI) in
+    {45}out(c, encrypt(msg2(Na_3,Nb),pkA_1));
+    {46}in(c, y_1: bitstring);
+    {47}let msg3(=Nb) = decrypt(y_1,skB_2) in
+    {39}let b_3: host = B in
+    {48}event BDone(a_3,b_3,Na_3,Nb)
+)
+
+-- Query event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) in process 1.
+Translating the process into Horn clauses...
+Initial clauses:
+Clause 0: attacker(true)
+(The attacker applies function true.)
+
+Clause 1: attacker(v) && attacker(v_1) -> attacker(sign(v,v_1))
+(The attacker applies function sign.)
+
+Clause 2: attacker(v) -> attacker(pk(v))
+(The attacker applies function pk.)
+
+Clause 3: attacker(v) -> attacker(msg3(v))
+(The attacker applies function msg3.)
+
+Clause 4: attacker(msg3(v)) -> attacker(v)
+(The attacker applies function 1-proj-msg3.)
+
+Clause 5: attacker(v) && attacker(v_1) -> attacker(msg2(v,v_1))
+(The attacker applies function msg2.)
+
+Clause 6: attacker(msg2(v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-msg2.)
+
+Clause 7: attacker(msg2(v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-msg2.)
+
+Clause 8: attacker(v) && attacker(v_1) -> attacker(msg1(v,v_1))
+(The attacker applies function msg1.)
+
+Clause 9: attacker(msg1(v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-msg1.)
+
+Clause 10: attacker(msg1(v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-msg1.)
+
+Clause 11: attacker(false)
+(The attacker applies function false.)
+
+Clause 12: attacker(v) && attacker(v_1) -> attacker(encrypt(v,v_1))
+(The attacker applies function encrypt.)
+
+Clause 13: attacker(encrypt(x_4,pk(y_2))) && attacker(y_2) -> attacker(x_4)
+(The attacker applies function decrypt.)
+
+Clause 14: attacker(0)
+(The attacker applies function 0.)
+
+Clause 15: attacker(v) -> attacker(v + 1)
+(The attacker applies function +.)
+
+Clause 16: attacker(v + 1) -> attacker(v)
+(The attacker applies function - 1.)
+
+Clause 17: attacker(v) && attacker(v_1) && attacker(v_2) -> attacker((v,v_1,v_2))
+(The attacker applies function 3-tuple.)
+
+Clause 18: attacker((v,v_1,v_2)) -> attacker(v)
+(The attacker applies function 1-proj-3-tuple.)
+
+Clause 19: attacker((v,v_1,v_2)) -> attacker(v_1)
+(The attacker applies function 2-proj-3-tuple.)
+
+Clause 20: attacker((v,v_1,v_2)) -> attacker(v_2)
+(The attacker applies function 3-proj-3-tuple.)
+
+Clause 21: attacker(v) && attacker(v_1) -> attacker((v,v_1))
+(The attacker applies function 2-tuple.)
+
+Clause 22: attacker((v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-2-tuple.)
+
+Clause 23: attacker((v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-2-tuple.)
+
+Clause 24: mess(v,v_1) && attacker(v) -> attacker(v_1)
+(The attacker can listen on all channels it has.)
+
+Clause 25: attacker(v) && attacker(v_1) -> mess(v,v_1)
+(The attacker can send messages it has on all channels it has.)
+
+Clause 26: attacker(fail-any_type)
+(Initial knowledge of the attacker.)
+
+Clause 27: attacker(c[])
+(Initial knowledge of the attacker.)
+
+Clause 28: attacker(I[])
+(Initial knowledge of the attacker.)
+
+Clause 29: attacker(B[])
+(Initial knowledge of the attacker.)
+
+Clause 30: attacker(A[])
+(Initial knowledge of the attacker.)
+
+Clause 31: equal(v,v)
+(Definition of equal.)
+
+Clause 32: attacker(new-name_1)
+(The attacker can create new names.)
+Abbreviations:
+new-name_1 = new-name[!att = v]
+
+Clause 33: attacker((pk(skA[]),pk(skB[]),skI[]))
+(The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.)
+
+Clause 34: attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
+(The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 35: b-event(ADone(A[],B[],Na_4,Nb_3)) && attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skB[])))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
+event ADone(A[],B[],Na_4,Nb_3) is executed at {14},
+then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 36: attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
+then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}.)
+
+Clause 37: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> event(BDone(A[],B[],Na_4,Nb[]))
+(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {24},
+then event BDone(A[],B[],Na_4,Nb[]) may be executed at {26}.)
+
+Clause 38: attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
+(The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 39: b-event(ADone(A[],I[],Na_4,Nb_3)) && attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skI[])))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
+event ADone(A[],I[],Na_4,Nb_3) is executed at {36},
+then the message encrypt(msg3(Nb_3),pk(skI[])) may be sent to the attacker at output {37}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 40: attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
+then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}.)
+
+Clause 41: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> event(BDone(I[],B[],Na_4,Nb[]))
+(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {46},
+then event BDone(I[],B[],Na_4,Nb[]) may be executed at {48}.)
+
+Completing...
+Starting query event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny))
+goal reachable: attacker(nx) -> event(BDone(A[],B[],nx,Nb[]))
+
+Derivation:
+goal  event(BDone(A[],B[],nx,Nb[]))
+    "If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {24}, then event BDone(A[],B[],Na_4,Nb[]) may be executed at {26}." [clause 37] event(BDone(A[],B[],nx,Nb[]))
+        "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg3(Nb[]),pk(skB[])))
+            apply msg3 attacker(msg3(Nb[]))
+                apply 2-proj-msg2 attacker(Nb[])
+                    "The attacker applies function decrypt." [clause 13] attacker(msg2(Na_4,Nb[]))
+                        "If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43}, then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}." [clause 40] attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
+                            "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(I[],Na_4),pk(skB[])))
+                                apply msg1 attacker(msg1(I[],Na_4))
+                                    initial knowledge  attacker(I[])
+                                    any attacker(Na_4)
+                                duplicate attacker(pk(skB[]))
+                        apply 3-proj-3-tuple attacker(skI[])
+                            duplicate attacker((pk(skA[]),pk(skB[]),skI[]))
+            duplicate attacker(pk(skB[]))
+        "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(A[],nx),pk(skB[])))
+            apply msg1 attacker(msg1(A[],nx))
+                initial knowledge  attacker(A[])
+                hypothesis attacker(nx)
+            apply 2-proj-3-tuple attacker(pk(skB[]))
+                "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}." [clause 33] attacker((pk(skA[]),pk(skB[]),skI[]))
+
+A more detailed output of the traces is available with
+  set traceDisplay = long.
+
+new skA: skey creating skA_3 at {1}
+
+new skB: skey creating skB_3 at {2}
+
+new skI: skey creating skI_1 at {3}
+
+out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_3), ~M_1 = pk(skB_3), ~M_2 = skI_1 at {4}
+
+in(c, encrypt(msg1(A,a_4),~M_1)) with encrypt(msg1(A,a_4),~M_1) = encrypt(msg1(A,a_4),pk(skB_3)) at {21} in copy a_5
+
+out(c, ~M_3) with ~M_3 = encrypt(msg2(a_4,Nb),pk(skA_3)) at {23} in copy a_5
+
+in(c, encrypt(msg1(I,a_6),~M_1)) with encrypt(msg1(I,a_6),~M_1) = encrypt(msg1(I,a_6),pk(skB_3)) at {43} in copy a_7
+
+out(c, ~M_4) with ~M_4 = encrypt(msg2(a_6,Nb),pk(skI_1)) at {45} in copy a_7
+
+in(c, encrypt(msg3(2-proj-msg2(decrypt(~M_4,~M_2))),~M_1)) with encrypt(msg3(2-proj-msg2(decrypt(~M_4,~M_2))),~M_1) = encrypt(msg3(Nb),pk(skB_3)) at {24} in copy a_5
+
+event BDone(A,B,a_4,Nb) at {26} in copy a_5 (goal)
+
+The event BDone(A,B,a_4,Nb) is executed at {26} in copy a_5.
+A trace has been found.
+RESULT event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) is false.
+-- Query not event(BDone(x_4,y_2,nx,ny)) in process 1.
+Translating the process into Horn clauses...
+Initial clauses:
+Clause 0: attacker(true)
+(The attacker applies function true.)
+
+Clause 1: attacker(v) && attacker(v_1) -> attacker(sign(v,v_1))
+(The attacker applies function sign.)
+
+Clause 2: attacker(v) -> attacker(pk(v))
+(The attacker applies function pk.)
+
+Clause 3: attacker(v) -> attacker(msg3(v))
+(The attacker applies function msg3.)
+
+Clause 4: attacker(msg3(v)) -> attacker(v)
+(The attacker applies function 1-proj-msg3.)
+
+Clause 5: attacker(v) && attacker(v_1) -> attacker(msg2(v,v_1))
+(The attacker applies function msg2.)
+
+Clause 6: attacker(msg2(v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-msg2.)
+
+Clause 7: attacker(msg2(v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-msg2.)
+
+Clause 8: attacker(v) && attacker(v_1) -> attacker(msg1(v,v_1))
+(The attacker applies function msg1.)
+
+Clause 9: attacker(msg1(v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-msg1.)
+
+Clause 10: attacker(msg1(v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-msg1.)
+
+Clause 11: attacker(false)
+(The attacker applies function false.)
+
+Clause 12: attacker(v) && attacker(v_1) -> attacker(encrypt(v,v_1))
+(The attacker applies function encrypt.)
+
+Clause 13: attacker(encrypt(x_4,pk(y_2))) && attacker(y_2) -> attacker(x_4)
+(The attacker applies function decrypt.)
+
+Clause 14: attacker(0)
+(The attacker applies function 0.)
+
+Clause 15: attacker(v) -> attacker(v + 1)
+(The attacker applies function +.)
+
+Clause 16: attacker(v + 1) -> attacker(v)
+(The attacker applies function - 1.)
+
+Clause 17: attacker(v) && attacker(v_1) && attacker(v_2) -> attacker((v,v_1,v_2))
+(The attacker applies function 3-tuple.)
+
+Clause 18: attacker((v,v_1,v_2)) -> attacker(v)
+(The attacker applies function 1-proj-3-tuple.)
+
+Clause 19: attacker((v,v_1,v_2)) -> attacker(v_1)
+(The attacker applies function 2-proj-3-tuple.)
+
+Clause 20: attacker((v,v_1,v_2)) -> attacker(v_2)
+(The attacker applies function 3-proj-3-tuple.)
+
+Clause 21: attacker(v) && attacker(v_1) -> attacker((v,v_1))
+(The attacker applies function 2-tuple.)
+
+Clause 22: attacker((v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-2-tuple.)
+
+Clause 23: attacker((v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-2-tuple.)
+
+Clause 24: mess(v,v_1) && attacker(v) -> attacker(v_1)
+(The attacker can listen on all channels it has.)
+
+Clause 25: attacker(v) && attacker(v_1) -> mess(v,v_1)
+(The attacker can send messages it has on all channels it has.)
+
+Clause 26: attacker(fail-any_type)
+(Initial knowledge of the attacker.)
+
+Clause 27: attacker(c[])
+(Initial knowledge of the attacker.)
+
+Clause 28: attacker(I[])
+(Initial knowledge of the attacker.)
+
+Clause 29: attacker(B[])
+(Initial knowledge of the attacker.)
+
+Clause 30: attacker(A[])
+(Initial knowledge of the attacker.)
+
+Clause 31: equal(v,v)
+(Definition of equal.)
+
+Clause 32: attacker(new-name_1)
+(The attacker can create new names.)
+Abbreviations:
+new-name_1 = new-name[!att = v]
+
+Clause 33: attacker((pk(skA[]),pk(skB[]),skI[]))
+(The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.)
+
+Clause 34: attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
+(The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 35: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skB[])))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
+then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 36: attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
+then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}.)
+
+Clause 37: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> event(BDone(A[],B[],Na_4,Nb[]))
+(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {24},
+then event BDone(A[],B[],Na_4,Nb[]) may be executed at {26}.)
+
+Clause 38: attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
+(The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 39: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skI[])))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
+then the message encrypt(msg3(Nb_3),pk(skI[])) may be sent to the attacker at output {37}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 40: attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
+then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}.)
+
+Clause 41: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> event(BDone(I[],B[],Na_4,Nb[]))
+(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {46},
+then event BDone(I[],B[],Na_4,Nb[]) may be executed at {48}.)
+
+Completing...
+Starting query not event(BDone(x_4,y_2,nx,ny))
+goal reachable: attacker(nx) -> event(BDone(I[],B[],nx,Nb[]))
+
+Derivation:
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+goal  event(BDone(I[],B[],nx,Nb[]))
+    "If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {46}, then event BDone(I[],B[],Na_4,Nb[]) may be executed at {48}." [clause 41] event(BDone(I[],B[],nx,Nb[]))
+        "If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12}, then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}." [clause 35] attacker(encrypt(msg3(Nb[]),pk(skB[])))
+            "If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21}, then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}." [clause 36] attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
+                "The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}." [clause 34] attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
+        "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(I[],nx),pk(skB[])))
+            apply msg1 attacker(msg1(I[],nx))
+                initial knowledge  attacker(I[])
+                hypothesis attacker(nx)
+            apply 2-proj-3-tuple attacker(pk(skB[]))
+                "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}." [clause 33] attacker((pk(skA[]),pk(skB[]),skI[]))
+
+A more detailed output of the traces is available with
+  set traceDisplay = long.
+
+new skA: skey creating skA_3 at {1}
+
+new skB: skey creating skB_3 at {2}
+
+new skI: skey creating skI_1 at {3}
+
+out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_3), ~M_1 = pk(skB_3), ~M_2 = skI_1 at {4}
+
+new Na: nonce creating Na_5 at {10} in copy a_4
+
+out(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_5),pk(skB_3)) at {11} in copy a_4
+
+in(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_5),pk(skB_3)) at {21} in copy a_5
+
+out(c, ~M_4) with ~M_4 = encrypt(msg2(Na_5,Nb),pk(skA_3)) at {23} in copy a_5
+
+in(c, ~M_4) with ~M_4 = encrypt(msg2(Na_5,Nb),pk(skA_3)) at {12} in copy a_4
+
+event ADone(A,B,Na_5,Nb) at {14} in copy a_4
+
+out(c, ~M_5) with ~M_5 = encrypt(msg3(Nb),pk(skB_3)) at {15} in copy a_4
+
+in(c, encrypt(msg1(I,a_6),~M_1)) with encrypt(msg1(I,a_6),~M_1) = encrypt(msg1(I,a_6),pk(skB_3)) at {43} in copy a_7
+
+out(c, ~M_6) with ~M_6 = encrypt(msg2(a_6,Nb),pk(skI_1)) at {45} in copy a_7
+
+in(c, ~M_5) with ~M_5 = encrypt(msg3(Nb),pk(skB_3)) at {46} in copy a_7
+
+event BDone(I,B,a_6,Nb) at {48} in copy a_7 (goal)
+
+The event BDone(I,B,a_6,Nb) is executed at {48} in copy a_7.
+A trace has been found.
+RESULT not event(BDone(x_4,y_2,nx,ny)) is false.
+-- Query not event(ADone(x_4,y_2,nx,ny)) in process 1.
+Translating the process into Horn clauses...
+Initial clauses:
+Clause 0: attacker(true)
+(The attacker applies function true.)
+
+Clause 1: attacker(v) && attacker(v_1) -> attacker(sign(v,v_1))
+(The attacker applies function sign.)
+
+Clause 2: attacker(v) -> attacker(pk(v))
+(The attacker applies function pk.)
+
+Clause 3: attacker(v) -> attacker(msg3(v))
+(The attacker applies function msg3.)
+
+Clause 4: attacker(msg3(v)) -> attacker(v)
+(The attacker applies function 1-proj-msg3.)
+
+Clause 5: attacker(v) && attacker(v_1) -> attacker(msg2(v,v_1))
+(The attacker applies function msg2.)
+
+Clause 6: attacker(msg2(v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-msg2.)
+
+Clause 7: attacker(msg2(v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-msg2.)
+
+Clause 8: attacker(v) && attacker(v_1) -> attacker(msg1(v,v_1))
+(The attacker applies function msg1.)
+
+Clause 9: attacker(msg1(v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-msg1.)
+
+Clause 10: attacker(msg1(v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-msg1.)
+
+Clause 11: attacker(false)
+(The attacker applies function false.)
+
+Clause 12: attacker(v) && attacker(v_1) -> attacker(encrypt(v,v_1))
+(The attacker applies function encrypt.)
+
+Clause 13: attacker(encrypt(x_4,pk(y_2))) && attacker(y_2) -> attacker(x_4)
+(The attacker applies function decrypt.)
+
+Clause 14: attacker(0)
+(The attacker applies function 0.)
+
+Clause 15: attacker(v) -> attacker(v + 1)
+(The attacker applies function +.)
+
+Clause 16: attacker(v + 1) -> attacker(v)
+(The attacker applies function - 1.)
+
+Clause 17: attacker(v) && attacker(v_1) && attacker(v_2) -> attacker((v,v_1,v_2))
+(The attacker applies function 3-tuple.)
+
+Clause 18: attacker((v,v_1,v_2)) -> attacker(v)
+(The attacker applies function 1-proj-3-tuple.)
+
+Clause 19: attacker((v,v_1,v_2)) -> attacker(v_1)
+(The attacker applies function 2-proj-3-tuple.)
+
+Clause 20: attacker((v,v_1,v_2)) -> attacker(v_2)
+(The attacker applies function 3-proj-3-tuple.)
+
+Clause 21: attacker(v) && attacker(v_1) -> attacker((v,v_1))
+(The attacker applies function 2-tuple.)
+
+Clause 22: attacker((v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-2-tuple.)
+
+Clause 23: attacker((v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-2-tuple.)
+
+Clause 24: mess(v,v_1) && attacker(v) -> attacker(v_1)
+(The attacker can listen on all channels it has.)
+
+Clause 25: attacker(v) && attacker(v_1) -> mess(v,v_1)
+(The attacker can send messages it has on all channels it has.)
+
+Clause 26: attacker(fail-any_type)
+(Initial knowledge of the attacker.)
+
+Clause 27: attacker(c[])
+(Initial knowledge of the attacker.)
+
+Clause 28: attacker(I[])
+(Initial knowledge of the attacker.)
+
+Clause 29: attacker(B[])
+(Initial knowledge of the attacker.)
+
+Clause 30: attacker(A[])
+(Initial knowledge of the attacker.)
+
+Clause 31: equal(v,v)
+(Definition of equal.)
+
+Clause 32: attacker(new-name_1)
+(The attacker can create new names.)
+Abbreviations:
+new-name_1 = new-name[!att = v]
+
+Clause 33: attacker((pk(skA[]),pk(skB[]),skI[]))
+(The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.)
+
+Clause 34: attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
+(The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 35: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> event(ADone(A[],B[],Na_4,Nb_3))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
+then event ADone(A[],B[],Na_4,Nb_3) may be executed at {14}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 36: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skB[])))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
+then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 37: attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
+then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}.)
+
+Clause 38: attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
+(The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 39: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> event(ADone(A[],I[],Na_4,Nb_3))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
+then event ADone(A[],I[],Na_4,Nb_3) may be executed at {36}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 40: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skI[])))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
+then the message encrypt(msg3(Nb_3),pk(skI[])) may be sent to the attacker at output {37}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 41: attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
+then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}.)
+
+Completing...
+Starting query not event(ADone(x_4,y_2,nx,ny))
+goal reachable: attacker(ny) -> event(ADone(A[],I[],Na_4,ny))
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Derivation:
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+goal  event(ADone(A[],I[],Na_4,ny))
+    "If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34}, then event ADone(A[],I[],Na_4,Nb_3) may be executed at {36}." [clause 39] event(ADone(A[],I[],Na_4,ny))
+        "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg2(Na_4,ny),pk(skA[])))
+            apply msg2 attacker(msg2(Na_4,ny))
+                apply 2-proj-msg1 attacker(Na_4)
+                    "The attacker applies function decrypt." [clause 13] attacker(msg1(A[],Na_4))
+                        "The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}." [clause 38] attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
+                        apply 3-proj-3-tuple attacker(skI[])
+                            duplicate attacker((pk(skA[]),pk(skB[]),skI[]))
+                hypothesis attacker(ny)
+            apply 1-proj-3-tuple attacker(pk(skA[]))
+                "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}." [clause 33] attacker((pk(skA[]),pk(skB[]),skI[]))
+
+A more detailed output of the traces is available with
+  set traceDisplay = long.
+
+new skA: skey creating skA_3 at {1}
+
+new skB: skey creating skB_3 at {2}
+
+new skI: skey creating skI_1 at {3}
+
+out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_3), ~M_1 = pk(skB_3), ~M_2 = skI_1 at {4}
+
+new Na_2: nonce creating Na_5 at {32} in copy a_4
+
+out(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_5),pk(skI_1)) at {33} in copy a_4
+
+in(c, encrypt(msg2(2-proj-msg1(decrypt(~M_3,~M_2)),a_5),~M)) with encrypt(msg2(2-proj-msg1(decrypt(~M_3,~M_2)),a_5),~M) = encrypt(msg2(Na_5,a_5),pk(skA_3)) at {34} in copy a_4
+
+event ADone(A,I,Na_5,a_5) at {36} in copy a_4 (goal)
+
+The event ADone(A,I,Na_5,a_5) is executed at {36} in copy a_4.
+A trace has been found.
+RESULT not event(ADone(x_4,y_2,nx,ny)) is false.
+-- Query not attacker(Nb[]) in process 1.
+Translating the process into Horn clauses...
+Initial clauses:
+Clause 0: attacker(true)
+(The attacker applies function true.)
+
+Clause 1: attacker(v) && attacker(v_1) -> attacker(sign(v,v_1))
+(The attacker applies function sign.)
+
+Clause 2: attacker(v) -> attacker(pk(v))
+(The attacker applies function pk.)
+
+Clause 3: attacker(v) -> attacker(msg3(v))
+(The attacker applies function msg3.)
+
+Clause 4: attacker(msg3(v)) -> attacker(v)
+(The attacker applies function 1-proj-msg3.)
+
+Clause 5: attacker(v) && attacker(v_1) -> attacker(msg2(v,v_1))
+(The attacker applies function msg2.)
+
+Clause 6: attacker(msg2(v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-msg2.)
+
+Clause 7: attacker(msg2(v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-msg2.)
+
+Clause 8: attacker(v) && attacker(v_1) -> attacker(msg1(v,v_1))
+(The attacker applies function msg1.)
+
+Clause 9: attacker(msg1(v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-msg1.)
+
+Clause 10: attacker(msg1(v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-msg1.)
+
+Clause 11: attacker(false)
+(The attacker applies function false.)
+
+Clause 12: attacker(v) && attacker(v_1) -> attacker(encrypt(v,v_1))
+(The attacker applies function encrypt.)
+
+Clause 13: attacker(encrypt(x_4,pk(y_2))) && attacker(y_2) -> attacker(x_4)
+(The attacker applies function decrypt.)
+
+Clause 14: attacker(0)
+(The attacker applies function 0.)
+
+Clause 15: attacker(v) -> attacker(v + 1)
+(The attacker applies function +.)
+
+Clause 16: attacker(v + 1) -> attacker(v)
+(The attacker applies function - 1.)
+
+Clause 17: attacker(v) && attacker(v_1) && attacker(v_2) -> attacker((v,v_1,v_2))
+(The attacker applies function 3-tuple.)
+
+Clause 18: attacker((v,v_1,v_2)) -> attacker(v)
+(The attacker applies function 1-proj-3-tuple.)
+
+Clause 19: attacker((v,v_1,v_2)) -> attacker(v_1)
+(The attacker applies function 2-proj-3-tuple.)
+
+Clause 20: attacker((v,v_1,v_2)) -> attacker(v_2)
+(The attacker applies function 3-proj-3-tuple.)
+
+Clause 21: attacker(v) && attacker(v_1) -> attacker((v,v_1))
+(The attacker applies function 2-tuple.)
+
+Clause 22: attacker((v,v_1)) -> attacker(v)
+(The attacker applies function 1-proj-2-tuple.)
+
+Clause 23: attacker((v,v_1)) -> attacker(v_1)
+(The attacker applies function 2-proj-2-tuple.)
+
+Clause 24: mess(v,v_1) && attacker(v) -> attacker(v_1)
+(The attacker can listen on all channels it has.)
+
+Clause 25: attacker(v) && attacker(v_1) -> mess(v,v_1)
+(The attacker can send messages it has on all channels it has.)
+
+Clause 26: attacker(fail-any_type)
+(Initial knowledge of the attacker.)
+
+Clause 27: attacker(c[])
+(Initial knowledge of the attacker.)
+
+Clause 28: attacker(I[])
+(Initial knowledge of the attacker.)
+
+Clause 29: attacker(B[])
+(Initial knowledge of the attacker.)
+
+Clause 30: attacker(A[])
+(Initial knowledge of the attacker.)
+
+Clause 31: equal(v,v)
+(Definition of equal.)
+
+Clause 32: attacker(new-name_1)
+(The attacker can create new names.)
+Abbreviations:
+new-name_1 = new-name[!att = v]
+
+Clause 33: attacker((pk(skA[]),pk(skB[]),skI[]))
+(The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.)
+
+Clause 34: attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
+(The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 35: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skB[])))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
+then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}.)
+Abbreviations:
+Na_4 = Na[!1 = @sid]
+
+Clause 36: attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
+then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}.)
+
+Clause 37: attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
+(The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 38: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skI[])))
+(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
+then the message encrypt(msg3(Nb_3),pk(skI[])) may be sent to the attacker at output {37}.)
+Abbreviations:
+Na_4 = Na_2[!1 = @sid]
+
+Clause 39: attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
+then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}.)
+
+Completing...
+Starting query not attacker(Nb[])
+goal reachable: attacker(Nb[])
+
+Derivation:
+goal  attacker(Nb[])
+    apply 2-proj-msg2 attacker(Nb[])
+        "The attacker applies function decrypt." [clause 13] attacker(msg2(Na_4,Nb[]))
+            "If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43}, then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}." [clause 39] attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
+                "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(I[],Na_4),pk(skB[])))
+                    apply msg1 attacker(msg1(I[],Na_4))
+                        initial knowledge  attacker(I[])
+                        any attacker(Na_4)
+                    apply 2-proj-3-tuple attacker(pk(skB[]))
+                        duplicate attacker((pk(skA[]),pk(skB[]),skI[]))
+            apply 3-proj-3-tuple attacker(skI[])
+                "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}." [clause 33] attacker((pk(skA[]),pk(skB[]),skI[]))
+
+A more detailed output of the traces is available with
+  set traceDisplay = long.
+
+new skA: skey creating skA_3 at {1}
+
+new skB: skey creating skB_3 at {2}
+
+new skI: skey creating skI_1 at {3}
+
+out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_3), ~M_1 = pk(skB_3), ~M_2 = skI_1 at {4}
+
+in(c, encrypt(msg1(I,a_4),~M_1)) with encrypt(msg1(I,a_4),~M_1) = encrypt(msg1(I,a_4),pk(skB_3)) at {43} in copy a_5
+
+out(c, ~M_3) with ~M_3 = encrypt(msg2(a_4,Nb),pk(skI_1)) at {45} in copy a_5
+
+The attacker has the message 2-proj-msg2(decrypt(~M_3,~M_2)) = Nb.
+A trace has been found.
+RESULT not attacker(Nb[]) is false.
+
+--------------------------------------------------------------
+Verification summary:
+
+Query event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) is false.
+
+Query not event(BDone(x_4,y_2,nx,ny)) is false.
+
+Query not event(ADone(x_4,y_2,nx,ny)) is false.
+
+Query not attacker(Nb[]) is false.
+
+--------------------------------------------------------------
+

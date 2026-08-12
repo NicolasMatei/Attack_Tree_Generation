@@ -1,0 +1,104 @@
+(* 
+
+Needham-Schroeder public key protocol
+
+Message 3: A -> B : { A, Na }pkB
+Message 6: B -> A : { Na, Nb }pkA
+Message 7: A -> B : { Nb }pkB
+
+*)
+
+free c: channel.
+
+type host.
+type nonce.
+type pkey.
+type skey.
+
+fun msg1(host,nonce): bitstring [data].
+fun msg2(nonce,nonce): bitstring [data].
+fun msg3(nonce): bitstring [data].
+
+(* Public key encryption *)
+
+fun pk(skey): pkey.
+fun encrypt(bitstring, pkey): bitstring.
+reduc forall x: bitstring, y: skey; decrypt(encrypt(x,pk(y)),y) = x.
+
+(* Public key signatures *)
+
+fun sign(bitstring, skey): bitstring.
+reduc forall x: bitstring, y: skey;
+    verify(x,sign(x,y),pk(y)) = true.
+
+
+(* Security Events *)
+
+event ADone(host,host,nonce,nonce).
+event BDone(host,host,nonce,nonce).
+
+(* A IS AUTHENTICATED AT B *)
+
+query nx:nonce, ny:nonce;
+      event(BDone(A,B,nx,ny)) ==> event(ADone(A,B,nx,ny)).
+
+query x:host, y:host, nx:nonce, ny:nonce;
+      event(BDone(x,y,nx,ny)).
+query x:host, y:host, nx:nonce, ny:nonce;
+      event(ADone(x,y,nx,ny)).
+
+(* Nb IS SECRET *)
+
+free Nb: nonce [private].
+query attacker(Nb).
+
+(* The A Process *)
+
+let processA(a:host, skA: skey, b:host, pkB: pkey) =
+        new Na: nonce;
+        out (c,encrypt(msg1(a,Na),pkB));
+        in (c,x:bitstring);
+        let msg2(=Na,Nb) = decrypt(x,skA) in
+        event ADone(a,b,Na,Nb);
+        out (c,encrypt(msg3(Nb),pkB)).
+
+(* The B Process *)
+
+let processB(b:host, skB: skey, a:host, pkA: pkey) = 
+        in (c,x:bitstring);
+        let msg1(=a,Na) = decrypt(x,skB) in
+  	(* new Nb:nonce;  *)
+        out (c,encrypt(msg2(Na,Nb),pkA));
+        in (c,y:bitstring);
+        let msg3(=Nb) = decrypt(y,skB) in
+        event BDone(a,b,Na,Nb).
+
+
+(* 2 honest host names A and B *)
+
+free A, B, I: host.
+
+(* Top-level process *)
+ 
+process         
+  new skA:skey; 
+  new skB:skey;
+
+  new skI:skey;
+  out (c,(pk(skA),pk(skB),skI));
+
+  !processA(A,skA,B,pk(skB)) |
+  !processB(B,skB,A,pk(skA)) | 
+  !processA(A,skA,I,pk(skI)) |
+  !processB(B,skB,I,pk(skI))
+
+(*  
+  processA(I,skI,B,pk(skB)) |
+  processB(I,skI,A,pk(skA)) |
+*)  
+
+
+
+
+
+    

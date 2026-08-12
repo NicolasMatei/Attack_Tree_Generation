@@ -1,0 +1,85 @@
+{
+  "index": 3,
+  "query": "not event(ADone(x_4,y_2,nx,ny)) in process 1.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "event(ADone(A[],I[],Na_4,ny))",
+    "children": [
+      {
+        "type": "step",
+        "description": "If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34}, then event ADone(A[],I[],Na_4,Nb_3) may be executed at {36}.",
+        "clause": 39,
+        "fact": "event(ADone(A[],I[],Na_4,ny))",
+        "children": [
+          {
+            "type": "step",
+            "description": "The attacker applies function encrypt.",
+            "clause": 12,
+            "fact": "attacker(encrypt(msg2(Na_4,ny),pk(skA[])))",
+            "children": [
+              {
+                "type": "unknown",
+                "raw": "apply msg2 attacker(msg2(Na_4,ny))",
+                "children": [
+                  {
+                    "type": "unknown",
+                    "raw": "apply 2-proj-msg1 attacker(Na_4)",
+                    "children": [
+                      {
+                        "type": "step",
+                        "description": "The attacker applies function decrypt.",
+                        "clause": 13,
+                        "fact": "attacker(msg1(A[],Na_4))",
+                        "children": [
+                          {
+                            "type": "step",
+                            "description": "The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.",
+                            "clause": 38,
+                            "fact": "attacker(encrypt(msg1(A[],Na_4),pk(skI[])))",
+                            "children": []
+                          },
+                          {
+                            "type": "unknown",
+                            "raw": "apply 3-proj-3-tuple attacker(skI[])",
+                            "children": [
+                              {
+                                "type": "step",
+                                "description": "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.",
+                                "clause": 33,
+                                "fact": "attacker((pk(skA[]),pk(skB[]),skI[]))",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "unknown",
+                    "raw": "hypothesis attacker(ny)",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "unknown",
+                "raw": "apply 1-proj-3-tuple attacker(pk(skA[]))",
+                "children": [
+                  {
+                    "type": "step",
+                    "description": "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.",
+                    "clause": 33,
+                    "fact": "attacker((pk(skA[]),pk(skB[]),skI[]))",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
