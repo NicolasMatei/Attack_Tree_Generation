@@ -9,28 +9,28 @@ Ce script enchaîne les quatre étapes décrites dans la sous-section
 "Generation of Conjonctive Attack Graphs" du framework :
 
     1. pv_derivation_to_json.py   -- extraction et parsing des Horn
-                                      Derivation Proof Trees produits par
-                                      ProVerif (avec nommage des clauses)
+                                     Derivation Proof Trees produits par
+                                     ProVerif (avec nommage des clauses)
     2. decompose_pv_edges.py      -- décomposition des arêtes longues en
-                                      une succession de noeuds/arêtes
+                                     une succession de noeuds/arêtes
     3. resolve_pv_duplicates.py   -- remplacement des noeuds "duplicate"
-                                      par la description humainement
-                                      lisible correspondante
+                                     par la description humainement
+                                     lisible correspondante
     4. pv_json_to_pdf.py          -- (optionnel) génération d'un rendu PDF
-                                      des arbres finaux
+                                     des arbres finaux
 
 Avant toute exécution, les répertoires de sortie d'une exécution
 précédente sont supprimés (équivalent de la série de `rm -rf` donnée
 dans le document). Après l'étape 3, les répertoires intermédiaires
 (arbres bruts et arbres décomposés) sont eux aussi supprimés : seuls
 les arbres résolus (<prefix>_arbres_resolus) et les PDF (<prefix>_pdf)
-sont conservés au final.
+sont conservés au final dans le dossier de sortie.
 
 Le script ProVerif utilisé (et le nombre d'exécutions) doit être choisi
 explicitement via l'une de ces deux options mutuellement exclusives,
 OBLIGATOIRES :
 
-    --classical       Utilise le proverif du PATH bash (une seule
+    --classical        Utilise le proverif du PATH bash (une seule
                        exécution, résultat déterministe).
     --randomized N     Utilise l'exécutable local ./proverif, exécuté
                        N fois (variabilité de l'ordre des dérivations).
@@ -41,17 +41,8 @@ Usage
     python3 generate_cag.py how_many_attack.pv --randomized 10
     python3 generate_cag.py how_many_attack.pv --randomized 10 --skip-pdf
     python3 generate_cag.py how_many_attack.pv --classical --scripts-dir /chemin/vers/scripts
+    python3 generate_cag.py how_many_attack.pv --classical --output-dir /chemin/vers/resultats
     python3 generate_cag.py how_many_attack.pv --randomized 10 -v
-
-Cela reproduit, pour un fichier nommé "how_many_attack.pv", la série de
-commandes suivante :
-
-    rm -rf how_many_attack_arbres && rm -rf how_many_attack_arbres_decomposes &&
-    rm -rf how_many_attack_arbres_resolus && rm -rf how_many_attack_pdf
-    python3 pv_derivation_to_json.py how_many_attack.pv how_many_attack_arbres/ --proverif ...
-    python3 decompose_pv_edges.py how_many_attack_arbres/ how_many_attack_arbres_decomposes/
-    python3 resolve_pv_duplicates.py how_many_attack_arbres_decomposes/ how_many_attack_arbres_resolus/
-    python3 pv_json_to_pdf.py how_many_attack_arbres_resolus/ how_many_attack_pdf/
 """
 
 from __future__ import annotations
@@ -91,6 +82,15 @@ def parse_args() -> argparse.Namespace:
             "Répertoire contenant pv_derivation_to_json.py, "
             "decompose_pv_edges.py, resolve_pv_duplicates.py et "
             "pv_json_to_pdf.py (par défaut : le répertoire de generate_cag.py)"
+        ),
+    )
+    parser.add_argument(
+        "-o", "--output-dir",
+        type=Path,
+        default=Path("."),
+        help=(
+            "Dossier de destination pour les résultats. Les dossiers finaux "
+            "y seront créés. (Par défaut : le répertoire courant)"
         ),
     )
     parser.add_argument(
@@ -167,13 +167,18 @@ def main() -> None:
         print(f"[generate_cag] ERREUR : '{pv_file}' est introuvable.", file=sys.stderr)
         sys.exit(1)
 
+    # Création du dossier de sortie s'il n'existe pas
+    output_dir: Path = args.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     # Préfixe utilisé pour tous les répertoires générés, ex : "how_many_attack"
     prefix = pv_file.stem
 
-    arbres_dir = Path(f"{prefix}_arbres")
-    decomposes_dir = Path(f"{prefix}_arbres_decomposes")
-    resolus_dir = Path(f"{prefix}_arbres_resolus")
-    pdf_dir = Path(f"{prefix}_pdf")
+    # Les dossiers sont maintenant rattachés au dossier de sortie
+    arbres_dir = output_dir / f"{prefix}_arbres"
+    decomposes_dir = output_dir / f"{prefix}_arbres_decomposes"
+    resolus_dir = output_dir / f"{prefix}_arbres_resolus"
+    pdf_dir = output_dir / f"{prefix}_pdf"
 
     # On vérifie la présence de tous les scripts requis avant de commencer.
     missing = [
@@ -190,10 +195,7 @@ def main() -> None:
     def script(name: str) -> str:
         return str(args.scripts_dir / name)
 
-    # Options ProVerif à propager à l'étape 1 (pv_derivation_to_json.py),
-    # qui s'appuie sur proverif_annotate_derivation.py /
-    # proverif10times_annotate_derivation.py et doit donc accepter les
-    # mêmes options --proverif / -times que ces scripts.
+    # Options ProVerif à propager à l'étape 1
     if args.classical:
         proverif_mode_desc = "classique (proverif du PATH bash, 1 exécution)"
         proverif_opts = ["--proverif", "proverif"]
@@ -232,9 +234,7 @@ def main() -> None:
         args.verbose,
     )
 
-    # Nettoyage des répertoires intermédiaires : on ne garde que les arbres
-    # résolus (résultat final) et, plus bas, le PDF. arbres_dir et
-    # decomposes_dir ne sont que des étapes de travail.
+    # Nettoyage des répertoires intermédiaires
     print("[generate_cag] Nettoyage des répertoires intermédiaires (arbres, arbres_decomposes)...")
     for d in (arbres_dir, decomposes_dir):
         if d.exists():
