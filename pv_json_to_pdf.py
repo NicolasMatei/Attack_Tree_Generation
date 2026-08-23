@@ -35,8 +35,102 @@ except ImportError:
     )
 
 
+import re
+
 NL = "\\n"  # newline littéral pour les labels DOT (pas un vrai '\n')
 WRAP_WIDTH = 45
+
+# Motifs de faits qu'on ne veut pas afficher dans les labels
+# (ex: "attacker(secretcondition[])", "attacker(hash(nonce[],seed[]))")
+HIDDEN_FACT_PATTERNS = [
+    re.compile(r"attacker\(secretcondition"),
+    re.compile(r"attacker\(hash\("),
+]
+
+
+def is_hidden_fact(fact):
+    """Renvoie True si le fait ne doit pas être affiché dans le PDF."""
+    if not fact:
+        return False
+    return any(p.search(str(fact)) for p in HIDDEN_FACT_PATTERNS)
+
+
+# Mots à retirer entièrement de tout texte affiché dans les labels
+FORBIDDEN_WORDS_RE = re.compile(r"\b(attacker|input|premise)\b", re.IGNORECASE)
+
+
+def remove_calls(s, keyword):
+    """Retire toutes les occurrences de 'keyword(...)' d'une chaîne, en
+    gérant correctement les parenthèses imbriquées (ex: 'attacker(hash(a,b))').
+    """
+    pattern = re.compile(r"\b" + keyword + r"\s*\(", re.IGNORECASE)
+    out = []
+    i = 0
+    while True:
+        m = pattern.search(s, i)
+        if not m:
+            out.append(s[i:])
+            break
+        out.append(s[i:m.start()])
+        depth = 1
+        j = m.end()
+        while j < len(s) and depth > 0:
+            if s[j] == "(":
+                depth += 1
+            elif s[j] == ")":
+                depth -= 1
+            j += 1
+        i = j
+    return "".join(out)
+
+
+# Motifs d'annotations à retirer entièrement, quel que soit le noeud
+# (ex: "[clause 3]", "[Clause #12]")
+CLAUSE_TAG_RE = re.compile(r"\[\s*clause[^\]]*\]", re.IGNORECASE)
+
+
+def clean_text(s):
+    """Retire les mots interdits ('attacker', 'input', 'premise') et le
+    symbole '=>' d'une chaîne, puis nettoie les espaces superflus.
+
+    Certaines tournures récurrentes sont réécrites AVANT le retrait mot à
+    mot, pour éviter des phrases bancales du style
+    "received from the at {1}" (au lieu de "received at {1}")."""
+    if not s:
+        return s
+    s = str(s)
+
+    # --- Exceptions de phrase, à traiter avant le retrait générique ---
+    # "... is received from the attacker at input {N}" -> "... is received at {N}"
+    s = re.sub(r"\bfrom the attacker at input\b", "at", s, flags=re.IGNORECASE)
+    # "... may be sent to the attacker at output {N}" -> "... may be sent at output {N}"
+    s = re.sub(r"\bto the attacker at output\b", "at output", s, flags=re.IGNORECASE)
+    # variantes plus génériques sans "at input"/"at output" juste après
+    s = re.sub(r"\bfrom the attacker\b", "", s, flags=re.IGNORECASE)
+    s = re.sub(r"\bto the attacker\b", "", s, flags=re.IGNORECASE)
+
+    # --- Retrait des annotations "[clause ...]" ---
+    s = CLAUSE_TAG_RE.sub("", s)
+
+    # --- Retrait des prédicats complets "attacker(...)" et "premise(...)" ---
+    # (gère aussi les cas imbriqués comme "attacker(hash(...))")
+    s = remove_calls(s, "attacker")
+    s = remove_calls(s, "premise")
+
+    # --- Retrait générique des mots interdits restants ---
+    s = FORBIDDEN_WORDS_RE.sub("", s)
+    s = s.replace("=>", "")
+
+    # --- Nettoyage final ---
+    s = re.sub(r",\s*,", ",", s)          # virgules doublées ("a, , b" -> "a, b")
+    s = re.sub(r"\(\s*,\s*", "(", s)       # virgule juste après une parenthèse ouvrante
+    s = re.sub(r",\s*\)", ")", s)          # virgule juste avant une parenthèse fermante
+    s = re.sub(r"\s{2,}", " ", s)
+    s = re.sub(r"\(\s*\)", "", s)  # parenthèses vides laissées par le nettoyage
+    s = re.sub(r"\{\s*\}", "", s)  # accolades vides laissées par le nettoyage
+    s = re.sub(r"^\s*,\s*", "", s)         # virgule résiduelle en tout début de chaîne
+    s = re.sub(r"\s*,\s*$", "", s)         # virgule résiduelle en toute fin de chaîne
+    return s.strip()
 
 # Style graphique par type de noeud
 STYLE = {
@@ -89,26 +183,36 @@ def node_label(node):
     t = node.get("type")
 
     if t == "goal":
-        return f"GOAL{NL}{wrap(node.get('fact', ''))}"
+        fact = node.get("fact", "")
+        if is_hidden_fact(fact):
+            return "GOAL"
+        return f"GOAL{NL}{wrap(clean_text(fact))}"
 
     if t == "step":
-        parts = []
-        if node.get("clause") is not None:
-            parts.append(f"[clause {node['clause']}]")
-        if node.get("description"):
-            parts.append(wrap(node["description"]))
-        parts.append("=> " + wrap(node.get("fact", "")))
-        return NL.join(parts)
+        description = node.get("description")
+        fact = node.get("fact", "")
+        if description:
+            # La description contient déjà l'information du fait ;
+            # on ne la répète pas en dessous.
+            return wrap(clean_text(description))
+        if not is_hidden_fact(fact):
+            return wrap(clean_text(fact))
+        return ""
 
     if t == "premise":
-        parts = [f"premise (input {{{node.get('input_index', '?')}}})"]
+        parts = []
         if node.get("description"):
-            parts.append(wrap(node["description"]))
-        parts.append(wrap(node.get("fact", "")))
-        return NL.join(parts)
+            parts.append(wrap(clean_text(node["description"])))
+        fact = node.get("fact", "")
+        if not is_hidden_fact(fact):
+            parts.append(wrap(clean_text(fact)))
+        return NL.join(p for p in parts if p)
 
     if t == "duplicate":
-        return f"duplicate{NL}{wrap(node.get('fact', ''))}"
+        fact = node.get("fact", "")
+        if is_hidden_fact(fact):
+            return "duplicate"
+        return f"duplicate{NL}{wrap(clean_text(fact))}"
 
     # type inconnu / fallback
     raw = node.get("raw") or json.dumps(node, ensure_ascii=False)
