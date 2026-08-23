@@ -1,0 +1,239 @@
+{
+  "goals": [
+    {
+      "fact": "attacker(success[])",
+      "query": "not attacker(success[]) in process 0.",
+      "source_indices": [
+        1,
+        3
+      ],
+      "source_files": [
+        "01_not_attacker_success_in_process_0.json",
+        "03_not_attacker_success_in_process_0.json"
+      ],
+      "derivation": {
+        "type": "goal",
+        "fact": "attacker(success[])",
+        "children": [
+          {
+            "io": "output",
+            "pi_id": 3,
+            "term": "success[]",
+            "relation": "or",
+            "children": [
+              {
+                "io": "input",
+                "pi_id": 1,
+                "term": "hash(nonce[],seed[])",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "output",
+                    "pi_id": 16,
+                    "term": "hash(nonce[],seed[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "input",
+                        "pi_id": 14,
+                        "term": "secretcondition[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 8,
+                            "term": "secretcondition[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "io": "input",
+                        "pi_id": 13,
+                        "term": "nonce[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 17,
+                            "term": "nonce[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "input",
+                "pi_id": 1,
+                "term": "enc(nonce[],sk[])",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "output",
+                    "pi_id": 12,
+                    "term": "enc(nonce[],sk[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "input",
+                        "pi_id": 10,
+                        "term": "secretcondition[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 8,
+                            "term": "secretcondition[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "io": "input",
+                        "pi_id": 9,
+                        "term": "nonce[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 17,
+                            "term": "nonce[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fact": "attacker(success2[])",
+      "query": "not attacker(success2[]) in process 0.",
+      "source_indices": [
+        2
+      ],
+      "source_files": [
+        "02_not_attacker_success2_in_process_0.json"
+      ],
+      "derivation": {
+        "type": "goal",
+        "fact": "attacker(success2[])",
+        "children": [
+          {
+            "io": "output",
+            "pi_id": 7,
+            "term": "success2[]",
+            "relation": "and",
+            "children": [
+              {
+                "io": "input",
+                "pi_id": 5,
+                "term": "enc(nonce3[],sk[])",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "output",
+                    "pi_id": 12,
+                    "term": "enc(nonce3[],sk[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "input",
+                        "pi_id": 10,
+                        "term": "secretcondition[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 8,
+                            "term": "secretcondition[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "io": "input",
+                        "pi_id": 9,
+                        "term": "nonce3[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 19,
+                            "term": "nonce3[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "input",
+                "pi_id": 4,
+                "term": "hash(nonce2[],seed[])",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "output",
+                    "pi_id": 16,
+                    "term": "hash(nonce2[],seed[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "input",
+                        "pi_id": 14,
+                        "term": "secretcondition[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 8,
+                            "term": "secretcondition[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "io": "input",
+                        "pi_id": 13,
+                        "term": "nonce2[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 18,
+                            "term": "nonce2[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "unresolved": []
+}

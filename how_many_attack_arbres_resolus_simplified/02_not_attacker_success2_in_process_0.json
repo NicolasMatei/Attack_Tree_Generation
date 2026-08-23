@@ -1,0 +1,98 @@
+{
+  "index": 2,
+  "query": "not attacker(success2[]) in process 0.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "attacker(success2[])",
+    "children": [
+      {
+        "pi_id": 7,
+        "io": "output",
+        "term": "success2[]",
+        "children": [
+          {
+            "pi_id": 5,
+            "io": "input",
+            "term": "enc(nonce3[],sk[])",
+            "children": [
+              {
+                "pi_id": 12,
+                "io": "output",
+                "term": "enc(nonce3[],sk[])",
+                "children": [
+                  {
+                    "pi_id": 10,
+                    "io": "input",
+                    "term": "secretcondition[]",
+                    "children": [
+                      {
+                        "pi_id": 8,
+                        "io": "output",
+                        "term": "secretcondition[]",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "pi_id": 9,
+                    "io": "input",
+                    "term": "nonce3[]",
+                    "children": [
+                      {
+                        "pi_id": 19,
+                        "io": "output",
+                        "term": "nonce3[]",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "pi_id": 4,
+            "io": "input",
+            "term": "hash(nonce2[],seed[])",
+            "children": [
+              {
+                "pi_id": 16,
+                "io": "output",
+                "term": "hash(nonce2[],seed[])",
+                "children": [
+                  {
+                    "pi_id": 14,
+                    "io": "input",
+                    "term": "secretcondition[]",
+                    "children": [
+                      {
+                        "pi_id": 8,
+                        "io": "output",
+                        "term": "secretcondition[]",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "pi_id": 13,
+                    "io": "input",
+                    "term": "nonce2[]",
+                    "children": [
+                      {
+                        "pi_id": 18,
+                        "io": "output",
+                        "term": "nonce2[]",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

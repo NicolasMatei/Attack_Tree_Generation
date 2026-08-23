@@ -1,0 +1,58 @@
+{
+  "index": 3,
+  "query": "not attacker(success[]) in process 0.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "attacker(success[])",
+    "children": [
+      {
+        "pi_id": 3,
+        "io": "output",
+        "term": "success[]",
+        "children": [
+          {
+            "pi_id": 1,
+            "io": "input",
+            "term": "enc(nonce[],sk[])",
+            "children": [
+              {
+                "pi_id": 12,
+                "io": "output",
+                "term": "enc(nonce[],sk[])",
+                "children": [
+                  {
+                    "pi_id": 10,
+                    "io": "input",
+                    "term": "secretcondition[]",
+                    "children": [
+                      {
+                        "pi_id": 8,
+                        "io": "output",
+                        "term": "secretcondition[]",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "pi_id": 9,
+                    "io": "input",
+                    "term": "nonce[]",
+                    "children": [
+                      {
+                        "pi_id": 17,
+                        "io": "output",
+                        "term": "nonce[]",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
