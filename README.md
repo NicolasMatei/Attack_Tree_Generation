@@ -94,6 +94,42 @@ results/
 
 Each number corresponds to a ProVerif query (`-- Query ...`); the associated PDF is the graphical rendering of the JSON derivation tree of the same name.
 
+## Master Tree Generation (AND/OR Attack Graph)
+
+Once `generate_cag.py` has produced the resolved trees
+(`<prefix>_arbres_resolus/`), a second, optional pipeline can combine them
+into a single **Master Tree** (technically a *forest*, one tree per
+goal): identical derivations are merged together, and the points where
+several trees prove the same goal in different ways are marked with
+explicit **AND**/**OR** gate nodes.
+
+```bash
+python3 run_master_tree_pipeline.py <prefix>_arbres_resolus <prefix>_master_attack_graph.pdf
+```
+
+Example, following up on `how_many_attack.pv`:
+
+```bash
+python3 run_master_tree_pipeline.py how_many_attack_arbres_resolus final_conjunctive_attack_graph.pdf
+```
+
+This chains three steps:
+
+1. **`pv_json_simplify.py`** — reduces every node to its essential
+   information (direction, $\pi$-id, term), discarding clause numbers and
+   natural-language descriptions → `<prefix>_arbres_resolus_simplified/`.
+2. **`pv_json_merge_master.py`** — groups all trees proving the same goal
+   and merges them level by level: an **AND** gate is inserted where
+   every derivation agrees on its children, an **OR** gate where
+   derivations diverge → `arbre_maitre.json`.
+3. **`pv_master_to_pdf.py`** — renders the merged forest as a single PDF
+   with Graphviz (AND gates in green, OR gates in orange), sharing any
+   strictly identical subtree wherever it occurs, even across different
+   goals → the final PDF.
+
+Each step can also be run individually; see "Using the Scripts
+Individually" below.
+
 ## Using the Scripts Individually
 
 Each step can also be run alone, for example, to debug:
