@@ -32,20 +32,54 @@ import sys
 # ici, donc une extraction "premier ( ... dernier )" suffit.
 ATTACKER_WRAPPER_RE = re.compile(r"^\s*attacker\s*\((.*)\)\s*$", re.IGNORECASE | re.DOTALL)
 
+# Pour les noeuds "unknown" (pas de champ "fact", seulement "raw"), l'appel
+# "attacker(...)" n'enrobe pas toute la chaîne (ex: "hypothesis attacker(nx)",
+# "apply 2-proj-3-tuple attacker(pk(skB[]))"). On le repère par sa position
+# de départ puis on compte les parenthèses pour trouver la fermante exacte
+# (une regex ".*" gourmande casserait sur les termes imbriqués comme
+# "attacker(pk(skB[]))").
+ATTACKER_START_RE = re.compile(r"attacker\s*\(", re.IGNORECASE)
 
-def extract_term(fact):
+
+def unwrap_attacker_anywhere(s):
+    """Déplie 'attacker(X)' en 'X' où qu'il apparaisse dans la chaîne,
+    en conservant le texte autour (utile pour les raw des noeuds
+    'unknown' : 'hypothesis attacker(nx)' -> 'hypothesis nx')."""
+    m = ATTACKER_START_RE.search(s)
+    if not m:
+        return s.strip()
+    depth = 1
+    j = m.end()
+    while j < len(s) and depth > 0:
+        if s[j] == "(":
+            depth += 1
+        elif s[j] == ")":
+            depth -= 1
+        j += 1
+    inner = s[m.end():j - 1]
+    return (s[:m.start()] + inner + s[j:]).strip()
+
+
+def extract_term(fact, raw=None):
     """Retire l'enrobage 'attacker(...)' d'un fait pour ne garder que le terme.
 
-    Si le fait ne correspond pas au motif attendu, on le renvoie tel quel
-    (nettoyé des espaces superflus) plutôt que de perdre de l'information.
+    - Si 'fact' est présent (noeuds step/premise/goal/duplicate), on suppose
+      qu'il est intégralement de la forme 'attacker(TERME)' (cas d'origine).
+    - Si 'fact' est absent mais 'raw' est fourni (noeuds "unknown"), on
+      déplie 'attacker(...)' où qu'il apparaisse dans le texte brut, afin
+      que chaque noeud garde une identité distincte (sinon tous les noeuds
+      "unknown" collapsent sur le même terme None -> collision dans le
+      merge des arbres, voir pv_json_merge_master.py).
     """
-    if fact is None:
-        return None
-    s = str(fact).strip()
-    m = ATTACKER_WRAPPER_RE.match(s)
-    if m:
-        return m.group(1).strip()
-    return s
+    if fact is not None:
+        s = str(fact).strip()
+        m = ATTACKER_WRAPPER_RE.match(s)
+        if m:
+            return m.group(1).strip()
+        return s
+    if raw is not None:
+        return unwrap_attacker_anywhere(str(raw))
+    return None
 
 
 DESC_IO_RE = re.compile(r"at\s+(input|output)\s*\{\s*(-?\d+)\s*\}", re.IGNORECASE)
@@ -58,8 +92,18 @@ def node_io_and_pi_id(node):
     la description : c'est la source la plus fiable, car certains noeuds
     (notamment les feuilles) n'ont pas de champ input_index/output_index
     même quand leur description mentionne un output/input.
-    À défaut, on se rabat sur les champs input_index / output_index, puis,
-    en dernier recours, sur le type du noeud lui-même (ex: "duplicate").
+    À défaut, on se rabat sur les champs input_index / output_index.
+
+    Si aucun des deux ne s'applique et que le noeud est de type "step",
+    ce n'est PAS un vrai input/output du protocole mais un calcul interne
+    de l'attaquant (ex: "The attacker applies function encrypt.", clause
+    sans référence à un canal) : on l'étiquette "attacker_step" plutôt que
+    "step" tout court, pour rester cohérent avec le classement fait côté
+    rendu PDF (pv_json_to_pdf.py::effective_type) et ne pas laisser croire
+    qu'il s'agit d'un vrai échange réseau.
+
+    En tout dernier recours, on se rabat sur le type du noeud lui-même
+    (ex: "unknown", "duplicate").
     """
     description = node.get("description")
     if description:
@@ -71,7 +115,20 @@ def node_io_and_pi_id(node):
         return "input", node["input_index"]
     if "output_index" in node and node["output_index"] is not None:
         return "output", node["output_index"]
-    return node.get("type", "unknown"), None
+
+    if node.get("type") == "step":
+        return "attacker_step", None
+
+    node_type = node.get("type")
+    if node_type == "unknown":
+        # Raisonnement interne de l'attaquant sans clause dédiée
+        # (hypothesis / any / initial knowledge / apply ...). On évite le
+        # mot "unknown" dans l'io : il ne veut pas dire "non pris en
+        # compte" mais fuiterait tel quel dans le label du noeud lors du
+        # rendu du master tree.
+        return "attacker_reasoning", None
+
+    return node_type or "attacker_reasoning", None
 
 
 def simplify_node(node, is_root=False):
@@ -89,7 +146,7 @@ def simplify_node(node, is_root=False):
         return simplified
 
     io, pi_id = node_io_and_pi_id(node)
-    term = extract_term(node.get("fact"))
+    term = extract_term(node.get("fact"), node.get("raw"))
 
     return {
         "pi_id": pi_id,

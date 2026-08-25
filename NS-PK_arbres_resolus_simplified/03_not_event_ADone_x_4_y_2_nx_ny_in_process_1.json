@@ -1,0 +1,84 @@
+{
+  "index": 3,
+  "query": "not event(ADone(x_4,y_2,nx,ny)) in process 1.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "event(ADone(A[],I[],Na_4,ny))",
+    "children": [
+      {
+        "pi_id": 34,
+        "io": "input",
+        "term": "event(ADone(A[],I[],Na_4,ny))",
+        "children": [
+          {
+            "pi_id": null,
+            "io": "attacker_step",
+            "term": "encrypt(msg2(Na_4,ny),pk(skA[]))",
+            "children": [
+              {
+                "pi_id": null,
+                "io": "attacker_reasoning",
+                "term": "apply msg2 msg2(Na_4,ny)",
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "apply 2-proj-msg1 Na_4",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "attacker_step",
+                        "term": "msg1(A[],Na_4)",
+                        "children": [
+                          {
+                            "pi_id": 33,
+                            "io": "output",
+                            "term": "encrypt(msg1(A[],Na_4),pk(skI[]))",
+                            "children": []
+                          },
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply 3-proj-3-tuple skI[]",
+                            "children": [
+                              {
+                                "pi_id": 4,
+                                "io": "output",
+                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "hypothesis ny",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "pi_id": null,
+                "io": "attacker_reasoning",
+                "term": "apply 1-proj-3-tuple pk(skA[])",
+                "children": [
+                  {
+                    "pi_id": 4,
+                    "io": "output",
+                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

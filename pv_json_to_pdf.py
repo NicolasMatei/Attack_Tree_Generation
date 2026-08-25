@@ -56,13 +56,41 @@ def is_hidden_fact(fact):
 
 
 # Mots à retirer entièrement de tout texte affiché dans les labels
-FORBIDDEN_WORDS_RE = re.compile(r"\b(attacker|input|premise)\b", re.IGNORECASE)
+FORBIDDEN_WORDS_RE = re.compile(r"\b(input|premise)\b", re.IGNORECASE)
+
+
+def unwrap_calls(s, keyword):
+    """Remplace 'keyword(...)' par son seul contenu interne '...', en
+    gérant correctement les parenthèses imbriquées (ex: 'attacker(hash(a,b))'
+    -> 'hash(a,b)'). Contrairement à remove_calls, le contenu interne est
+    conservé (seule l'enveloppe 'keyword(' ... ')' est retirée)."""
+    pattern = re.compile(r"\b" + keyword + r"\s*\(", re.IGNORECASE)
+    out = []
+    i = 0
+    while True:
+        m = pattern.search(s, i)
+        if not m:
+            out.append(s[i:])
+            break
+        out.append(s[i:m.start()])
+        depth = 1
+        j = m.end()
+        start_inner = j
+        while j < len(s) and depth > 0:
+            if s[j] == "(":
+                depth += 1
+            elif s[j] == ")":
+                depth -= 1
+            j += 1
+        out.append(s[start_inner:j - 1])
+        i = j
+    return "".join(out)
 
 
 def remove_calls(s, keyword):
-    """Retire toutes les occurrences de 'keyword(...)' d'une chaîne, en
-    gérant correctement les parenthèses imbriquées (ex: 'attacker(hash(a,b))').
-    """
+    """Retire toutes les occurrences de 'keyword(...)' d'une chaîne, y
+    compris son contenu interne (utilisé pour 'premise', qui est déjà
+    représenté par un noeud dédié)."""
     pattern = re.compile(r"\b" + keyword + r"\s*\(", re.IGNORECASE)
     out = []
     i = 0
@@ -88,6 +116,34 @@ def remove_calls(s, keyword):
 # (ex: "[clause 3]", "[Clause #12]")
 CLAUSE_TAG_RE = re.compile(r"\[\s*clause[^\]]*\]", re.IGNORECASE)
 
+# Un vrai step protocolaire (envoi/réception réel sur le réseau) mentionne
+# toujours "at input {N}" ou "at output {N}" dans sa description. Un clause
+# comme "The attacker applies function encrypt." (règle interne de
+# Dolev-Yao : l'attaquant construit un terme, sans échange sur le réseau)
+# n'a pas ce motif : ce n'est PAS un vrai output, même s'il est marqué
+# "type": "step" dans le JSON.
+IO_DESC_RE = re.compile(r"at\s+(input|output)\s*\{\s*-?\d+\s*\}", re.IGNORECASE)
+
+
+def is_real_io_step(node):
+    """True si ce noeud 'step' correspond à un véritable input/output du
+    protocole (et non à un calcul interne de l'attaquant)."""
+    if "input_index" in node or "output_index" in node:
+        return True
+    desc = node.get("description")
+    return bool(desc and IO_DESC_RE.search(str(desc)))
+
+
+def effective_type(node):
+    """Type utilisé pour le STYLE visuel : reclasse les noeuds 'step' qui
+    ne sont pas de vraies actions input/output du protocole (ex: 'The
+    attacker applies function encrypt.') en 'attacker_step', pour ne pas
+    les colorer comme un vrai échange réseau."""
+    t = node.get("type")
+    if t == "step" and not is_real_io_step(node):
+        return "attacker_step"
+    return t
+
 
 def clean_text(s):
     """Retire les mots interdits ('attacker', 'input', 'premise') et le
@@ -112,9 +168,10 @@ def clean_text(s):
     # --- Retrait des annotations "[clause ...]" ---
     s = CLAUSE_TAG_RE.sub("", s)
 
-    # --- Retrait des prédicats complets "attacker(...)" et "premise(...)" ---
+    # --- "attacker(...)" -> on garde le contenu interne (unwrap) ---
     # (gère aussi les cas imbriqués comme "attacker(hash(...))")
-    s = remove_calls(s, "attacker")
+    s = unwrap_calls(s, "attacker")
+    # --- "premise(...)" -> ici on retire tout, contenu inclus ---
     s = remove_calls(s, "premise")
 
     # --- Retrait générique des mots interdits restants ---
@@ -148,6 +205,13 @@ STYLE = {
         "fontname": "Helvetica",
         "fontsize": "10",
     },
+    "attacker_step": {
+        "shape": "box",
+        "style": "filled,rounded",
+        "fillcolor": "#ccff90",
+        "fontname": "Helvetica-Oblique",
+        "fontsize": "10",
+    },
     "premise": {
         "shape": "box",
         "style": "filled,rounded,dashed",
@@ -166,7 +230,7 @@ STYLE = {
     "unknown": {
         "shape": "box",
         "style": "filled",
-        "fillcolor": "white",
+        "fillcolor": "#ccff90",
         "fontname": "Helvetica",
         "fontsize": "9",
     },
@@ -216,12 +280,12 @@ def node_label(node):
 
     # type inconnu / fallback
     raw = node.get("raw") or json.dumps(node, ensure_ascii=False)
-    return wrap(raw)
+    return wrap(clean_text(raw))
 
 
 def add_node_recursive(dot, node, counter, parent_id=None):
     node_id = f"n{next(counter)}"
-    node_type = node.get("type", "unknown")
+    node_type = effective_type(node)
     style = STYLE.get(node_type, STYLE["unknown"])
 
     dot.node(node_id, label=node_label(node), **style)

@@ -68,9 +68,17 @@
                                         ]
                                       },
                                       {
-                                        "type": "duplicate",
-                                        "fact": "attacker(pk(skB[]))",
-                                        "children": []
+                                        "type": "unknown",
+                                        "raw": "apply 2-proj-3-tuple attacker(pk(skB[]))",
+                                        "children": [
+                                          {
+                                            "type": "step",
+                                            "description": "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.",
+                                            "clause": 33,
+                                            "fact": "attacker((pk(skA[]),pk(skB[]),skI[]))",
+                                            "children": []
+                                          }
+                                        ]
                                       }
                                     ]
                                   }
@@ -99,9 +107,17 @@
                 ]
               },
               {
-                "type": "duplicate",
-                "fact": "attacker(pk(skB[]))",
-                "children": []
+                "type": "unknown",
+                "raw": "apply 2-proj-3-tuple attacker(pk(skB[]))",
+                "children": [
+                  {
+                    "type": "step",
+                    "description": "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.",
+                    "clause": 33,
+                    "fact": "attacker((pk(skA[]),pk(skB[]),skI[]))",
+                    "children": []
+                  }
+                ]
               }
             ]
           },

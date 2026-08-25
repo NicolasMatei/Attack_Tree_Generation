@@ -128,8 +128,8 @@ goal reachable: attacker(success[])
 
 Derivation:
 goal  attacker(success[])
-    "If the message hash(nonce[],seed[]) is received from the attacker at input {1}, then the message success[] may be sent to the attacker at output {3}." [clause 19] attacker(success[])
-        "If the message x_4 is received from the attacker at input {13}, the message secretcondition[] is received from the attacker at input {14}, then the message hash(x_4,seed[]) may be sent to the attacker at output {16}." [clause 23] attacker(hash(nonce[],seed[]))
+    "If the message enc(nonce[],sk[]) is received from the attacker at input {1}, then the message success[] may be sent to the attacker at output {3}." [clause 18] attacker(success[])
+        "If the message x_4 is received from the attacker at input {9}, the message secretcondition[] is received from the attacker at input {10}, then the message enc(x_4,sk[]) may be sent to the attacker at output {12}." [clause 22] attacker(enc(nonce[],sk[]))
             "The message secretcondition[] may be sent to the attacker at output {8}." [clause 21] attacker(secretcondition[])
             "The message nonce[] may be sent to the attacker at output {17}." [clause 24] attacker(nonce[])
 
@@ -144,13 +144,13 @@ out(c, ~M_2) with ~M_2 = nonce at {17}
 
 out(c, ~M_3) with ~M_3 = secretcondition at {8}
 
-in(c, ~M_2) with ~M_2 = nonce at {13}
+in(c, ~M_2) with ~M_2 = nonce at {9}
 
-in(c, ~M_3) with ~M_3 = secretcondition at {14}
+in(c, ~M_3) with ~M_3 = secretcondition at {10}
 
-out(c, ~M_4) with ~M_4 = hash(nonce,seed) at {16}
+out(c, ~M_4) with ~M_4 = enc(nonce,sk) at {12}
 
-in(c, ~M_4) with ~M_4 = hash(nonce,seed) at {1}
+in(c, ~M_4) with ~M_4 = enc(nonce,sk) at {1}
 
 out(c, ~M_5) with ~M_5 = success at {3}
 

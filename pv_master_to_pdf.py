@@ -82,7 +82,21 @@ STYLE = {
     "unknown": {
         "shape": "box",
         "style": "filled",
-        "fillcolor": "white",
+        "fillcolor": "#f1f3f4",
+        "fontname": "Helvetica",
+        "fontsize": "9",
+    },
+    "attacker_step": {
+        "shape": "box",
+        "style": "filled",
+        "fillcolor": "#ccff90",
+        "fontname": "Helvetica-Oblique",
+        "fontsize": "10",
+    },
+    "attacker_reasoning": {
+        "shape": "box",
+        "style": "filled",
+        "fillcolor": "#ccff90",
         "fontname": "Helvetica",
         "fontsize": "9",
     },
@@ -138,10 +152,18 @@ def leaf_label(node):
         header = f"Output {{{pi_id}}}" if pi_id is not None else "Output"
     elif io == "input":
         header = f"Input {{{pi_id}}}" if pi_id is not None else "Input"
+    elif io in ("attacker_step", "attacker_reasoning"):
+        # Raisonnement interne de l'attaquant (pas d'action réseau, pas de
+        # pi-id) : le terme est déjà explicite, pas besoin de préfixer par
+        # le nom brut de la catégorie ("attacker_step"/"attacker_reasoning"),
+        # qui n'apporterait qu'un mot technique confus dans la figure.
+        header = None
     else:
         header = str(io or "?")
 
     body = wrap(term) if term else ""
+    if header is None:
+        return body or "?"
     return f"{header}{NL}{body}" if body else header
 
 

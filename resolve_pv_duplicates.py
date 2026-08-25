@@ -28,20 +28,66 @@ import argparse
 import copy
 import json
 import os
+import re
 import sys
+
+# Motif d'un appel "attacker(" pour le repérer où qu'il apparaisse dans un
+# texte brut (noeuds "unknown" : "initial knowledge  attacker(I[])",
+# "apply 2-proj-3-tuple attacker(pk(skB[]))", ...).
+ATTACKER_CALL_RE = re.compile(r"attacker\s*\(", re.IGNORECASE)
+
+
+def find_fact_string(node):
+    """Retourne le fait canonique 'attacker(X)' prouvé par ce noeud.
+
+    - Pour un noeud 'step' (ou tout noeud portant un champ 'fact'), on
+      renvoie directement ce champ (comportement d'origine).
+    - Pour un noeud 'unknown' (pas de champ 'fact', seulement 'raw'), on
+      extrait le premier 'attacker(...)' rencontré dans le texte brut, en
+      comptant les parenthèses pour trouver la fermante exacte (les
+      termes peuvent être imbriqués, ex: 'attacker(pk(skB[]))').
+
+    Sans cette extraction depuis 'raw', les faits prouvés uniquement par
+    un raisonnement interne de l'attaquant (connaissance initiale,
+    hypothèse, application/projection de constructeur) ne sont jamais
+    indexés, et les 'duplicate' qui les référencent restent non résolus.
+    """
+    fact = node.get("fact")
+    if fact is not None:
+        return fact
+
+    raw = node.get("raw")
+    if raw:
+        m = ATTACKER_CALL_RE.search(raw)
+        if m:
+            depth = 1
+            j = m.end()
+            while j < len(raw) and depth > 0:
+                if raw[j] == "(":
+                    depth += 1
+                elif raw[j] == ")":
+                    depth -= 1
+                j += 1
+            return raw[m.start():j]
+
+    return None
 
 
 def collect_fact_index(node, index):
     """
-    Parcourt l'arbre et indexe, pour chaque fait, le premier noeud "step"
-    (une vraie dérivation, pas un duplicate) qui le prouve.
+    Parcourt l'arbre et indexe, pour chaque fait, le premier noeud
+    ("step" ou "unknown") qui le prouve. Les noeuds "unknown" (raisonnement
+    interne de l'attaquant : connaissance initiale, hypothèse, application
+    de constructeur ou de projection) sont inclus car ce sont souvent eux
+    qui prouvent les faits référencés par les "duplicate" — pas seulement
+    les "step".
     """
     if not isinstance(node, dict):
         return
 
-    if node.get("type") == "step" and node.get("fact") is not None:
-        fact = node["fact"]
-        if fact not in index:
+    if node.get("type") in ("step", "unknown"):
+        fact = find_fact_string(node)
+        if fact is not None and fact not in index:
             index[fact] = node
 
     for child in node.get("children", []) or []:

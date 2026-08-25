@@ -14,15 +14,15 @@
           {
             "pi_id": 1,
             "io": "input",
-            "term": "hash(nonce[],seed[])",
+            "term": "enc(nonce[],sk[])",
             "children": [
               {
-                "pi_id": 16,
+                "pi_id": 12,
                 "io": "output",
-                "term": "hash(nonce[],seed[])",
+                "term": "enc(nonce[],sk[])",
                 "children": [
                   {
-                    "pi_id": 14,
+                    "pi_id": 10,
                     "io": "input",
                     "term": "secretcondition[]",
                     "children": [
@@ -35,7 +35,7 @@
                     ]
                   },
                   {
-                    "pi_id": 13,
+                    "pi_id": 9,
                     "io": "input",
                     "term": "nonce[]",
                     "children": [
