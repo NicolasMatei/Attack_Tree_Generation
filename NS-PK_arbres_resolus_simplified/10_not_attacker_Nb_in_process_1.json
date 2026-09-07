@@ -1,5 +1,5 @@
 {
-  "index": 4,
+  "index": 10,
   "query": "not attacker(Nb[]) in process 1.",
   "has_derivation": true,
   "derivation": {
@@ -17,12 +17,12 @@
             "term": "msg2(Na_12,Nb[])",
             "children": [
               {
-                "pi_id": 101,
+                "pi_id": 111,
                 "io": "output",
                 "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
                 "children": [
                   {
-                    "pi_id": 99,
+                    "pi_id": 109,
                     "io": "input",
                     "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
                     "children": [

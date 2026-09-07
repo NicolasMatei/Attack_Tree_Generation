@@ -1,0 +1,10 @@
+{
+  "index": 12,
+  "query": "not event(BDone(x_12,y_6,nx,ny)) in process 1.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "unknown",
+    "raw": "This clause still contradicts the query.",
+    "children": []
+  }
+}

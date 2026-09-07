@@ -1,5 +1,5 @@
 {
-  "index": 4,
+  "index": 10,
   "query": "not attacker(Nb[]) in process 1.",
   "has_derivation": true,
   "derivation": {
@@ -18,16 +18,16 @@
             "children": [
               {
                 "type": "step",
-                "description": "then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {101}",
-                "clause": 49,
+                "description": "then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {111}",
+                "clause": 50,
                 "fact": "attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))",
                 "children": [
                   {
                     "type": "premise",
-                    "description": "the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99}",
-                    "input_index": 99,
+                    "description": "the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109}",
+                    "input_index": 109,
                     "fact": "attacker(encrypt(msg1(I[],Na_12),pk(skB[])))",
-                    "clause": 49,
+                    "clause": 50,
                     "children": [
                       {
                         "type": "step",
@@ -69,7 +69,7 @@
                     ]
                   }
                 ],
-                "output_index": 101
+                "output_index": 111
               },
               {
                 "type": "unknown",

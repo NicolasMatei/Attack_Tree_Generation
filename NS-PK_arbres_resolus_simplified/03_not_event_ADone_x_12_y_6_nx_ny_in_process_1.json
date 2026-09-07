@@ -1,59 +1,46 @@
 {
-  "index": 4,
-  "query": "not attacker(Nb[]) in process 1.",
+  "index": 3,
+  "query": "not event(ADone(x_12,y_6,nx,ny)) in process 1.",
   "has_derivation": true,
   "derivation": {
     "type": "goal",
-    "fact": "attacker(Nb[])",
+    "fact": "event(ADone(A[],I[],Na_8[],ny))",
     "children": [
       {
-        "pi_id": null,
-        "io": "attacker_reasoning",
-        "term": "apply 2-proj-msg2 Nb[]",
+        "pi_id": 91,
+        "io": "input",
+        "term": "event(ADone(A[],I[],Na_8[],ny))",
         "children": [
           {
             "pi_id": null,
             "io": "attacker_step",
-            "term": "msg2(Na_12,Nb[])",
+            "term": "encrypt(msg2(Na_8[],ny),pk(skA[]))",
             "children": [
               {
-                "pi_id": 101,
-                "io": "output",
-                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                "pi_id": null,
+                "io": "attacker_reasoning",
+                "term": "apply msg2 msg2(Na_8[],ny)",
                 "children": [
                   {
-                    "pi_id": 99,
-                    "io": "input",
-                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "apply 2-proj-msg1 Na_8[]",
                     "children": [
                       {
                         "pi_id": null,
                         "io": "attacker_step",
-                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                        "term": "msg1(A[],Na_8[])",
                         "children": [
                           {
-                            "pi_id": null,
-                            "io": "attacker_reasoning",
-                            "term": "apply msg1 msg1(I[],Na_12)",
-                            "children": [
-                              {
-                                "pi_id": null,
-                                "io": "attacker_reasoning",
-                                "term": "initial knowledge  I[]",
-                                "children": []
-                              },
-                              {
-                                "pi_id": null,
-                                "io": "attacker_reasoning",
-                                "term": "any Na_12",
-                                "children": []
-                              }
-                            ]
+                            "pi_id": 90,
+                            "io": "output",
+                            "term": "encrypt(msg1(A[],Na_8[]),pk(skI[]))",
+                            "children": []
                           },
                           {
                             "pi_id": null,
                             "io": "attacker_reasoning",
-                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                            "term": "apply 3-proj-3-tuple skI[]",
                             "children": [
                               {
                                 "pi_id": 4,
@@ -66,13 +53,19 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "hypothesis ny",
+                    "children": []
                   }
                 ]
               },
               {
                 "pi_id": null,
                 "io": "attacker_reasoning",
-                "term": "apply 3-proj-3-tuple skI[]",
+                "term": "apply 1-proj-3-tuple pk(skA[])",
                 "children": [
                   {
                     "pi_id": 4,

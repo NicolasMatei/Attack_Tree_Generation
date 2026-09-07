@@ -1,65 +1,1186 @@
 {
   "goals": [
     {
-      "fact": "attacker(success[])",
-      "query": "not attacker(success[]) in process 0.",
+      "fact": "event(BDone(A[],B[],nx,Nb[]))",
+      "query": "event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) in process 1.",
       "source_indices": [
         1,
-        3
+        5,
+        8,
+        11,
+        13,
+        16,
+        18,
+        20,
+        23
       ],
       "source_files": [
-        "01_not_attacker_success_in_process_0.json",
-        "03_not_attacker_success_in_process_0.json"
+        "01_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json",
+        "05_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json",
+        "08_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json",
+        "11_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json",
+        "13_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json",
+        "16_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json",
+        "18_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json",
+        "20_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json",
+        "23_event_BDone_A_B_nx_ny_event_ADone_A_B_nx_ny_in_process_1.json"
       ],
       "derivation": {
         "type": "goal",
-        "fact": "attacker(success[])",
+        "fact": "event(BDone(A[],B[],nx,Nb[]))",
         "children": [
           {
-            "io": "output",
-            "pi_id": 3,
-            "term": "success[]",
-            "relation": "or",
+            "io": "input",
+            "pi_id": 49,
+            "term": "event(BDone(A[],B[],nx,Nb[]))",
+            "relation": "and",
             "children": [
               {
-                "io": "input",
-                "pi_id": 1,
-                "term": "hash(nonce[],seed[])",
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
                 "relation": "and",
                 "children": [
                   {
-                    "io": "output",
-                    "pi_id": 16,
-                    "term": "hash(nonce[],seed[])",
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg3 msg3(Nb[])",
                     "relation": "and",
                     "children": [
                       {
-                        "io": "input",
-                        "pi_id": 14,
-                        "term": "secretcondition[]",
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "apply 2-proj-msg2 Nb[]",
                         "relation": "and",
                         "children": [
                           {
-                            "io": "output",
-                            "pi_id": 8,
-                            "term": "secretcondition[]",
-                            "relation": "and",
-                            "children": []
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "msg2(Na_12,Nb[])",
+                            "relation": "or",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 121,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 119,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 3-proj-3-tuple skI[]",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "output",
+                                "pi_id": 111,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 109,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "output",
+                                "pi_id": 101,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 99,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
                           }
                         ]
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg1(A[],nx),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg1 msg1(A[],nx)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "initial knowledge  A[]",
+                        "relation": "and",
+                        "children": []
                       },
                       {
-                        "io": "input",
-                        "pi_id": 13,
-                        "term": "nonce[]",
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis nx",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "io": "input",
+            "pi_id": 39,
+            "term": "event(BDone(A[],B[],nx,Nb[]))",
+            "relation": "and",
+            "children": [
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg3 msg3(Nb[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "apply 2-proj-msg2 Nb[]",
                         "relation": "and",
                         "children": [
                           {
-                            "io": "output",
-                            "pi_id": 17,
-                            "term": "nonce[]",
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "msg2(Na_12,Nb[])",
+                            "relation": "or",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 121,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 119,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 3-proj-3-tuple skI[]",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "output",
+                                "pi_id": 111,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 109,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "output",
+                                "pi_id": 101,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 99,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg1(A[],nx),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg1 msg1(A[],nx)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "initial knowledge  A[]",
+                        "relation": "and",
+                        "children": []
+                      },
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis nx",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "io": "input",
+            "pi_id": 59,
+            "term": "event(BDone(A[],B[],nx,Nb[]))",
+            "relation": "and",
+            "children": [
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg3 msg3(Nb[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "apply 2-proj-msg2 Nb[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "msg2(Na_12,Nb[])",
+                            "relation": "or",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 101,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 99,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 3-proj-3-tuple skI[]",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "output",
+                                "pi_id": 111,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 109,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "output",
+                                "pi_id": 121,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 119,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg1(A[],nx),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg1 msg1(A[],nx)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "initial knowledge  A[]",
+                        "relation": "and",
+                        "children": []
+                      },
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis nx",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fact": "event(BDone(I[],B[],nx,Nb[]))",
+      "query": "not event(BDone(x_12,y_6,nx,ny)) in process 1.",
+      "source_indices": [
+        2,
+        2,
+        5,
+        6,
+        9,
+        14,
+        15,
+        17,
+        19,
+        21,
+        22,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "source_files": [
+        "02_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "02_not_event_BDone_x_4_y_2_nx_ny_in_process_1.json",
+        "05_not_event_BDone_x_4_y_2_nx_ny_in_process_1.json",
+        "06_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "09_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "14_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "15_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "17_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "19_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "21_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "22_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "24_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "25_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "26_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "27_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "28_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "29_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "30_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json",
+        "31_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json"
+      ],
+      "derivation": {
+        "type": "goal",
+        "fact": "event(BDone(I[],B[],nx,Nb[]))",
+        "children": [
+          {
+            "io": "input",
+            "pi_id": 99,
+            "term": "event(BDone(I[],B[],nx,Nb[]))",
+            "relation": "or",
+            "children": [
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg3 msg3(Nb[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "apply 2-proj-msg2 Nb[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "msg2(Na_12,Nb[])",
                             "relation": "and",
-                            "children": []
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 121,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 119,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 3-proj-3-tuple skI[]",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg1(I[],nx),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg1 msg1(I[],nx)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "initial knowledge  I[]",
+                        "relation": "and",
+                        "children": []
+                      },
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis nx",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "output",
+                "pi_id": 34,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "input",
+                    "pi_id": 31,
+                    "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 41,
+                        "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 39,
+                            "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 30,
+                                "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
                           }
                         ]
                       }
@@ -68,44 +1189,1348 @@
                 ]
               },
               {
-                "io": "input",
-                "pi_id": 1,
-                "term": "enc(nonce[],sk[])",
+                "io": "output",
+                "pi_id": 14,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
                 "relation": "and",
                 "children": [
                   {
-                    "io": "output",
-                    "pi_id": 12,
-                    "term": "enc(nonce[],sk[])",
+                    "io": "input",
+                    "pi_id": 11,
+                    "term": "encrypt(msg2(Na[],Nb[]),pk(skA[]))",
                     "relation": "and",
                     "children": [
                       {
-                        "io": "input",
-                        "pi_id": 10,
-                        "term": "secretcondition[]",
+                        "io": "output",
+                        "pi_id": 51,
+                        "term": "encrypt(msg2(Na[],Nb[]),pk(skA[]))",
                         "relation": "and",
                         "children": [
                           {
-                            "io": "output",
-                            "pi_id": 8,
-                            "term": "secretcondition[]",
+                            "io": "input",
+                            "pi_id": 49,
+                            "term": "encrypt(msg1(A[],Na[]),pk(skB[]))",
                             "relation": "and",
-                            "children": []
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 10,
+                                "term": "encrypt(msg1(A[],Na[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "output",
+                "pi_id": 24,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "input",
+                    "pi_id": 21,
+                    "term": "encrypt(msg2(Na_1[],Nb[]),pk(skA[]))",
+                    "relation": "or",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 51,
+                        "term": "encrypt(msg2(Na_1[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 49,
+                            "term": "encrypt(msg1(A[],Na_1[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 20,
+                                "term": "encrypt(msg1(A[],Na_1[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
                           }
                         ]
                       },
                       {
-                        "io": "input",
-                        "pi_id": 9,
-                        "term": "nonce[]",
+                        "io": "output",
+                        "pi_id": 61,
+                        "term": "encrypt(msg2(Na_1[],Nb[]),pk(skA[]))",
                         "relation": "and",
                         "children": [
                           {
-                            "io": "output",
-                            "pi_id": 17,
-                            "term": "nonce[]",
+                            "io": "input",
+                            "pi_id": 59,
+                            "term": "encrypt(msg1(A[],Na_1[]),pk(skB[]))",
                             "relation": "and",
-                            "children": []
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 20,
+                                "term": "encrypt(msg1(A[],Na_1[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "io": "input",
+            "pi_id": 43,
+            "term": "event(BDone(I[],B[],nx,Nb[]))",
+            "relation": "or",
+            "children": [
+              {
+                "io": "output",
+                "pi_id": 15,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "input",
+                    "pi_id": 12,
+                    "term": "encrypt(msg2(Na_4,Nb[]),pk(skA[]))",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 23,
+                        "term": "encrypt(msg2(Na_4,Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 21,
+                            "term": "encrypt(msg1(A[],Na_4),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 11,
+                                "term": "encrypt(msg1(A[],Na_4),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg1(I[],nx),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg1 msg1(I[],nx)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "initial knowledge  I[]",
+                        "relation": "and",
+                        "children": []
+                      },
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis nx",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg3 msg3(Nb[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "apply 2-proj-msg2 Nb[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "msg2(Na_4,Nb[])",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 45,
+                                "term": "encrypt(msg2(Na_4,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 43,
+                                    "term": "encrypt(msg1(I[],Na_4),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_4),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_4)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_4",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 3-proj-3-tuple skI[]",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "io": "input",
+            "pi_id": 119,
+            "term": "event(BDone(I[],B[],nx,Nb[]))",
+            "relation": "or",
+            "children": [
+              {
+                "io": "output",
+                "pi_id": 24,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "input",
+                    "pi_id": 21,
+                    "term": "encrypt(msg2(Na_1[],Nb[]),pk(skA[]))",
+                    "relation": "or",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 41,
+                        "term": "encrypt(msg2(Na_1[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 39,
+                            "term": "encrypt(msg1(A[],Na_1[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 20,
+                                "term": "encrypt(msg1(A[],Na_1[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "io": "output",
+                        "pi_id": 61,
+                        "term": "encrypt(msg2(Na_1[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 59,
+                            "term": "encrypt(msg1(A[],Na_1[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 20,
+                                "term": "encrypt(msg1(A[],Na_1[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg1(I[],nx),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg1 msg1(I[],nx)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "initial knowledge  I[]",
+                        "relation": "and",
+                        "children": []
+                      },
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis nx",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "output",
+                "pi_id": 34,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "input",
+                    "pi_id": 31,
+                    "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                    "relation": "or",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 41,
+                        "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 39,
+                            "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 30,
+                                "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "io": "output",
+                        "pi_id": 61,
+                        "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 59,
+                            "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 30,
+                                "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "output",
+                "pi_id": 14,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "input",
+                    "pi_id": 11,
+                    "term": "encrypt(msg2(Na[],Nb[]),pk(skA[]))",
+                    "relation": "or",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 61,
+                        "term": "encrypt(msg2(Na[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 59,
+                            "term": "encrypt(msg1(A[],Na[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 10,
+                                "term": "encrypt(msg1(A[],Na[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "io": "output",
+                        "pi_id": 51,
+                        "term": "encrypt(msg2(Na[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 49,
+                            "term": "encrypt(msg1(A[],Na[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 10,
+                                "term": "encrypt(msg1(A[],Na[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "io": "input",
+            "pi_id": 109,
+            "term": "event(BDone(I[],B[],nx,Nb[]))",
+            "relation": "or",
+            "children": [
+              {
+                "io": "output",
+                "pi_id": 34,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "input",
+                    "pi_id": 31,
+                    "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                    "relation": "or",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 61,
+                        "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 59,
+                            "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 30,
+                                "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "io": "output",
+                        "pi_id": 51,
+                        "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 49,
+                            "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 30,
+                                "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "io": "output",
+                        "pi_id": 41,
+                        "term": "encrypt(msg2(Na_2[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 39,
+                            "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 30,
+                                "term": "encrypt(msg1(A[],Na_2[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg1(I[],nx),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg1 msg1(I[],nx)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "initial knowledge  I[]",
+                        "relation": "and",
+                        "children": []
+                      },
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis nx",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "output",
+                "pi_id": 14,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "input",
+                    "pi_id": 11,
+                    "term": "encrypt(msg2(Na[],Nb[]),pk(skA[]))",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 61,
+                        "term": "encrypt(msg2(Na[],Nb[]),pk(skA[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "input",
+                            "pi_id": 59,
+                            "term": "encrypt(msg1(A[],Na[]),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 10,
+                                "term": "encrypt(msg1(A[],Na[]),pk(skB[]))",
+                                "relation": "and",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg3(Nb[]),pk(skB[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg3 msg3(Nb[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "apply 2-proj-msg2 Nb[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "msg2(Na_12,Nb[])",
+                            "relation": "or",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 121,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 119,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 3-proj-3-tuple skI[]",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "output",
+                                "pi_id": 101,
+                                "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "input",
+                                    "pi_id": 99,
+                                    "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                    "relation": "and",
+                                    "children": [
+                                      {
+                                        "io": "attacker_step",
+                                        "pi_id": null,
+                                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                                        "relation": "and",
+                                        "children": [
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply msg1 msg1(I[],Na_12)",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "initial knowledge  I[]",
+                                                "relation": "and",
+                                                "children": []
+                                              },
+                                              {
+                                                "io": "attacker_reasoning",
+                                                "pi_id": null,
+                                                "term": "any Na_12",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "io": "attacker_reasoning",
+                                            "pi_id": null,
+                                            "term": "apply 2-proj-3-tuple pk(skB[])",
+                                            "relation": "and",
+                                            "children": [
+                                              {
+                                                "io": "output",
+                                                "pi_id": 4,
+                                                "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                                "relation": "and",
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 2-proj-3-tuple pk(skB[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fact": "event(ADone(A[],I[],Na_8[],ny))",
+      "query": "not event(ADone(x_12,y_6,nx,ny)) in process 1.",
+      "source_indices": [
+        3
+      ],
+      "source_files": [
+        "03_not_event_ADone_x_12_y_6_nx_ny_in_process_1.json"
+      ],
+      "derivation": {
+        "type": "goal",
+        "fact": "event(ADone(A[],I[],Na_8[],ny))",
+        "children": [
+          {
+            "io": "input",
+            "pi_id": 91,
+            "term": "event(ADone(A[],I[],Na_8[],ny))",
+            "relation": "and",
+            "children": [
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg2(Na_8[],ny),pk(skA[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg2 msg2(Na_8[],ny)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "apply 2-proj-msg1 Na_8[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "msg1(A[],Na_8[])",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 90,
+                                "term": "encrypt(msg1(A[],Na_8[]),pk(skI[]))",
+                                "relation": "and",
+                                "children": []
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 3-proj-3-tuple skI[]",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis ny",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 1-proj-3-tuple pk(skA[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fact": "event(ADone(A[],I[],Na_4,ny))",
+      "query": "not event(ADone(x_4,y_2,nx,ny)) in process 1.",
+      "source_indices": [
+        3
+      ],
+      "source_files": [
+        "03_not_event_ADone_x_4_y_2_nx_ny_in_process_1.json"
+      ],
+      "derivation": {
+        "type": "goal",
+        "fact": "event(ADone(A[],I[],Na_4,ny))",
+        "children": [
+          {
+            "io": "input",
+            "pi_id": 34,
+            "term": "event(ADone(A[],I[],Na_4,ny))",
+            "relation": "and",
+            "children": [
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "encrypt(msg2(Na_4,ny),pk(skA[]))",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply msg2 msg2(Na_4,ny)",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "apply 2-proj-msg1 Na_4",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "msg1(A[],Na_4)",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "output",
+                                "pi_id": 33,
+                                "term": "encrypt(msg1(A[],Na_4),pk(skI[]))",
+                                "relation": "and",
+                                "children": []
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 3-proj-3-tuple skI[]",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "io": "attacker_reasoning",
+                        "pi_id": null,
+                        "term": "hypothesis ny",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 1-proj-3-tuple pk(skA[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fact": "attacker(Nb[])",
+      "query": "not attacker(Nb[]) in process 1.",
+      "source_indices": [
+        4,
+        7,
+        10
+      ],
+      "source_files": [
+        "04_not_attacker_Nb_in_process_1.json",
+        "07_not_attacker_Nb_in_process_1.json",
+        "10_not_attacker_Nb_in_process_1.json"
+      ],
+      "derivation": {
+        "type": "goal",
+        "fact": "attacker(Nb[])",
+        "children": [
+          {
+            "io": "attacker_reasoning",
+            "pi_id": null,
+            "term": "apply 2-proj-msg2 Nb[]",
+            "relation": "and",
+            "children": [
+              {
+                "io": "attacker_step",
+                "pi_id": null,
+                "term": "msg2(Na_12,Nb[])",
+                "relation": "or",
+                "children": [
+                  {
+                    "io": "output",
+                    "pi_id": 101,
+                    "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "input",
+                        "pi_id": 99,
+                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply msg1 msg1(I[],Na_12)",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "attacker_reasoning",
+                                    "pi_id": null,
+                                    "term": "initial knowledge  I[]",
+                                    "relation": "and",
+                                    "children": []
+                                  },
+                                  {
+                                    "io": "attacker_reasoning",
+                                    "pi_id": null,
+                                    "term": "any Na_12",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 2-proj-3-tuple pk(skB[])",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "io": "attacker_reasoning",
+                    "pi_id": null,
+                    "term": "apply 3-proj-3-tuple skI[]",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "output",
+                        "pi_id": 4,
+                        "term": "(pk(skA[]),pk(skB[]),skI[])",
+                        "relation": "and",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "io": "output",
+                    "pi_id": 121,
+                    "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "input",
+                        "pi_id": 119,
+                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply msg1 msg1(I[],Na_12)",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "attacker_reasoning",
+                                    "pi_id": null,
+                                    "term": "initial knowledge  I[]",
+                                    "relation": "and",
+                                    "children": []
+                                  },
+                                  {
+                                    "io": "attacker_reasoning",
+                                    "pi_id": null,
+                                    "term": "any Na_12",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 2-proj-3-tuple pk(skB[])",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "io": "output",
+                    "pi_id": 111,
+                    "term": "encrypt(msg2(Na_12,Nb[]),pk(skI[]))",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "input",
+                        "pi_id": 109,
+                        "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "attacker_step",
+                            "pi_id": null,
+                            "term": "encrypt(msg1(I[],Na_12),pk(skB[]))",
+                            "relation": "and",
+                            "children": [
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply msg1 msg1(I[],Na_12)",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "attacker_reasoning",
+                                    "pi_id": null,
+                                    "term": "initial knowledge  I[]",
+                                    "relation": "and",
+                                    "children": []
+                                  },
+                                  {
+                                    "io": "attacker_reasoning",
+                                    "pi_id": null,
+                                    "term": "any Na_12",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "io": "attacker_reasoning",
+                                "pi_id": null,
+                                "term": "apply 2-proj-3-tuple pk(skB[])",
+                                "relation": "and",
+                                "children": [
+                                  {
+                                    "io": "output",
+                                    "pi_id": 4,
+                                    "term": "(pk(skA[]),pk(skB[]),skI[])",
+                                    "relation": "and",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
                           }
                         ]
                       }
@@ -119,119 +2544,18 @@
       }
     },
     {
-      "fact": "attacker(success2[])",
-      "query": "not attacker(success2[]) in process 0.",
+      "fact": null,
+      "query": "not event(BDone(x_12,y_6,nx,ny)) in process 1.",
       "source_indices": [
-        2
+        12
       ],
       "source_files": [
-        "02_not_attacker_success2_in_process_0.json"
+        "12_not_event_BDone_x_12_y_6_nx_ny_in_process_1.json"
       ],
       "derivation": {
-        "type": "goal",
-        "fact": "attacker(success2[])",
-        "children": [
-          {
-            "io": "output",
-            "pi_id": 7,
-            "term": "success2[]",
-            "relation": "and",
-            "children": [
-              {
-                "io": "input",
-                "pi_id": 5,
-                "term": "enc(nonce3[],sk[])",
-                "relation": "and",
-                "children": [
-                  {
-                    "io": "output",
-                    "pi_id": 12,
-                    "term": "enc(nonce3[],sk[])",
-                    "relation": "and",
-                    "children": [
-                      {
-                        "io": "input",
-                        "pi_id": 10,
-                        "term": "secretcondition[]",
-                        "relation": "and",
-                        "children": [
-                          {
-                            "io": "output",
-                            "pi_id": 8,
-                            "term": "secretcondition[]",
-                            "relation": "and",
-                            "children": []
-                          }
-                        ]
-                      },
-                      {
-                        "io": "input",
-                        "pi_id": 9,
-                        "term": "nonce3[]",
-                        "relation": "and",
-                        "children": [
-                          {
-                            "io": "output",
-                            "pi_id": 19,
-                            "term": "nonce3[]",
-                            "relation": "and",
-                            "children": []
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "io": "input",
-                "pi_id": 4,
-                "term": "hash(nonce2[],seed[])",
-                "relation": "and",
-                "children": [
-                  {
-                    "io": "output",
-                    "pi_id": 16,
-                    "term": "hash(nonce2[],seed[])",
-                    "relation": "and",
-                    "children": [
-                      {
-                        "io": "input",
-                        "pi_id": 14,
-                        "term": "secretcondition[]",
-                        "relation": "and",
-                        "children": [
-                          {
-                            "io": "output",
-                            "pi_id": 8,
-                            "term": "secretcondition[]",
-                            "relation": "and",
-                            "children": []
-                          }
-                        ]
-                      },
-                      {
-                        "io": "input",
-                        "pi_id": 13,
-                        "term": "nonce2[]",
-                        "relation": "and",
-                        "children": [
-                          {
-                            "io": "output",
-                            "pi_id": 18,
-                            "term": "nonce2[]",
-                            "relation": "and",
-                            "children": []
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+        "type": "unknown",
+        "fact": null,
+        "children": []
       }
     }
   ],

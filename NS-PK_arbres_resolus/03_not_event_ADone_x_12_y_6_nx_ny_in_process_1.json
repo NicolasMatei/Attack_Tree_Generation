@@ -1,42 +1,42 @@
 {
   "index": 3,
-  "query": "not event(ADone(x_4,y_2,nx,ny)) in process 1.",
+  "query": "not event(ADone(x_12,y_6,nx,ny)) in process 1.",
   "has_derivation": true,
   "derivation": {
     "type": "goal",
-    "fact": "event(ADone(A[],I[],Na_4,ny))",
+    "fact": "event(ADone(A[],I[],Na_8[],ny))",
     "children": [
       {
         "type": "step",
-        "description": "If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34}, then event ADone(A[],I[],Na_4,Nb_3) may be executed at {36}.",
-        "clause": 39,
-        "fact": "event(ADone(A[],I[],Na_4,ny))",
+        "description": "If the message encrypt(msg2(Na_8[],Nb_7),pk(skA[])) is received from the attacker at input {91}, then event ADone(A[],I[],Na_8[],Nb_7) may be executed at {93}.",
+        "clause": 53,
+        "fact": "event(ADone(A[],I[],Na_8[],ny))",
         "children": [
           {
             "type": "step",
             "description": "The attacker applies function encrypt.",
             "clause": 12,
-            "fact": "attacker(encrypt(msg2(Na_4,ny),pk(skA[])))",
+            "fact": "attacker(encrypt(msg2(Na_8[],ny),pk(skA[])))",
             "children": [
               {
                 "type": "unknown",
-                "raw": "apply msg2 attacker(msg2(Na_4,ny))",
+                "raw": "apply msg2 attacker(msg2(Na_8[],ny))",
                 "children": [
                   {
                     "type": "unknown",
-                    "raw": "apply 2-proj-msg1 attacker(Na_4)",
+                    "raw": "apply 2-proj-msg1 attacker(Na_8[])",
                     "children": [
                       {
                         "type": "step",
                         "description": "The attacker applies function decrypt.",
                         "clause": 13,
-                        "fact": "attacker(msg1(A[],Na_4))",
+                        "fact": "attacker(msg1(A[],Na_8[]))",
                         "children": [
                           {
                             "type": "step",
-                            "description": "The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.",
-                            "clause": 38,
-                            "fact": "attacker(encrypt(msg1(A[],Na_4),pk(skI[])))",
+                            "description": "The message encrypt(msg1(A[],Na_8[]),pk(skI[])) may be sent to the attacker at output {90}.",
+                            "clause": 52,
+                            "fact": "attacker(encrypt(msg1(A[],Na_8[]),pk(skI[])))",
                             "children": []
                           },
                           {

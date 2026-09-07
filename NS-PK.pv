@@ -81,21 +81,22 @@ free A, B, I: host.
 (* Top-level process *)
  
 process         
-  new skA:skey; 
+  new skA:skey;
   new skB:skey;
-
   new skI:skey;
   out (c,(pk(skA),pk(skB),skI));
-
-  !processA(A,skA,B,pk(skB)) |
-  !processB(B,skB,A,pk(skA)) | 
-  !processA(A,skA,I,pk(skI)) |
-  !processB(B,skB,I,pk(skI))
-
-(*  
-  processA(I,skI,B,pk(skB)) |
-  processB(I,skI,A,pk(skA)) |
-*)  
+  processA(A,skA,B,pk(skB)) |
+  processA(A,skA,B,pk(skB)) |
+  processA(A,skA,B,pk(skB)) |
+  processB(B,skB,A,pk(skA)) |
+  processB(B,skB,A,pk(skA)) |
+  processB(B,skB,A,pk(skA)) |
+  processA(A,skA,I,pk(skI)) |
+  processA(A,skA,I,pk(skI)) |
+  processA(A,skA,I,pk(skI)) |
+  processB(B,skB,I,pk(skI)) |
+  processB(B,skB,I,pk(skI)) |
+  processB(B,skB,I,pk(skI))
 
 
 

@@ -1,16 +1,16 @@
 {
-  "index": 1,
-  "query": "event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) in process 1.",
+  "index": 2,
+  "query": "not event(BDone(x_12,y_6,nx,ny)) in process 1.",
   "has_derivation": true,
   "derivation": {
     "type": "goal",
-    "fact": "event(BDone(A[],B[],nx,Nb[]))",
+    "fact": "event(BDone(I[],B[],nx,Nb[]))",
     "children": [
       {
         "type": "step",
-        "description": "If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {49}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {52}, then event BDone(A[],B[],Na_12,Nb[]) may be executed at {54}.",
-        "clause": 43,
-        "fact": "event(BDone(A[],B[],nx,Nb[]))",
+        "description": "If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {102}, then event BDone(I[],B[],Na_12,Nb[]) may be executed at {104}.",
+        "clause": 53,
+        "fact": "event(BDone(I[],B[],nx,Nb[]))",
         "children": [
           {
             "type": "step",
@@ -125,15 +125,15 @@
             "type": "step",
             "description": "The attacker applies function encrypt.",
             "clause": 12,
-            "fact": "attacker(encrypt(msg1(A[],nx),pk(skB[])))",
+            "fact": "attacker(encrypt(msg1(I[],nx),pk(skB[])))",
             "children": [
               {
                 "type": "unknown",
-                "raw": "apply msg1 attacker(msg1(A[],nx))",
+                "raw": "apply msg1 attacker(msg1(I[],nx))",
                 "children": [
                   {
                     "type": "unknown",
-                    "raw": "initial knowledge  attacker(A[])",
+                    "raw": "initial knowledge  attacker(I[])",
                     "children": []
                   },
                   {

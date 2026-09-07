@@ -1,0 +1,99 @@
+{
+  "index": 9,
+  "query": "not event(BDone(x_12,y_6,nx,ny)) in process 1.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "event(BDone(I[],B[],nx,Nb[]))",
+    "children": [
+      {
+        "type": "step",
+        "description": "If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {112}, then event BDone(I[],B[],Na_12,Nb[]) may be executed at {114}.",
+        "clause": 55,
+        "fact": "event(BDone(I[],B[],nx,Nb[]))",
+        "children": [
+          {
+            "type": "step",
+            "description": "then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {34}",
+            "clause": 39,
+            "fact": "attacker(encrypt(msg3(Nb[]),pk(skB[])))",
+            "children": [
+              {
+                "type": "premise",
+                "description": "the message encrypt(msg2(Na_2[],Nb_7),pk(skA[])) is received from the attacker at input {31}",
+                "input_index": 31,
+                "fact": "attacker(encrypt(msg2(Na_2[],Nb[]),pk(skA[])))",
+                "clause": 39,
+                "children": [
+                  {
+                    "type": "step",
+                    "description": "then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {61}",
+                    "clause": 44,
+                    "fact": "attacker(encrypt(msg2(Na_2[],Nb[]),pk(skA[])))",
+                    "children": [
+                      {
+                        "type": "premise",
+                        "description": "the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59}",
+                        "input_index": 59,
+                        "fact": "attacker(encrypt(msg1(A[],Na_2[]),pk(skB[])))",
+                        "clause": 44,
+                        "children": [
+                          {
+                            "type": "step",
+                            "description": "The message encrypt(msg1(A[],Na_2[]),pk(skB[])) may be sent to the attacker at output {30}.",
+                            "clause": 38,
+                            "fact": "attacker(encrypt(msg1(A[],Na_2[]),pk(skB[])))",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ],
+                    "output_index": 61
+                  }
+                ]
+              }
+            ],
+            "output_index": 34
+          },
+          {
+            "type": "step",
+            "description": "The attacker applies function encrypt.",
+            "clause": 12,
+            "fact": "attacker(encrypt(msg1(I[],nx),pk(skB[])))",
+            "children": [
+              {
+                "type": "unknown",
+                "raw": "apply msg1 attacker(msg1(I[],nx))",
+                "children": [
+                  {
+                    "type": "unknown",
+                    "raw": "initial knowledge  attacker(I[])",
+                    "children": []
+                  },
+                  {
+                    "type": "unknown",
+                    "raw": "hypothesis attacker(nx)",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "unknown",
+                "raw": "apply 2-proj-3-tuple attacker(pk(skB[]))",
+                "children": [
+                  {
+                    "type": "step",
+                    "description": "The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.",
+                    "clause": 33,
+                    "fact": "attacker((pk(skA[]),pk(skB[]),skI[]))",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

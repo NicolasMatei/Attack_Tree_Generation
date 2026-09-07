@@ -1,16 +1,16 @@
 {
-  "index": 5,
-  "query": "not event(BDone(x_4,y_2,nx,ny)) in process 1.",
+  "index": 11,
+  "query": "event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) in process 1.",
   "has_derivation": true,
   "derivation": {
     "type": "goal",
-    "fact": "event(BDone(I[],B[],nx,Nb[]))",
+    "fact": "event(BDone(A[],B[],nx,Nb[]))",
     "children": [
       {
         "type": "step",
-        "description": "If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {46}, then event BDone(I[],B[],Na_4,Nb[]) may be executed at {48}.",
-        "clause": 41,
-        "fact": "event(BDone(I[],B[],nx,Nb[]))",
+        "description": "If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {62}, then event BDone(A[],B[],Na_12,Nb[]) may be executed at {64}.",
+        "clause": 45,
+        "fact": "event(BDone(A[],B[],nx,Nb[]))",
         "children": [
           {
             "type": "step",
@@ -30,30 +30,30 @@
                         "type": "step",
                         "description": "The attacker applies function decrypt.",
                         "clause": 13,
-                        "fact": "attacker(msg2(Na_4,Nb[]))",
+                        "fact": "attacker(msg2(Na_12,Nb[]))",
                         "children": [
                           {
                             "type": "step",
-                            "description": "then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}",
-                            "clause": 40,
-                            "fact": "attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))",
+                            "description": "then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {101}",
+                            "clause": 52,
+                            "fact": "attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))",
                             "children": [
                               {
                                 "type": "premise",
-                                "description": "If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43}",
-                                "input_index": 43,
-                                "fact": "attacker(encrypt(msg1(I[],Na_4),pk(skB[])))",
-                                "clause": 40,
+                                "description": "the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99}",
+                                "input_index": 99,
+                                "fact": "attacker(encrypt(msg1(I[],Na_12),pk(skB[])))",
+                                "clause": 52,
                                 "children": [
                                   {
                                     "type": "step",
                                     "description": "The attacker applies function encrypt.",
                                     "clause": 12,
-                                    "fact": "attacker(encrypt(msg1(I[],Na_4),pk(skB[])))",
+                                    "fact": "attacker(encrypt(msg1(I[],Na_12),pk(skB[])))",
                                     "children": [
                                       {
                                         "type": "unknown",
-                                        "raw": "apply msg1 attacker(msg1(I[],Na_4))",
+                                        "raw": "apply msg1 attacker(msg1(I[],Na_12))",
                                         "children": [
                                           {
                                             "type": "unknown",
@@ -62,7 +62,7 @@
                                           },
                                           {
                                             "type": "unknown",
-                                            "raw": "any attacker(Na_4)",
+                                            "raw": "any attacker(Na_12)",
                                             "children": []
                                           }
                                         ]
@@ -85,7 +85,7 @@
                                 ]
                               }
                             ],
-                            "output_index": 45
+                            "output_index": 101
                           },
                           {
                             "type": "unknown",
@@ -125,15 +125,15 @@
             "type": "step",
             "description": "The attacker applies function encrypt.",
             "clause": 12,
-            "fact": "attacker(encrypt(msg1(I[],nx),pk(skB[])))",
+            "fact": "attacker(encrypt(msg1(A[],nx),pk(skB[])))",
             "children": [
               {
                 "type": "unknown",
-                "raw": "apply msg1 attacker(msg1(I[],nx))",
+                "raw": "apply msg1 attacker(msg1(A[],nx))",
                 "children": [
                   {
                     "type": "unknown",
-                    "raw": "initial knowledge  attacker(I[])",
+                    "raw": "initial knowledge  attacker(A[])",
                     "children": []
                   },
                   {

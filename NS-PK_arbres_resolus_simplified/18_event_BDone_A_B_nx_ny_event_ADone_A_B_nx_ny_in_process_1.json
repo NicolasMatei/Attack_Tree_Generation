@@ -1,5 +1,5 @@
 {
-  "index": 1,
+  "index": 18,
   "query": "event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) in process 1.",
   "has_derivation": true,
   "derivation": {
@@ -7,7 +7,7 @@
     "fact": "event(BDone(A[],B[],nx,Nb[]))",
     "children": [
       {
-        "pi_id": 49,
+        "pi_id": 59,
         "io": "input",
         "term": "event(BDone(A[],B[],nx,Nb[]))",
         "children": [

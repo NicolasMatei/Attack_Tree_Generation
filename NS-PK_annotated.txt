@@ -6,53 +6,137 @@ Process 0 (that is, the initial process):
 {3}new skI: skey;
 {4}out(c, (pk(skA),pk(skB),skI));
 (
-    {5}!
-    {6}let a: host = A in
-    {7}let skA_1: skey = skA in
-    {8}let b: host = B in
-    {9}let pkB: pkey = pk(skB) in
-    {10}new Na: nonce;
-    {11}out(c, encrypt(msg1(a,Na),pkB));
-    {12}in(c, x: bitstring);
-    {13}let msg2(=Na,Nb_1: nonce) = decrypt(x,skA_1) in
-    {14}event ADone(a,b,Na,Nb_1);
-    {15}out(c, encrypt(msg3(Nb_1),pkB))
+    {5}let a: host = A in
+    {6}let skA_1: skey = skA in
+    {7}let b: host = B in
+    {8}let pkB: pkey = pk(skB) in
+    {9}new Na: nonce;
+    {10}out(c, encrypt(msg1(a,Na),pkB));
+    {11}in(c, x: bitstring);
+    {12}let msg2(=Na,Nb_1: nonce) = decrypt(x,skA_1) in
+    {13}event ADone(a,b,Na,Nb_1);
+    {14}out(c, encrypt(msg3(Nb_1),pkB))
 ) | (
-    {16}!
+    {15}let a_1: host = A in
+    {16}let skA_2: skey = skA in
     {17}let b_1: host = B in
-    {18}let skB_1: skey = skB in
-    {19}let a_1: host = A in
-    {20}let pkA: pkey = pk(skA) in
+    {18}let pkB_1: pkey = pk(skB) in
+    {19}new Na_1: nonce;
+    {20}out(c, encrypt(msg1(a_1,Na_1),pkB_1));
     {21}in(c, x_1: bitstring);
-    {22}let msg1(=a_1,Na_1: nonce) = decrypt(x_1,skB_1) in
-    {23}out(c, encrypt(msg2(Na_1,Nb),pkA));
-    {24}in(c, y: bitstring);
-    {25}let msg3(=Nb) = decrypt(y,skB_1) in
-    {26}event BDone(a_1,b_1,Na_1,Nb)
+    {22}let msg2(=Na_1,Nb_2: nonce) = decrypt(x_1,skA_2) in
+    {23}event ADone(a_1,b_1,Na_1,Nb_2);
+    {24}out(c, encrypt(msg3(Nb_2),pkB_1))
 ) | (
-    {27}!
-    {28}let a_2: host = A in
-    {29}let skA_2: skey = skA in
-    {30}let b_2: host = I in
-    {31}let pkB_1: pkey = pk(skI) in
-    {32}new Na_2: nonce;
-    {33}out(c, encrypt(msg1(a_2,Na_2),pkB_1));
-    {34}in(c, x_2: bitstring);
-    {35}let msg2(=Na_2,Nb_2: nonce) = decrypt(x_2,skA_2) in
-    {36}event ADone(a_2,b_2,Na_2,Nb_2);
-    {37}out(c, encrypt(msg3(Nb_2),pkB_1))
+    {25}let a_2: host = A in
+    {26}let skA_3: skey = skA in
+    {27}let b_2: host = B in
+    {28}let pkB_2: pkey = pk(skB) in
+    {29}new Na_2: nonce;
+    {30}out(c, encrypt(msg1(a_2,Na_2),pkB_2));
+    {31}in(c, x_2: bitstring);
+    {32}let msg2(=Na_2,Nb_3: nonce) = decrypt(x_2,skA_3) in
+    {33}event ADone(a_2,b_2,Na_2,Nb_3);
+    {34}out(c, encrypt(msg3(Nb_3),pkB_2))
 ) | (
-    {38}!
-    {39}let b_3: host = B in
-    {40}let skB_2: skey = skB in
-    {41}let a_3: host = I in
-    {42}let pkA_1: pkey = pk(skI) in
-    {43}in(c, x_3: bitstring);
-    {44}let msg1(=a_3,Na_3: nonce) = decrypt(x_3,skB_2) in
-    {45}out(c, encrypt(msg2(Na_3,Nb),pkA_1));
-    {46}in(c, y_1: bitstring);
-    {47}let msg3(=Nb) = decrypt(y_1,skB_2) in
-    {48}event BDone(a_3,b_3,Na_3,Nb)
+    {35}let b_3: host = B in
+    {36}let skB_1: skey = skB in
+    {37}let a_3: host = A in
+    {38}let pkA: pkey = pk(skA) in
+    {39}in(c, x_3: bitstring);
+    {40}let msg1(=a_3,Na_3: nonce) = decrypt(x_3,skB_1) in
+    {41}out(c, encrypt(msg2(Na_3,Nb),pkA));
+    {42}in(c, y: bitstring);
+    {43}let msg3(=Nb) = decrypt(y,skB_1) in
+    {44}event BDone(a_3,b_3,Na_3,Nb)
+) | (
+    {45}let b_4: host = B in
+    {46}let skB_2: skey = skB in
+    {47}let a_4: host = A in
+    {48}let pkA_1: pkey = pk(skA) in
+    {49}in(c, x_4: bitstring);
+    {50}let msg1(=a_4,Na_4: nonce) = decrypt(x_4,skB_2) in
+    {51}out(c, encrypt(msg2(Na_4,Nb),pkA_1));
+    {52}in(c, y_1: bitstring);
+    {53}let msg3(=Nb) = decrypt(y_1,skB_2) in
+    {54}event BDone(a_4,b_4,Na_4,Nb)
+) | (
+    {55}let b_5: host = B in
+    {56}let skB_3: skey = skB in
+    {57}let a_5: host = A in
+    {58}let pkA_2: pkey = pk(skA) in
+    {59}in(c, x_5: bitstring);
+    {60}let msg1(=a_5,Na_5: nonce) = decrypt(x_5,skB_3) in
+    {61}out(c, encrypt(msg2(Na_5,Nb),pkA_2));
+    {62}in(c, y_2: bitstring);
+    {63}let msg3(=Nb) = decrypt(y_2,skB_3) in
+    {64}event BDone(a_5,b_5,Na_5,Nb)
+) | (
+    {65}let a_6: host = A in
+    {66}let skA_4: skey = skA in
+    {67}let b_6: host = I in
+    {68}let pkB_3: pkey = pk(skI) in
+    {69}new Na_6: nonce;
+    {70}out(c, encrypt(msg1(a_6,Na_6),pkB_3));
+    {71}in(c, x_6: bitstring);
+    {72}let msg2(=Na_6,Nb_4: nonce) = decrypt(x_6,skA_4) in
+    {73}event ADone(a_6,b_6,Na_6,Nb_4);
+    {74}out(c, encrypt(msg3(Nb_4),pkB_3))
+) | (
+    {75}let a_7: host = A in
+    {76}let skA_5: skey = skA in
+    {77}let b_7: host = I in
+    {78}let pkB_4: pkey = pk(skI) in
+    {79}new Na_7: nonce;
+    {80}out(c, encrypt(msg1(a_7,Na_7),pkB_4));
+    {81}in(c, x_7: bitstring);
+    {82}let msg2(=Na_7,Nb_5: nonce) = decrypt(x_7,skA_5) in
+    {83}event ADone(a_7,b_7,Na_7,Nb_5);
+    {84}out(c, encrypt(msg3(Nb_5),pkB_4))
+) | (
+    {85}let a_8: host = A in
+    {86}let skA_6: skey = skA in
+    {87}let b_8: host = I in
+    {88}let pkB_5: pkey = pk(skI) in
+    {89}new Na_8: nonce;
+    {90}out(c, encrypt(msg1(a_8,Na_8),pkB_5));
+    {91}in(c, x_8: bitstring);
+    {92}let msg2(=Na_8,Nb_6: nonce) = decrypt(x_8,skA_6) in
+    {93}event ADone(a_8,b_8,Na_8,Nb_6);
+    {94}out(c, encrypt(msg3(Nb_6),pkB_5))
+) | (
+    {95}let b_9: host = B in
+    {96}let skB_4: skey = skB in
+    {97}let a_9: host = I in
+    {98}let pkA_3: pkey = pk(skI) in
+    {99}in(c, x_9: bitstring);
+    {100}let msg1(=a_9,Na_9: nonce) = decrypt(x_9,skB_4) in
+    {101}out(c, encrypt(msg2(Na_9,Nb),pkA_3));
+    {102}in(c, y_3: bitstring);
+    {103}let msg3(=Nb) = decrypt(y_3,skB_4) in
+    {104}event BDone(a_9,b_9,Na_9,Nb)
+) | (
+    {105}let b_10: host = B in
+    {106}let skB_5: skey = skB in
+    {107}let a_10: host = I in
+    {108}let pkA_4: pkey = pk(skI) in
+    {109}in(c, x_10: bitstring);
+    {110}let msg1(=a_10,Na_10: nonce) = decrypt(x_10,skB_5) in
+    {111}out(c, encrypt(msg2(Na_10,Nb),pkA_4));
+    {112}in(c, y_4: bitstring);
+    {113}let msg3(=Nb) = decrypt(y_4,skB_5) in
+    {114}event BDone(a_10,b_10,Na_10,Nb)
+) | (
+    {115}let b_11: host = B in
+    {116}let skB_6: skey = skB in
+    {117}let a_11: host = I in
+    {118}let pkA_5: pkey = pk(skI) in
+    {119}in(c, x_11: bitstring);
+    {120}let msg1(=a_11,Na_11: nonce) = decrypt(x_11,skB_6) in
+    {121}out(c, encrypt(msg2(Na_11,Nb),pkA_5));
+    {122}in(c, y_5: bitstring);
+    {123}let msg3(=Nb) = decrypt(y_5,skB_6) in
+    {124}event BDone(a_11,b_11,Na_11,Nb)
 )
 
 --  Process 1 (that is, process 0, with let moved downwards):
@@ -61,53 +145,137 @@ Process 0 (that is, the initial process):
 {3}new skI: skey;
 {4}out(c, (pk(skA),pk(skB),skI));
 (
-    {5}!
-    {10}new Na: nonce;
-    {9}let pkB: pkey = pk(skB) in
-    {6}let a: host = A in
-    {11}out(c, encrypt(msg1(a,Na),pkB));
-    {12}in(c, x: bitstring);
-    {7}let skA_1: skey = skA in
-    {13}let msg2(=Na,Nb_1: nonce) = decrypt(x,skA_1) in
-    {8}let b: host = B in
-    {14}event ADone(a,b,Na,Nb_1);
-    {15}out(c, encrypt(msg3(Nb_1),pkB))
+    {9}new Na: nonce;
+    {8}let pkB: pkey = pk(skB) in
+    {5}let a: host = A in
+    {10}out(c, encrypt(msg1(a,Na),pkB));
+    {11}in(c, x: bitstring);
+    {6}let skA_1: skey = skA in
+    {12}let msg2(=Na,Nb_1: nonce) = decrypt(x,skA_1) in
+    {7}let b: host = B in
+    {13}event ADone(a,b,Na,Nb_1);
+    {14}out(c, encrypt(msg3(Nb_1),pkB))
 ) | (
-    {16}!
+    {19}new Na_1: nonce;
+    {18}let pkB_1: pkey = pk(skB) in
+    {15}let a_1: host = A in
+    {20}out(c, encrypt(msg1(a_1,Na_1),pkB_1));
     {21}in(c, x_1: bitstring);
-    {19}let a_1: host = A in
-    {18}let skB_1: skey = skB in
-    {22}let msg1(=a_1,Na_1: nonce) = decrypt(x_1,skB_1) in
-    {20}let pkA: pkey = pk(skA) in
-    {23}out(c, encrypt(msg2(Na_1,Nb),pkA));
-    {24}in(c, y: bitstring);
-    {25}let msg3(=Nb) = decrypt(y,skB_1) in
+    {16}let skA_2: skey = skA in
+    {22}let msg2(=Na_1,Nb_2: nonce) = decrypt(x_1,skA_2) in
     {17}let b_1: host = B in
-    {26}event BDone(a_1,b_1,Na_1,Nb)
+    {23}event ADone(a_1,b_1,Na_1,Nb_2);
+    {24}out(c, encrypt(msg3(Nb_2),pkB_1))
 ) | (
-    {27}!
-    {32}new Na_2: nonce;
-    {31}let pkB_1: pkey = pk(skI) in
-    {28}let a_2: host = A in
-    {33}out(c, encrypt(msg1(a_2,Na_2),pkB_1));
-    {34}in(c, x_2: bitstring);
-    {29}let skA_2: skey = skA in
-    {35}let msg2(=Na_2,Nb_2: nonce) = decrypt(x_2,skA_2) in
-    {30}let b_2: host = I in
-    {36}event ADone(a_2,b_2,Na_2,Nb_2);
-    {37}out(c, encrypt(msg3(Nb_2),pkB_1))
+    {29}new Na_2: nonce;
+    {28}let pkB_2: pkey = pk(skB) in
+    {25}let a_2: host = A in
+    {30}out(c, encrypt(msg1(a_2,Na_2),pkB_2));
+    {31}in(c, x_2: bitstring);
+    {26}let skA_3: skey = skA in
+    {32}let msg2(=Na_2,Nb_3: nonce) = decrypt(x_2,skA_3) in
+    {27}let b_2: host = B in
+    {33}event ADone(a_2,b_2,Na_2,Nb_3);
+    {34}out(c, encrypt(msg3(Nb_3),pkB_2))
 ) | (
-    {38}!
-    {43}in(c, x_3: bitstring);
-    {41}let a_3: host = I in
-    {40}let skB_2: skey = skB in
-    {44}let msg1(=a_3,Na_3: nonce) = decrypt(x_3,skB_2) in
-    {42}let pkA_1: pkey = pk(skI) in
-    {45}out(c, encrypt(msg2(Na_3,Nb),pkA_1));
-    {46}in(c, y_1: bitstring);
-    {47}let msg3(=Nb) = decrypt(y_1,skB_2) in
-    {39}let b_3: host = B in
-    {48}event BDone(a_3,b_3,Na_3,Nb)
+    {39}in(c, x_3: bitstring);
+    {37}let a_3: host = A in
+    {36}let skB_1: skey = skB in
+    {40}let msg1(=a_3,Na_3: nonce) = decrypt(x_3,skB_1) in
+    {38}let pkA: pkey = pk(skA) in
+    {41}out(c, encrypt(msg2(Na_3,Nb),pkA));
+    {42}in(c, y: bitstring);
+    {43}let msg3(=Nb) = decrypt(y,skB_1) in
+    {35}let b_3: host = B in
+    {44}event BDone(a_3,b_3,Na_3,Nb)
+) | (
+    {49}in(c, x_4: bitstring);
+    {47}let a_4: host = A in
+    {46}let skB_2: skey = skB in
+    {50}let msg1(=a_4,Na_4: nonce) = decrypt(x_4,skB_2) in
+    {48}let pkA_1: pkey = pk(skA) in
+    {51}out(c, encrypt(msg2(Na_4,Nb),pkA_1));
+    {52}in(c, y_1: bitstring);
+    {53}let msg3(=Nb) = decrypt(y_1,skB_2) in
+    {45}let b_4: host = B in
+    {54}event BDone(a_4,b_4,Na_4,Nb)
+) | (
+    {59}in(c, x_5: bitstring);
+    {57}let a_5: host = A in
+    {56}let skB_3: skey = skB in
+    {60}let msg1(=a_5,Na_5: nonce) = decrypt(x_5,skB_3) in
+    {58}let pkA_2: pkey = pk(skA) in
+    {61}out(c, encrypt(msg2(Na_5,Nb),pkA_2));
+    {62}in(c, y_2: bitstring);
+    {63}let msg3(=Nb) = decrypt(y_2,skB_3) in
+    {55}let b_5: host = B in
+    {64}event BDone(a_5,b_5,Na_5,Nb)
+) | (
+    {69}new Na_6: nonce;
+    {68}let pkB_3: pkey = pk(skI) in
+    {65}let a_6: host = A in
+    {70}out(c, encrypt(msg1(a_6,Na_6),pkB_3));
+    {71}in(c, x_6: bitstring);
+    {66}let skA_4: skey = skA in
+    {72}let msg2(=Na_6,Nb_4: nonce) = decrypt(x_6,skA_4) in
+    {67}let b_6: host = I in
+    {73}event ADone(a_6,b_6,Na_6,Nb_4);
+    {74}out(c, encrypt(msg3(Nb_4),pkB_3))
+) | (
+    {79}new Na_7: nonce;
+    {78}let pkB_4: pkey = pk(skI) in
+    {75}let a_7: host = A in
+    {80}out(c, encrypt(msg1(a_7,Na_7),pkB_4));
+    {81}in(c, x_7: bitstring);
+    {76}let skA_5: skey = skA in
+    {82}let msg2(=Na_7,Nb_5: nonce) = decrypt(x_7,skA_5) in
+    {77}let b_7: host = I in
+    {83}event ADone(a_7,b_7,Na_7,Nb_5);
+    {84}out(c, encrypt(msg3(Nb_5),pkB_4))
+) | (
+    {89}new Na_8: nonce;
+    {88}let pkB_5: pkey = pk(skI) in
+    {85}let a_8: host = A in
+    {90}out(c, encrypt(msg1(a_8,Na_8),pkB_5));
+    {91}in(c, x_8: bitstring);
+    {86}let skA_6: skey = skA in
+    {92}let msg2(=Na_8,Nb_6: nonce) = decrypt(x_8,skA_6) in
+    {87}let b_8: host = I in
+    {93}event ADone(a_8,b_8,Na_8,Nb_6);
+    {94}out(c, encrypt(msg3(Nb_6),pkB_5))
+) | (
+    {99}in(c, x_9: bitstring);
+    {97}let a_9: host = I in
+    {96}let skB_4: skey = skB in
+    {100}let msg1(=a_9,Na_9: nonce) = decrypt(x_9,skB_4) in
+    {98}let pkA_3: pkey = pk(skI) in
+    {101}out(c, encrypt(msg2(Na_9,Nb),pkA_3));
+    {102}in(c, y_3: bitstring);
+    {103}let msg3(=Nb) = decrypt(y_3,skB_4) in
+    {95}let b_9: host = B in
+    {104}event BDone(a_9,b_9,Na_9,Nb)
+) | (
+    {109}in(c, x_10: bitstring);
+    {107}let a_10: host = I in
+    {106}let skB_5: skey = skB in
+    {110}let msg1(=a_10,Na_10: nonce) = decrypt(x_10,skB_5) in
+    {108}let pkA_4: pkey = pk(skI) in
+    {111}out(c, encrypt(msg2(Na_10,Nb),pkA_4));
+    {112}in(c, y_4: bitstring);
+    {113}let msg3(=Nb) = decrypt(y_4,skB_5) in
+    {105}let b_10: host = B in
+    {114}event BDone(a_10,b_10,Na_10,Nb)
+) | (
+    {119}in(c, x_11: bitstring);
+    {117}let a_11: host = I in
+    {116}let skB_6: skey = skB in
+    {120}let msg1(=a_11,Na_11: nonce) = decrypt(x_11,skB_6) in
+    {118}let pkA_5: pkey = pk(skI) in
+    {121}out(c, encrypt(msg2(Na_11,Nb),pkA_5));
+    {122}in(c, y_5: bitstring);
+    {123}let msg3(=Nb) = decrypt(y_5,skB_6) in
+    {115}let b_11: host = B in
+    {124}event BDone(a_11,b_11,Na_11,Nb)
 )
 
 -- Query event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) in process 1.
@@ -152,7 +320,7 @@ Clause 11: attacker(false)
 Clause 12: attacker(v) && attacker(v_1) -> attacker(encrypt(v,v_1))
 (The attacker applies function encrypt.)
 
-Clause 13: attacker(encrypt(x_4,pk(y_2))) && attacker(y_2) -> attacker(x_4)
+Clause 13: attacker(encrypt(x_12,pk(y_6))) && attacker(y_6) -> attacker(x_12)
 (The attacker applies function decrypt.)
 
 Clause 14: attacker(0)
@@ -217,47 +385,107 @@ new-name_1 = new-name[!att = v]
 Clause 33: attacker((pk(skA[]),pk(skB[]),skI[]))
 (The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.)
 
-Clause 34: attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
-(The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 34: attacker(encrypt(msg1(A[],Na[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na[]),pk(skB[])) may be sent to the attacker at output {10}.)
 
-Clause 35: b-event(ADone(A[],B[],Na_4,Nb_3)) && attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skB[])))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
-event ADone(A[],B[],Na_4,Nb_3) is executed at {14},
-then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 35: b-event(ADone(A[],B[],Na[],Nb_7)) && attacker(encrypt(msg2(Na[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na[],Nb_7),pk(skA[])) is received from the attacker at input {11},
+event ADone(A[],B[],Na[],Nb_7) is executed at {13},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {14}.)
 
-Clause 36: attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
-(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
-then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}.)
+Clause 36: attacker(encrypt(msg1(A[],Na_1[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na_1[]),pk(skB[])) may be sent to the attacker at output {20}.)
 
-Clause 37: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> event(BDone(A[],B[],Na_4,Nb[]))
-(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
-the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {24},
-then event BDone(A[],B[],Na_4,Nb[]) may be executed at {26}.)
+Clause 37: b-event(ADone(A[],B[],Na_1[],Nb_7)) && attacker(encrypt(msg2(Na_1[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na_1[],Nb_7),pk(skA[])) is received from the attacker at input {21},
+event ADone(A[],B[],Na_1[],Nb_7) is executed at {23},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {24}.)
 
-Clause 38: attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
-(The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 38: attacker(encrypt(msg1(A[],Na_2[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na_2[]),pk(skB[])) may be sent to the attacker at output {30}.)
 
-Clause 39: b-event(ADone(A[],I[],Na_4,Nb_3)) && attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skI[])))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
-event ADone(A[],I[],Na_4,Nb_3) is executed at {36},
-then the message encrypt(msg3(Nb_3),pk(skI[])) may be sent to the attacker at output {37}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 39: b-event(ADone(A[],B[],Na_2[],Nb_7)) && attacker(encrypt(msg2(Na_2[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na_2[],Nb_7),pk(skA[])) is received from the attacker at input {31},
+event ADone(A[],B[],Na_2[],Nb_7) is executed at {33},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {34}.)
 
-Clause 40: attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
-(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
-then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}.)
+Clause 40: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {39},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {41}.)
 
-Clause 41: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> event(BDone(I[],B[],Na_4,Nb[]))
-(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
-the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {46},
-then event BDone(I[],B[],Na_4,Nb[]) may be executed at {48}.)
+Clause 41: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> event(BDone(A[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {39},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {42},
+then event BDone(A[],B[],Na_12,Nb[]) may be executed at {44}.)
+
+Clause 42: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {49},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {51}.)
+
+Clause 43: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> event(BDone(A[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {49},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {52},
+then event BDone(A[],B[],Na_12,Nb[]) may be executed at {54}.)
+
+Clause 44: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {61}.)
+
+Clause 45: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> event(BDone(A[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {62},
+then event BDone(A[],B[],Na_12,Nb[]) may be executed at {64}.)
+
+Clause 46: attacker(encrypt(msg1(A[],Na_6[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_6[]),pk(skI[])) may be sent to the attacker at output {70}.)
+
+Clause 47: b-event(ADone(A[],I[],Na_6[],Nb_7)) && attacker(encrypt(msg2(Na_6[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_6[],Nb_7),pk(skA[])) is received from the attacker at input {71},
+event ADone(A[],I[],Na_6[],Nb_7) is executed at {73},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {74}.)
+
+Clause 48: attacker(encrypt(msg1(A[],Na_7[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_7[]),pk(skI[])) may be sent to the attacker at output {80}.)
+
+Clause 49: b-event(ADone(A[],I[],Na_7[],Nb_7)) && attacker(encrypt(msg2(Na_7[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_7[],Nb_7),pk(skA[])) is received from the attacker at input {81},
+event ADone(A[],I[],Na_7[],Nb_7) is executed at {83},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {84}.)
+
+Clause 50: attacker(encrypt(msg1(A[],Na_8[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_8[]),pk(skI[])) may be sent to the attacker at output {90}.)
+
+Clause 51: b-event(ADone(A[],I[],Na_8[],Nb_7)) && attacker(encrypt(msg2(Na_8[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_8[],Nb_7),pk(skA[])) is received from the attacker at input {91},
+event ADone(A[],I[],Na_8[],Nb_7) is executed at {93},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {94}.)
+
+Clause 52: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {101}.)
+
+Clause 53: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> event(BDone(I[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {102},
+then event BDone(I[],B[],Na_12,Nb[]) may be executed at {104}.)
+
+Clause 54: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {111}.)
+
+Clause 55: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> event(BDone(I[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {112},
+then event BDone(I[],B[],Na_12,Nb[]) may be executed at {114}.)
+
+Clause 56: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {119},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {121}.)
+
+Clause 57: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> event(BDone(I[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {119},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {122},
+then event BDone(I[],B[],Na_12,Nb[]) may be executed at {124}.)
 
 Completing...
 Starting query event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny))
@@ -265,16 +493,16 @@ goal reachable: attacker(nx) -> event(BDone(A[],B[],nx,Nb[]))
 
 Derivation:
 goal  event(BDone(A[],B[],nx,Nb[]))
-    "If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {24}, then event BDone(A[],B[],Na_4,Nb[]) may be executed at {26}." [clause 37] event(BDone(A[],B[],nx,Nb[]))
+    "If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {62}, then event BDone(A[],B[],Na_12,Nb[]) may be executed at {64}." [clause 45] event(BDone(A[],B[],nx,Nb[]))
         "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg3(Nb[]),pk(skB[])))
             apply msg3 attacker(msg3(Nb[]))
                 apply 2-proj-msg2 attacker(Nb[])
-                    "The attacker applies function decrypt." [clause 13] attacker(msg2(Na_4,Nb[]))
-                        "If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43}, then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}." [clause 40] attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
-                            "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(I[],Na_4),pk(skB[])))
-                                apply msg1 attacker(msg1(I[],Na_4))
+                    "The attacker applies function decrypt." [clause 13] attacker(msg2(Na_12,Nb[]))
+                        "If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {119}, then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {121}." [clause 56] attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+                            "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(I[],Na_12),pk(skB[])))
+                                apply msg1 attacker(msg1(I[],Na_12))
                                     initial knowledge  attacker(I[])
-                                    any attacker(Na_4)
+                                    any attacker(Na_12)
                                 duplicate attacker(pk(skB[]))
                         apply 3-proj-3-tuple attacker(skI[])
                             duplicate attacker((pk(skA[]),pk(skB[]),skI[]))
@@ -289,30 +517,54 @@ goal  event(BDone(A[],B[],nx,Nb[]))
 A more detailed output of the traces is available with
   set traceDisplay = long.
 
-new skA: skey creating skA_3 at {1}
+new skA: skey creating skA_7 at {1}
 
-new skB: skey creating skB_3 at {2}
+new skB: skey creating skB_7 at {2}
 
 new skI: skey creating skI_1 at {3}
 
-out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_3), ~M_1 = pk(skB_3), ~M_2 = skI_1 at {4}
+out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_7), ~M_1 = pk(skB_7), ~M_2 = skI_1 at {4}
 
-in(c, encrypt(msg1(A,a_4),~M_1)) with encrypt(msg1(A,a_4),~M_1) = encrypt(msg1(A,a_4),pk(skB_3)) at {21} in copy a_5
+new Na_8: nonce creating Na_13 at {89}
 
-out(c, ~M_3) with ~M_3 = encrypt(msg2(a_4,Nb),pk(skA_3)) at {23} in copy a_5
+out(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_13),pk(skI_1)) at {90}
 
-in(c, encrypt(msg1(I,a_6),~M_1)) with encrypt(msg1(I,a_6),~M_1) = encrypt(msg1(I,a_6),pk(skB_3)) at {43} in copy a_7
+new Na_7: nonce creating Na_14 at {79}
 
-out(c, ~M_4) with ~M_4 = encrypt(msg2(a_6,Nb),pk(skI_1)) at {45} in copy a_7
+out(c, ~M_4) with ~M_4 = encrypt(msg1(A,Na_14),pk(skI_1)) at {80}
 
-in(c, encrypt(msg3(2-proj-msg2(decrypt(~M_4,~M_2))),~M_1)) with encrypt(msg3(2-proj-msg2(decrypt(~M_4,~M_2))),~M_1) = encrypt(msg3(Nb),pk(skB_3)) at {24} in copy a_5
+new Na_6: nonce creating Na_15 at {69}
 
-event BDone(A,B,a_4,Nb) at {26} in copy a_5 (goal)
+out(c, ~M_5) with ~M_5 = encrypt(msg1(A,Na_15),pk(skI_1)) at {70}
 
-The event BDone(A,B,a_4,Nb) is executed at {26} in copy a_5.
+new Na_2: nonce creating Na_16 at {29}
+
+out(c, ~M_6) with ~M_6 = encrypt(msg1(A,Na_16),pk(skB_7)) at {30}
+
+new Na_1: nonce creating Na_17 at {19}
+
+out(c, ~M_7) with ~M_7 = encrypt(msg1(A,Na_17),pk(skB_7)) at {20}
+
+new Na: nonce creating Na_18 at {9}
+
+out(c, ~M_8) with ~M_8 = encrypt(msg1(A,Na_18),pk(skB_7)) at {10}
+
+in(c, encrypt(msg1(A,a_12),~M_1)) with encrypt(msg1(A,a_12),~M_1) = encrypt(msg1(A,a_12),pk(skB_7)) at {59}
+
+out(c, ~M_9) with ~M_9 = encrypt(msg2(a_12,Nb),pk(skA_7)) at {61}
+
+in(c, encrypt(msg1(I,a_13),~M_1)) with encrypt(msg1(I,a_13),~M_1) = encrypt(msg1(I,a_13),pk(skB_7)) at {119}
+
+out(c, ~M_10) with ~M_10 = encrypt(msg2(a_13,Nb),pk(skI_1)) at {121}
+
+in(c, encrypt(msg3(2-proj-msg2(decrypt(~M_10,~M_2))),~M_1)) with encrypt(msg3(2-proj-msg2(decrypt(~M_10,~M_2))),~M_1) = encrypt(msg3(Nb),pk(skB_7)) at {62}
+
+event BDone(A,B,a_12,Nb) at {64} (goal)
+
+The event BDone(A,B,a_12,Nb) is executed at {64}.
 A trace has been found.
 RESULT event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) is false.
--- Query not event(BDone(x_4,y_2,nx,ny)) in process 1.
+-- Query not event(BDone(x_12,y_6,nx,ny)) in process 1.
 Translating the process into Horn clauses...
 Initial clauses:
 Clause 0: attacker(true)
@@ -354,7 +606,7 @@ Clause 11: attacker(false)
 Clause 12: attacker(v) && attacker(v_1) -> attacker(encrypt(v,v_1))
 (The attacker applies function encrypt.)
 
-Clause 13: attacker(encrypt(x_4,pk(y_2))) && attacker(y_2) -> attacker(x_4)
+Clause 13: attacker(encrypt(x_12,pk(y_6))) && attacker(y_6) -> attacker(x_12)
 (The attacker applies function decrypt.)
 
 Clause 14: attacker(0)
@@ -419,58 +671,112 @@ new-name_1 = new-name[!att = v]
 Clause 33: attacker((pk(skA[]),pk(skB[]),skI[]))
 (The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.)
 
-Clause 34: attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
-(The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 34: attacker(encrypt(msg1(A[],Na[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na[]),pk(skB[])) may be sent to the attacker at output {10}.)
 
-Clause 35: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skB[])))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
-then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 35: attacker(encrypt(msg2(Na[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na[],Nb_7),pk(skA[])) is received from the attacker at input {11},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {14}.)
 
-Clause 36: attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
-(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
-then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}.)
+Clause 36: attacker(encrypt(msg1(A[],Na_1[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na_1[]),pk(skB[])) may be sent to the attacker at output {20}.)
 
-Clause 37: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> event(BDone(A[],B[],Na_4,Nb[]))
-(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
-the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {24},
-then event BDone(A[],B[],Na_4,Nb[]) may be executed at {26}.)
+Clause 37: attacker(encrypt(msg2(Na_1[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na_1[],Nb_7),pk(skA[])) is received from the attacker at input {21},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {24}.)
 
-Clause 38: attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
-(The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 38: attacker(encrypt(msg1(A[],Na_2[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na_2[]),pk(skB[])) may be sent to the attacker at output {30}.)
 
-Clause 39: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skI[])))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
-then the message encrypt(msg3(Nb_3),pk(skI[])) may be sent to the attacker at output {37}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 39: attacker(encrypt(msg2(Na_2[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na_2[],Nb_7),pk(skA[])) is received from the attacker at input {31},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {34}.)
 
-Clause 40: attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
-(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
-then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}.)
+Clause 40: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {39},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {41}.)
 
-Clause 41: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> event(BDone(I[],B[],Na_4,Nb[]))
-(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
-the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {46},
-then event BDone(I[],B[],Na_4,Nb[]) may be executed at {48}.)
+Clause 41: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> event(BDone(A[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {39},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {42},
+then event BDone(A[],B[],Na_12,Nb[]) may be executed at {44}.)
+
+Clause 42: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {49},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {51}.)
+
+Clause 43: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> event(BDone(A[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {49},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {52},
+then event BDone(A[],B[],Na_12,Nb[]) may be executed at {54}.)
+
+Clause 44: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {61}.)
+
+Clause 45: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> event(BDone(A[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {62},
+then event BDone(A[],B[],Na_12,Nb[]) may be executed at {64}.)
+
+Clause 46: attacker(encrypt(msg1(A[],Na_6[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_6[]),pk(skI[])) may be sent to the attacker at output {70}.)
+
+Clause 47: attacker(encrypt(msg2(Na_6[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_6[],Nb_7),pk(skA[])) is received from the attacker at input {71},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {74}.)
+
+Clause 48: attacker(encrypt(msg1(A[],Na_7[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_7[]),pk(skI[])) may be sent to the attacker at output {80}.)
+
+Clause 49: attacker(encrypt(msg2(Na_7[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_7[],Nb_7),pk(skA[])) is received from the attacker at input {81},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {84}.)
+
+Clause 50: attacker(encrypt(msg1(A[],Na_8[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_8[]),pk(skI[])) may be sent to the attacker at output {90}.)
+
+Clause 51: attacker(encrypt(msg2(Na_8[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_8[],Nb_7),pk(skA[])) is received from the attacker at input {91},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {94}.)
+
+Clause 52: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {101}.)
+
+Clause 53: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> event(BDone(I[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {102},
+then event BDone(I[],B[],Na_12,Nb[]) may be executed at {104}.)
+
+Clause 54: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {111}.)
+
+Clause 55: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> event(BDone(I[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {112},
+then event BDone(I[],B[],Na_12,Nb[]) may be executed at {114}.)
+
+Clause 56: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {119},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {121}.)
+
+Clause 57: attacker(encrypt(msg3(Nb[]),pk(skB[]))) && attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> event(BDone(I[],B[],Na_12,Nb[]))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {119},
+the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {122},
+then event BDone(I[],B[],Na_12,Nb[]) may be executed at {124}.)
 
 Completing...
-Starting query not event(BDone(x_4,y_2,nx,ny))
+Starting query not event(BDone(x_12,y_6,nx,ny))
 goal reachable: attacker(nx) -> event(BDone(I[],B[],nx,Nb[]))
 
 Derivation:
-Abbreviations:
-Na_4 = Na[!1 = @sid]
 goal  event(BDone(I[],B[],nx,Nb[]))
-    "If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {46}, then event BDone(I[],B[],Na_4,Nb[]) may be executed at {48}." [clause 41] event(BDone(I[],B[],nx,Nb[]))
-        "If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12}, then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}." [clause 35] attacker(encrypt(msg3(Nb[]),pk(skB[])))
-            "If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21}, then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}." [clause 36] attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
-                "The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}." [clause 34] attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
+    "If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109}, the message encrypt(msg3(Nb[]),pk(skB[])) is received from the attacker at input {112}, then event BDone(I[],B[],Na_12,Nb[]) may be executed at {114}." [clause 55] event(BDone(I[],B[],nx,Nb[]))
+        "If the message encrypt(msg2(Na[],Nb_7),pk(skA[])) is received from the attacker at input {11}, then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {14}." [clause 35] attacker(encrypt(msg3(Nb[]),pk(skB[])))
+            "If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59}, then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {61}." [clause 44] attacker(encrypt(msg2(Na[],Nb[]),pk(skA[])))
+                "The message encrypt(msg1(A[],Na[]),pk(skB[])) may be sent to the attacker at output {10}." [clause 34] attacker(encrypt(msg1(A[],Na[]),pk(skB[])))
         "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(I[],nx),pk(skB[])))
             apply msg1 attacker(msg1(I[],nx))
                 initial knowledge  attacker(I[])
@@ -481,40 +787,60 @@ goal  event(BDone(I[],B[],nx,Nb[]))
 A more detailed output of the traces is available with
   set traceDisplay = long.
 
-new skA: skey creating skA_3 at {1}
+new skA: skey creating skA_7 at {1}
 
-new skB: skey creating skB_3 at {2}
+new skB: skey creating skB_7 at {2}
 
 new skI: skey creating skI_1 at {3}
 
-out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_3), ~M_1 = pk(skB_3), ~M_2 = skI_1 at {4}
+out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_7), ~M_1 = pk(skB_7), ~M_2 = skI_1 at {4}
 
-new Na: nonce creating Na_5 at {10} in copy a_4
+new Na_8: nonce creating Na_12 at {89}
 
-out(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_5),pk(skB_3)) at {11} in copy a_4
+out(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_12),pk(skI_1)) at {90}
 
-in(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_5),pk(skB_3)) at {21} in copy a_5
+new Na_7: nonce creating Na_13 at {79}
 
-out(c, ~M_4) with ~M_4 = encrypt(msg2(Na_5,Nb),pk(skA_3)) at {23} in copy a_5
+out(c, ~M_4) with ~M_4 = encrypt(msg1(A,Na_13),pk(skI_1)) at {80}
 
-in(c, ~M_4) with ~M_4 = encrypt(msg2(Na_5,Nb),pk(skA_3)) at {12} in copy a_4
+new Na_6: nonce creating Na_14 at {69}
 
-event ADone(A,B,Na_5,Nb) at {14} in copy a_4
+out(c, ~M_5) with ~M_5 = encrypt(msg1(A,Na_14),pk(skI_1)) at {70}
 
-out(c, ~M_5) with ~M_5 = encrypt(msg3(Nb),pk(skB_3)) at {15} in copy a_4
+new Na_2: nonce creating Na_15 at {29}
 
-in(c, encrypt(msg1(I,a_6),~M_1)) with encrypt(msg1(I,a_6),~M_1) = encrypt(msg1(I,a_6),pk(skB_3)) at {43} in copy a_7
+out(c, ~M_6) with ~M_6 = encrypt(msg1(A,Na_15),pk(skB_7)) at {30}
 
-out(c, ~M_6) with ~M_6 = encrypt(msg2(a_6,Nb),pk(skI_1)) at {45} in copy a_7
+new Na_1: nonce creating Na_16 at {19}
 
-in(c, ~M_5) with ~M_5 = encrypt(msg3(Nb),pk(skB_3)) at {46} in copy a_7
+out(c, ~M_7) with ~M_7 = encrypt(msg1(A,Na_16),pk(skB_7)) at {20}
 
-event BDone(I,B,a_6,Nb) at {48} in copy a_7 (goal)
+new Na: nonce creating Na_17 at {9}
 
-The event BDone(I,B,a_6,Nb) is executed at {48} in copy a_7.
+out(c, ~M_8) with ~M_8 = encrypt(msg1(A,Na_17),pk(skB_7)) at {10}
+
+in(c, ~M_8) with ~M_8 = encrypt(msg1(A,Na_17),pk(skB_7)) at {59}
+
+out(c, ~M_9) with ~M_9 = encrypt(msg2(Na_17,Nb),pk(skA_7)) at {61}
+
+in(c, ~M_9) with ~M_9 = encrypt(msg2(Na_17,Nb),pk(skA_7)) at {11}
+
+event ADone(A,B,Na_17,Nb) at {13}
+
+out(c, ~M_10) with ~M_10 = encrypt(msg3(Nb),pk(skB_7)) at {14}
+
+in(c, encrypt(msg1(I,a_12),~M_1)) with encrypt(msg1(I,a_12),~M_1) = encrypt(msg1(I,a_12),pk(skB_7)) at {109}
+
+out(c, ~M_11) with ~M_11 = encrypt(msg2(a_12,Nb),pk(skI_1)) at {111}
+
+in(c, ~M_10) with ~M_10 = encrypt(msg3(Nb),pk(skB_7)) at {112}
+
+event BDone(I,B,a_12,Nb) at {114} (goal)
+
+The event BDone(I,B,a_12,Nb) is executed at {114}.
 A trace has been found.
-RESULT not event(BDone(x_4,y_2,nx,ny)) is false.
--- Query not event(ADone(x_4,y_2,nx,ny)) in process 1.
+RESULT not event(BDone(x_12,y_6,nx,ny)) is false.
+-- Query not event(ADone(x_12,y_6,nx,ny)) in process 1.
 Translating the process into Horn clauses...
 Initial clauses:
 Clause 0: attacker(true)
@@ -556,7 +882,7 @@ Clause 11: attacker(false)
 Clause 12: attacker(v) && attacker(v_1) -> attacker(encrypt(v,v_1))
 (The attacker applies function encrypt.)
 
-Clause 13: attacker(encrypt(x_4,pk(y_2))) && attacker(y_2) -> attacker(x_4)
+Clause 13: attacker(encrypt(x_12,pk(y_6))) && attacker(y_6) -> attacker(x_12)
 (The attacker applies function decrypt.)
 
 Clause 14: attacker(0)
@@ -621,64 +947,108 @@ new-name_1 = new-name[!att = v]
 Clause 33: attacker((pk(skA[]),pk(skB[]),skI[]))
 (The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.)
 
-Clause 34: attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
-(The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 34: attacker(encrypt(msg1(A[],Na[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na[]),pk(skB[])) may be sent to the attacker at output {10}.)
 
-Clause 35: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> event(ADone(A[],B[],Na_4,Nb_3))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
-then event ADone(A[],B[],Na_4,Nb_3) may be executed at {14}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 35: attacker(encrypt(msg2(Na[],Nb_7),pk(skA[]))) -> event(ADone(A[],B[],Na[],Nb_7))
+(If the message encrypt(msg2(Na[],Nb_7),pk(skA[])) is received from the attacker at input {11},
+then event ADone(A[],B[],Na[],Nb_7) may be executed at {13}.)
 
-Clause 36: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skB[])))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
-then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 36: attacker(encrypt(msg2(Na[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na[],Nb_7),pk(skA[])) is received from the attacker at input {11},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {14}.)
 
-Clause 37: attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
-(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
-then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}.)
+Clause 37: attacker(encrypt(msg1(A[],Na_1[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na_1[]),pk(skB[])) may be sent to the attacker at output {20}.)
 
-Clause 38: attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
-(The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 38: attacker(encrypt(msg2(Na_1[],Nb_7),pk(skA[]))) -> event(ADone(A[],B[],Na_1[],Nb_7))
+(If the message encrypt(msg2(Na_1[],Nb_7),pk(skA[])) is received from the attacker at input {21},
+then event ADone(A[],B[],Na_1[],Nb_7) may be executed at {23}.)
 
-Clause 39: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> event(ADone(A[],I[],Na_4,Nb_3))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
-then event ADone(A[],I[],Na_4,Nb_3) may be executed at {36}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 39: attacker(encrypt(msg2(Na_1[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na_1[],Nb_7),pk(skA[])) is received from the attacker at input {21},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {24}.)
 
-Clause 40: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skI[])))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
-then the message encrypt(msg3(Nb_3),pk(skI[])) may be sent to the attacker at output {37}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 40: attacker(encrypt(msg1(A[],Na_2[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na_2[]),pk(skB[])) may be sent to the attacker at output {30}.)
 
-Clause 41: attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
-(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
-then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}.)
+Clause 41: attacker(encrypt(msg2(Na_2[],Nb_7),pk(skA[]))) -> event(ADone(A[],B[],Na_2[],Nb_7))
+(If the message encrypt(msg2(Na_2[],Nb_7),pk(skA[])) is received from the attacker at input {31},
+then event ADone(A[],B[],Na_2[],Nb_7) may be executed at {33}.)
+
+Clause 42: attacker(encrypt(msg2(Na_2[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na_2[],Nb_7),pk(skA[])) is received from the attacker at input {31},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {34}.)
+
+Clause 43: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {39},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {41}.)
+
+Clause 44: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {49},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {51}.)
+
+Clause 45: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {61}.)
+
+Clause 46: attacker(encrypt(msg1(A[],Na_6[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_6[]),pk(skI[])) may be sent to the attacker at output {70}.)
+
+Clause 47: attacker(encrypt(msg2(Na_6[],Nb_7),pk(skA[]))) -> event(ADone(A[],I[],Na_6[],Nb_7))
+(If the message encrypt(msg2(Na_6[],Nb_7),pk(skA[])) is received from the attacker at input {71},
+then event ADone(A[],I[],Na_6[],Nb_7) may be executed at {73}.)
+
+Clause 48: attacker(encrypt(msg2(Na_6[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_6[],Nb_7),pk(skA[])) is received from the attacker at input {71},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {74}.)
+
+Clause 49: attacker(encrypt(msg1(A[],Na_7[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_7[]),pk(skI[])) may be sent to the attacker at output {80}.)
+
+Clause 50: attacker(encrypt(msg2(Na_7[],Nb_7),pk(skA[]))) -> event(ADone(A[],I[],Na_7[],Nb_7))
+(If the message encrypt(msg2(Na_7[],Nb_7),pk(skA[])) is received from the attacker at input {81},
+then event ADone(A[],I[],Na_7[],Nb_7) may be executed at {83}.)
+
+Clause 51: attacker(encrypt(msg2(Na_7[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_7[],Nb_7),pk(skA[])) is received from the attacker at input {81},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {84}.)
+
+Clause 52: attacker(encrypt(msg1(A[],Na_8[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_8[]),pk(skI[])) may be sent to the attacker at output {90}.)
+
+Clause 53: attacker(encrypt(msg2(Na_8[],Nb_7),pk(skA[]))) -> event(ADone(A[],I[],Na_8[],Nb_7))
+(If the message encrypt(msg2(Na_8[],Nb_7),pk(skA[])) is received from the attacker at input {91},
+then event ADone(A[],I[],Na_8[],Nb_7) may be executed at {93}.)
+
+Clause 54: attacker(encrypt(msg2(Na_8[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_8[],Nb_7),pk(skA[])) is received from the attacker at input {91},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {94}.)
+
+Clause 55: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {101}.)
+
+Clause 56: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {111}.)
+
+Clause 57: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {119},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {121}.)
 
 Completing...
-Starting query not event(ADone(x_4,y_2,nx,ny))
-goal reachable: attacker(ny) -> event(ADone(A[],I[],Na_4,ny))
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Starting query not event(ADone(x_12,y_6,nx,ny))
+goal reachable: attacker(ny) -> event(ADone(A[],I[],Na_8[],ny))
 
 Derivation:
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
-goal  event(ADone(A[],I[],Na_4,ny))
-    "If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34}, then event ADone(A[],I[],Na_4,Nb_3) may be executed at {36}." [clause 39] event(ADone(A[],I[],Na_4,ny))
-        "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg2(Na_4,ny),pk(skA[])))
-            apply msg2 attacker(msg2(Na_4,ny))
-                apply 2-proj-msg1 attacker(Na_4)
-                    "The attacker applies function decrypt." [clause 13] attacker(msg1(A[],Na_4))
-                        "The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}." [clause 38] attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
+goal  event(ADone(A[],I[],Na_8[],ny))
+    "If the message encrypt(msg2(Na_8[],Nb_7),pk(skA[])) is received from the attacker at input {91}, then event ADone(A[],I[],Na_8[],Nb_7) may be executed at {93}." [clause 53] event(ADone(A[],I[],Na_8[],ny))
+        "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg2(Na_8[],ny),pk(skA[])))
+            apply msg2 attacker(msg2(Na_8[],ny))
+                apply 2-proj-msg1 attacker(Na_8[])
+                    "The attacker applies function decrypt." [clause 13] attacker(msg1(A[],Na_8[]))
+                        "The message encrypt(msg1(A[],Na_8[]),pk(skI[])) may be sent to the attacker at output {90}." [clause 52] attacker(encrypt(msg1(A[],Na_8[]),pk(skI[])))
                         apply 3-proj-3-tuple attacker(skI[])
                             duplicate attacker((pk(skA[]),pk(skB[]),skI[]))
                 hypothesis attacker(ny)
@@ -688,25 +1058,45 @@ goal  event(ADone(A[],I[],Na_4,ny))
 A more detailed output of the traces is available with
   set traceDisplay = long.
 
-new skA: skey creating skA_3 at {1}
+new skA: skey creating skA_7 at {1}
 
-new skB: skey creating skB_3 at {2}
+new skB: skey creating skB_7 at {2}
 
 new skI: skey creating skI_1 at {3}
 
-out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_3), ~M_1 = pk(skB_3), ~M_2 = skI_1 at {4}
+out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_7), ~M_1 = pk(skB_7), ~M_2 = skI_1 at {4}
 
-new Na_2: nonce creating Na_5 at {32} in copy a_4
+new Na_8: nonce creating Na_12 at {89}
 
-out(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_5),pk(skI_1)) at {33} in copy a_4
+out(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_12),pk(skI_1)) at {90}
 
-in(c, encrypt(msg2(2-proj-msg1(decrypt(~M_3,~M_2)),a_5),~M)) with encrypt(msg2(2-proj-msg1(decrypt(~M_3,~M_2)),a_5),~M) = encrypt(msg2(Na_5,a_5),pk(skA_3)) at {34} in copy a_4
+new Na_7: nonce creating Na_13 at {79}
 
-event ADone(A,I,Na_5,a_5) at {36} in copy a_4 (goal)
+out(c, ~M_4) with ~M_4 = encrypt(msg1(A,Na_13),pk(skI_1)) at {80}
 
-The event ADone(A,I,Na_5,a_5) is executed at {36} in copy a_4.
+new Na_6: nonce creating Na_14 at {69}
+
+out(c, ~M_5) with ~M_5 = encrypt(msg1(A,Na_14),pk(skI_1)) at {70}
+
+new Na_2: nonce creating Na_15 at {29}
+
+out(c, ~M_6) with ~M_6 = encrypt(msg1(A,Na_15),pk(skB_7)) at {30}
+
+new Na_1: nonce creating Na_16 at {19}
+
+out(c, ~M_7) with ~M_7 = encrypt(msg1(A,Na_16),pk(skB_7)) at {20}
+
+new Na: nonce creating Na_17 at {9}
+
+out(c, ~M_8) with ~M_8 = encrypt(msg1(A,Na_17),pk(skB_7)) at {10}
+
+in(c, encrypt(msg2(2-proj-msg1(decrypt(~M_3,~M_2)),a_12),~M)) with encrypt(msg2(2-proj-msg1(decrypt(~M_3,~M_2)),a_12),~M) = encrypt(msg2(Na_12,a_12),pk(skA_7)) at {91}
+
+event ADone(A,I,Na_12,a_12) at {93} (goal)
+
+The event ADone(A,I,Na_12,a_12) is executed at {93}.
 A trace has been found.
-RESULT not event(ADone(x_4,y_2,nx,ny)) is false.
+RESULT not event(ADone(x_12,y_6,nx,ny)) is false.
 -- Query not attacker(Nb[]) in process 1.
 Translating the process into Horn clauses...
 Initial clauses:
@@ -749,7 +1139,7 @@ Clause 11: attacker(false)
 Clause 12: attacker(v) && attacker(v_1) -> attacker(encrypt(v,v_1))
 (The attacker applies function encrypt.)
 
-Clause 13: attacker(encrypt(x_4,pk(y_2))) && attacker(y_2) -> attacker(x_4)
+Clause 13: attacker(encrypt(x_12,pk(y_6))) && attacker(y_6) -> attacker(x_12)
 (The attacker applies function decrypt.)
 
 Clause 14: attacker(0)
@@ -814,35 +1204,71 @@ new-name_1 = new-name[!att = v]
 Clause 33: attacker((pk(skA[]),pk(skB[]),skI[]))
 (The message (pk(skA[]),pk(skB[]),skI[]) may be sent to the attacker at output {4}.)
 
-Clause 34: attacker(encrypt(msg1(A[],Na_4),pk(skB[])))
-(The message encrypt(msg1(A[],Na_4),pk(skB[])) may be sent to the attacker at output {11}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 34: attacker(encrypt(msg1(A[],Na[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na[]),pk(skB[])) may be sent to the attacker at output {10}.)
 
-Clause 35: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skB[])))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {12},
-then the message encrypt(msg3(Nb_3),pk(skB[])) may be sent to the attacker at output {15}.)
-Abbreviations:
-Na_4 = Na[!1 = @sid]
+Clause 35: attacker(encrypt(msg2(Na[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na[],Nb_7),pk(skA[])) is received from the attacker at input {11},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {14}.)
 
-Clause 36: attacker(encrypt(msg1(A[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skA[])))
-(If the message encrypt(msg1(A[],Na_4),pk(skB[])) is received from the attacker at input {21},
-then the message encrypt(msg2(Na_4,Nb[]),pk(skA[])) may be sent to the attacker at output {23}.)
+Clause 36: attacker(encrypt(msg1(A[],Na_1[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na_1[]),pk(skB[])) may be sent to the attacker at output {20}.)
 
-Clause 37: attacker(encrypt(msg1(A[],Na_4),pk(skI[])))
-(The message encrypt(msg1(A[],Na_4),pk(skI[])) may be sent to the attacker at output {33}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 37: attacker(encrypt(msg2(Na_1[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na_1[],Nb_7),pk(skA[])) is received from the attacker at input {21},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {24}.)
 
-Clause 38: attacker(encrypt(msg2(Na_4,Nb_3),pk(skA[]))) -> attacker(encrypt(msg3(Nb_3),pk(skI[])))
-(If the message encrypt(msg2(Na_4,Nb_3),pk(skA[])) is received from the attacker at input {34},
-then the message encrypt(msg3(Nb_3),pk(skI[])) may be sent to the attacker at output {37}.)
-Abbreviations:
-Na_4 = Na_2[!1 = @sid]
+Clause 38: attacker(encrypt(msg1(A[],Na_2[]),pk(skB[])))
+(The message encrypt(msg1(A[],Na_2[]),pk(skB[])) may be sent to the attacker at output {30}.)
 
-Clause 39: attacker(encrypt(msg1(I[],Na_4),pk(skB[]))) -> attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
-(If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43},
-then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}.)
+Clause 39: attacker(encrypt(msg2(Na_2[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skB[])))
+(If the message encrypt(msg2(Na_2[],Nb_7),pk(skA[])) is received from the attacker at input {31},
+then the message encrypt(msg3(Nb_7),pk(skB[])) may be sent to the attacker at output {34}.)
+
+Clause 40: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {39},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {41}.)
+
+Clause 41: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {49},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {51}.)
+
+Clause 42: attacker(encrypt(msg1(A[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skA[])))
+(If the message encrypt(msg1(A[],Na_12),pk(skB[])) is received from the attacker at input {59},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skA[])) may be sent to the attacker at output {61}.)
+
+Clause 43: attacker(encrypt(msg1(A[],Na_6[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_6[]),pk(skI[])) may be sent to the attacker at output {70}.)
+
+Clause 44: attacker(encrypt(msg2(Na_6[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_6[],Nb_7),pk(skA[])) is received from the attacker at input {71},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {74}.)
+
+Clause 45: attacker(encrypt(msg1(A[],Na_7[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_7[]),pk(skI[])) may be sent to the attacker at output {80}.)
+
+Clause 46: attacker(encrypt(msg2(Na_7[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_7[],Nb_7),pk(skA[])) is received from the attacker at input {81},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {84}.)
+
+Clause 47: attacker(encrypt(msg1(A[],Na_8[]),pk(skI[])))
+(The message encrypt(msg1(A[],Na_8[]),pk(skI[])) may be sent to the attacker at output {90}.)
+
+Clause 48: attacker(encrypt(msg2(Na_8[],Nb_7),pk(skA[]))) -> attacker(encrypt(msg3(Nb_7),pk(skI[])))
+(If the message encrypt(msg2(Na_8[],Nb_7),pk(skA[])) is received from the attacker at input {91},
+then the message encrypt(msg3(Nb_7),pk(skI[])) may be sent to the attacker at output {94}.)
+
+Clause 49: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {101}.)
+
+Clause 50: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {109},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {111}.)
+
+Clause 51: attacker(encrypt(msg1(I[],Na_12),pk(skB[]))) -> attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+(If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {119},
+then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {121}.)
 
 Completing...
 Starting query not attacker(Nb[])
@@ -851,12 +1277,12 @@ goal reachable: attacker(Nb[])
 Derivation:
 goal  attacker(Nb[])
     apply 2-proj-msg2 attacker(Nb[])
-        "The attacker applies function decrypt." [clause 13] attacker(msg2(Na_4,Nb[]))
-            "If the message encrypt(msg1(I[],Na_4),pk(skB[])) is received from the attacker at input {43}, then the message encrypt(msg2(Na_4,Nb[]),pk(skI[])) may be sent to the attacker at output {45}." [clause 39] attacker(encrypt(msg2(Na_4,Nb[]),pk(skI[])))
-                "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(I[],Na_4),pk(skB[])))
-                    apply msg1 attacker(msg1(I[],Na_4))
+        "The attacker applies function decrypt." [clause 13] attacker(msg2(Na_12,Nb[]))
+            "If the message encrypt(msg1(I[],Na_12),pk(skB[])) is received from the attacker at input {99}, then the message encrypt(msg2(Na_12,Nb[]),pk(skI[])) may be sent to the attacker at output {101}." [clause 49] attacker(encrypt(msg2(Na_12,Nb[]),pk(skI[])))
+                "The attacker applies function encrypt." [clause 12] attacker(encrypt(msg1(I[],Na_12),pk(skB[])))
+                    apply msg1 attacker(msg1(I[],Na_12))
                         initial knowledge  attacker(I[])
-                        any attacker(Na_4)
+                        any attacker(Na_12)
                     apply 2-proj-3-tuple attacker(pk(skB[]))
                         duplicate attacker((pk(skA[]),pk(skB[]),skI[]))
             apply 3-proj-3-tuple attacker(skI[])
@@ -865,19 +1291,43 @@ goal  attacker(Nb[])
 A more detailed output of the traces is available with
   set traceDisplay = long.
 
-new skA: skey creating skA_3 at {1}
+new skA: skey creating skA_7 at {1}
 
-new skB: skey creating skB_3 at {2}
+new skB: skey creating skB_7 at {2}
 
 new skI: skey creating skI_1 at {3}
 
-out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_3), ~M_1 = pk(skB_3), ~M_2 = skI_1 at {4}
+out(c, (~M,~M_1,~M_2)) with ~M = pk(skA_7), ~M_1 = pk(skB_7), ~M_2 = skI_1 at {4}
 
-in(c, encrypt(msg1(I,a_4),~M_1)) with encrypt(msg1(I,a_4),~M_1) = encrypt(msg1(I,a_4),pk(skB_3)) at {43} in copy a_5
+new Na_8: nonce creating Na_13 at {89}
 
-out(c, ~M_3) with ~M_3 = encrypt(msg2(a_4,Nb),pk(skI_1)) at {45} in copy a_5
+out(c, ~M_3) with ~M_3 = encrypt(msg1(A,Na_13),pk(skI_1)) at {90}
 
-The attacker has the message 2-proj-msg2(decrypt(~M_3,~M_2)) = Nb.
+new Na_7: nonce creating Na_14 at {79}
+
+out(c, ~M_4) with ~M_4 = encrypt(msg1(A,Na_14),pk(skI_1)) at {80}
+
+new Na_6: nonce creating Na_15 at {69}
+
+out(c, ~M_5) with ~M_5 = encrypt(msg1(A,Na_15),pk(skI_1)) at {70}
+
+new Na_2: nonce creating Na_16 at {29}
+
+out(c, ~M_6) with ~M_6 = encrypt(msg1(A,Na_16),pk(skB_7)) at {30}
+
+new Na_1: nonce creating Na_17 at {19}
+
+out(c, ~M_7) with ~M_7 = encrypt(msg1(A,Na_17),pk(skB_7)) at {20}
+
+new Na: nonce creating Na_18 at {9}
+
+out(c, ~M_8) with ~M_8 = encrypt(msg1(A,Na_18),pk(skB_7)) at {10}
+
+in(c, encrypt(msg1(I,a_12),~M_1)) with encrypt(msg1(I,a_12),~M_1) = encrypt(msg1(I,a_12),pk(skB_7)) at {99}
+
+out(c, ~M_9) with ~M_9 = encrypt(msg2(a_12,Nb),pk(skI_1)) at {101}
+
+The attacker has the message 2-proj-msg2(decrypt(~M_9,~M_2)) = Nb.
 A trace has been found.
 RESULT not attacker(Nb[]) is false.
 
@@ -886,9 +1336,9 @@ Verification summary:
 
 Query event(BDone(A[],B[],nx,ny)) ==> event(ADone(A[],B[],nx,ny)) is false.
 
-Query not event(BDone(x_4,y_2,nx,ny)) is false.
+Query not event(BDone(x_12,y_6,nx,ny)) is false.
 
-Query not event(ADone(x_4,y_2,nx,ny)) is false.
+Query not event(ADone(x_12,y_6,nx,ny)) is false.
 
 Query not attacker(Nb[]) is false.
 
