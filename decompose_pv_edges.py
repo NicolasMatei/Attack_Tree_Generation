@@ -8,11 +8,22 @@ noeuds "step" combinant plusieurs prémisses (texte du type
 "If <premisse_1>, <premisse_2>, ..., then <conclusion>.") sont décomposés :
 
   - le noeud parent ne garde que le fragment de conclusion
-    ("then the message ... may be sent to the attacker at output {N}")
-  - un noeud intermédiaire "premise" est inséré par prémisse
-    ("the message ... is received from the attacker at input {N}"),
-    chacun conservant en enfant le sous-arbre original qui prouvait
-    cette prémisse.
+  - un noeud intermédiaire "premise" est inséré par prémisse, chacun
+    conservant en enfant le sous-arbre original qui prouvait cette prémisse.
+
+Deux familles de prémisses/conclusions sont reconnues :
+
+  - réseau  : "the message <m> is received from the attacker at input {N}"
+              "the message <m> may be sent to the attacker at output {N}"
+  - table   : "the entry <f> is in a table at get {N}"
+              "the entry <f> may be inserted in a table at insert {N}"
+
+Les noeuds de prémisse portent :
+  - "input_index"  pour une prémisse réseau (input)
+  - "get_index"    pour une prémisse table (get)
+Le noeud parent conserve :
+  - "output_index" si la conclusion est un envoi réseau
+  - "insert_index" si la conclusion est une insertion en table
 
 La structure globale de l'arbre (qui prouve quoi, combien de branches)
 est conservée : on ne fait qu'expliciter chaque arête au lieu de tout
@@ -39,32 +50,83 @@ import sys
 # d'un caractère quelconque, jamais d'un "}").
 FRAGMENT_SPLIT_RE = re.compile(r'(?<=\})\s*,\s*')
 
-PREMISE_RE = re.compile(
+# Préfixe de conjonction laissé par le découpage sur le tout premier
+# fragment d'une description ("If the message ..."). On ne retire QUE ce
+# "If " ; le "then " du fragment de conclusion est conservé tel quel, comme
+# c'était déjà le cas dans les arbres produits jusqu'ici.
+LEADING_IF_RE = re.compile(r'^\s*if\s+', re.IGNORECASE)
+
+# --- prémisses réseau ---
+PREMISE_INPUT_RE = re.compile(
     r'the message (?P<msg>.+) is received from the attacker at input \{(?P<idx>\d+)\}\s*$'
 )
-CONCLUSION_RE = re.compile(
+# --- prémisses table (get) ---
+PREMISE_TABLE_RE = re.compile(
+    r'the entry (?P<msg>.+) is in a table at get \{(?P<idx>\d+)\}\s*$'
+)
+# --- conclusions réseau ---
+CONCLUSION_OUTPUT_RE = re.compile(
     r'the message (?P<msg>.+) may be sent to the attacker at output \{(?P<idx>\d+)\}\s*$'
 )
+# --- conclusions table (insert) ---
+CONCLUSION_INSERT_RE = re.compile(
+    r'the entry (?P<msg>.+) may be inserted in a table at insert \{(?P<idx>\d+)\}\s*$'
+)
+
+# Champ à utiliser sur le noeud "premise" selon le type de prémisse.
+PREMISE_INDEX_FIELD = {
+    "premise_input": "input_index",
+    "premise_table": "get_index",
+}
+# Champ à utiliser sur le noeud parent selon le type de conclusion.
+CONCLUSION_INDEX_FIELD = {
+    "conclusion_output": "output_index",
+    "conclusion_insert": "insert_index",
+}
 
 
 def split_description(desc):
-    """Découpe une description de clause en fragments (prémisses + conclusion)."""
+    """Découpe une description de clause en fragments (prémisses + conclusion),
+    en retirant le préfixe "If " résiduel laissé par le découpage."""
     desc = desc.strip()
     if desc.endswith('.'):
         desc = desc[:-1]
     fragments = FRAGMENT_SPLIT_RE.split(desc)
-    return [f.strip() for f in fragments if f.strip()]
+    cleaned = []
+    for f in fragments:
+        f = f.strip()
+        if not f:
+            continue
+        f = LEADING_IF_RE.sub('', f).strip()
+        cleaned.append(f)
+    return cleaned
 
 
 def classify_fragment(fragment):
-    """Retourne ('premise', msg, idx) ou ('conclusion', msg, idx) ou (None, None, None)."""
-    m = PREMISE_RE.search(fragment)
+    """Retourne (kind, msg, idx) où kind est l'un de :
+    'premise_input', 'premise_table', 'conclusion_output', 'conclusion_insert',
+    ou (None, None, None) si le fragment n'est reconnu dans aucune catégorie."""
+    m = PREMISE_INPUT_RE.search(fragment)
     if m:
-        return "premise", m.group("msg"), m.group("idx")
-    m = CONCLUSION_RE.search(fragment)
+        return "premise_input", m.group("msg"), m.group("idx")
+    m = PREMISE_TABLE_RE.search(fragment)
     if m:
-        return "conclusion", m.group("msg"), m.group("idx")
+        return "premise_table", m.group("msg"), m.group("idx")
+    m = CONCLUSION_OUTPUT_RE.search(fragment)
+    if m:
+        return "conclusion_output", m.group("msg"), m.group("idx")
+    m = CONCLUSION_INSERT_RE.search(fragment)
+    if m:
+        return "conclusion_insert", m.group("msg"), m.group("idx")
     return None, None, None
+
+
+def is_premise_kind(kind):
+    return kind in PREMISE_INDEX_FIELD
+
+
+def is_conclusion_kind(kind):
+    return kind in CONCLUSION_INDEX_FIELD
 
 
 def decompose_node(node, premise_order="reverse", stats=None):
@@ -86,30 +148,30 @@ def decompose_node(node, premise_order="reverse", stats=None):
         classified = [classify_fragment(f) for f in fragments]
 
         premises = [
-            (frag, msg, idx)
+            (frag, kind, msg, idx)
             for frag, (kind, msg, idx) in zip(fragments, classified)
-            if kind == "premise"
+            if is_premise_kind(kind)
         ]
         conclusions = [
-            (frag, msg, idx)
+            (frag, kind, msg, idx)
             for frag, (kind, msg, idx) in zip(fragments, classified)
-            if kind == "conclusion"
+            if is_conclusion_kind(kind)
         ]
 
         if len(conclusions) == 1 and len(premises) > 0 and len(premises) == len(children):
-            concl_frag, concl_msg, concl_idx = conclusions[0]
+            concl_frag, concl_kind, concl_msg, concl_idx = conclusions[0]
 
             ordered_premises = (
                 list(reversed(premises)) if premise_order == "reverse" else premises
             )
 
             new_children = []
-            for (prem_frag, prem_msg, prem_idx), child in zip(ordered_premises, children):
+            for (prem_frag, prem_kind, prem_msg, prem_idx), child in zip(ordered_premises, children):
                 decomposed_child = decompose_node(child, premise_order, stats)
                 premise_node = {
                     "type": "premise",
                     "description": prem_frag,
-                    "input_index": int(prem_idx),
+                    PREMISE_INDEX_FIELD[prem_kind]: int(prem_idx),
                     "fact": child.get("fact"),
                     "clause": node.get("clause"),
                     "children": [decomposed_child],
@@ -119,13 +181,15 @@ def decompose_node(node, premise_order="reverse", stats=None):
             stats["decomposed"] += 1
             new_node = dict(node)
             new_node["description"] = concl_frag
-            new_node["output_index"] = int(concl_idx)
+            new_node[CONCLUSION_INDEX_FIELD[concl_kind]] = int(concl_idx)
             new_node["children"] = new_children
             return new_node
 
         # Motif non reconnu ou nombre de prémisses != nombre d'enfants :
         # on laisse le noeud tel quel mais on continue à décomposer en dessous.
-        if premises or len(conclusions) != 1:
+        # (un step "may be inserted" en feuille, sans prémisse et sans enfant,
+        # n'est pas un échec de décomposition : on ne le compte pas comme tel)
+        if children and (premises or len(conclusions) != 1):
             stats["unchanged_step"] += 1
         new_node = dict(node)
         new_node["children"] = [decompose_node(c, premise_order, stats) for c in children]
