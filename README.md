@@ -65,6 +65,17 @@ python3 generate_cag.py NS-PK.pv --randomized 15
 python3 generate_cag.py how_many_attack.pv --classical --output-dir ./results --skip-pdf -v
 ```
 
+## Loading a ProVerif Library (Optional)
+
+If your specification relies on a `.pvl` library file, pass it with `--lib`:
+
+```bash
+python3 generate_cag.py how_many_attack.pv --classical --lib mylib.pvl
+python3 generate_cag.py how_many_attack.pv --randomized 10 --lib mylib.pvl
+```
+
+`--lib` is propagated through the whole pipeline down to the `proverif`/`./proverif` call (`-lib mylib.pvl`).
+
 ## What the Pipeline Does (4 Steps)
 
 For a `<prefix>.pv` file (e.g., `how_many_attack.pv`), the following steps are executed and their output directories are created inside your chosen `--output-dir`:
