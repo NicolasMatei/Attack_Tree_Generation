@@ -48,6 +48,11 @@ def parse_args():
              "(différent de 'proverif' du PATH) est utilisé. Ignoré (forcé à "
              "1) si --proverif vaut 'proverif'. Défaut : 10."
     )
+    parser.add_argument(
+        "-lib", "--lib", default=None, dest="lib", metavar="LIB.pvl",
+        help="Bibliothèque ProVerif (.pvl) à charger via l'option -lib de "
+             "proverif, transmise telle quelle à chaque exécution (optionnel)."
+    )
     return parser.parse_args()
 
 
@@ -71,9 +76,13 @@ def main():
         print(f"Exécution de ProVerif ('{proverif_path}') {n_runs} fois pour "
               f"le fichier '{pv_file}', veuillez patienter...")
 
+    cmd = ["python3", SUBSCRIPT, pv_file, "--proverif", proverif_path]
+    if args.lib:
+        cmd += ["--lib", args.lib]
+
     for i in range(1, n_runs + 1):
         result = subprocess.run(
-            ["python3", SUBSCRIPT, pv_file, "--proverif", proverif_path],
+            cmd,
             capture_output=True,
             text=True
         )

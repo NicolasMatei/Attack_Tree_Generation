@@ -43,7 +43,7 @@
                   },
                   {
                     "type": "premise",
-                    "description": "If the message x_4 is received from the attacker at input {9}",
+                    "description": "the message x_4 is received from the attacker at input {9}",
                     "input_index": 9,
                     "fact": "attacker(nonce3[])",
                     "clause": 22,
@@ -64,7 +64,7 @@
           },
           {
             "type": "premise",
-            "description": "If the message hash(nonce2[],seed[]) is received from the attacker at input {4}",
+            "description": "the message hash(nonce2[],seed[]) is received from the attacker at input {4}",
             "input_index": 4,
             "fact": "attacker(hash(nonce2[],seed[]))",
             "clause": 20,
@@ -93,7 +93,7 @@
                   },
                   {
                     "type": "premise",
-                    "description": "If the message x_4 is received from the attacker at input {13}",
+                    "description": "the message x_4 is received from the attacker at input {13}",
                     "input_index": 13,
                     "fact": "attacker(nonce2[])",
                     "clause": 23,

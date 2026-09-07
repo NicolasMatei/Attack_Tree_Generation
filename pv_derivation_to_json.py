@@ -29,13 +29,15 @@ DUP_RE = re.compile(r'^duplicate\s+(.*)$')
 STEP_RE = re.compile(r'^"(?P<desc>.*)"\s+\[clause\s+(?P<clause>\d+)\]\s+(?P<fact>.*)$')
 
 
-def run_proverif(script_path, pv_file, python_bin="python3", proverif=None, times=None):
+def run_proverif(script_path, pv_file, python_bin="python3", proverif=None, times=None, lib=None):
     """Lance le script d'annotation et renvoie sa sortie (stdout + stderr)."""
     cmd = [python_bin, script_path, pv_file]
     if proverif is not None:
         cmd += ["--proverif", proverif]
     if times is not None:
         cmd += ["-times", str(times)]
+    if lib is not None:
+        cmd += ["--lib", lib]
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0 and not result.stdout.strip():
         sys.stderr.write(result.stderr)
@@ -191,6 +193,14 @@ def main():
              "proverif10times_annotate_derivation.py via son option -times "
              "(ignoré par ce dernier si --proverif vaut 'proverif').",
     )
+    parser.add_argument(
+        "--lib",
+        default=None,
+        metavar="LIB.pvl",
+        help="Bibliothèque ProVerif (.pvl) à transmettre à "
+             "proverif10times_annotate_derivation.py via son option --lib "
+             "(optionnel).",
+    )
     args = parser.parse_args()
 
     if not os.path.isfile(args.pv_file):
@@ -203,10 +213,12 @@ def main():
     cmd_desc = f"{args.python} {args.script} {args.pv_file} --proverif {args.proverif}"
     if args.times is not None:
         cmd_desc += f" -times {args.times}"
+    if args.lib is not None:
+        cmd_desc += f" --lib {args.lib}"
     print(f"Exécution : {cmd_desc}")
     output_text = run_proverif(
         args.script, args.pv_file, args.python,
-        proverif=args.proverif, times=args.times,
+        proverif=args.proverif, times=args.times, lib=args.lib,
     )
 
     if args.raw_output:

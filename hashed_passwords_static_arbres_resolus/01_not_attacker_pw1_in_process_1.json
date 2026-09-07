@@ -1,0 +1,344 @@
+{
+  "index": 1,
+  "query": "not attacker(pw1[]) in process 1.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "attacker(pw1[])",
+    "children": [
+      {
+        "type": "step",
+        "description": "then the message pw1[] may be sent to the attacker at output {22}",
+        "clause": 33,
+        "fact": "attacker(pw1[])",
+        "children": [
+          {
+            "type": "premise",
+            "description": "the message seconds(10) is received from the attacker at input {19}",
+            "input_index": 19,
+            "fact": null,
+            "clause": 33,
+            "children": [
+              {
+                "type": "unknown",
+                "raw": "apply seconds attacker(seconds(10))",
+                "children": [
+                  {
+                    "type": "unknown",
+                    "raw": "apply + attacker(10)",
+                    "children": [
+                      {
+                        "type": "unknown",
+                        "raw": "apply + attacker(9)",
+                        "children": [
+                          {
+                            "type": "unknown",
+                            "raw": "apply + attacker(8)",
+                            "children": [
+                              {
+                                "type": "unknown",
+                                "raw": "apply + attacker(7)",
+                                "children": [
+                                  {
+                                    "type": "unknown",
+                                    "raw": "apply + attacker(6)",
+                                    "children": [
+                                      {
+                                        "type": "unknown",
+                                        "raw": "apply + attacker(5)",
+                                        "children": [
+                                          {
+                                            "type": "unknown",
+                                            "raw": "apply + attacker(4)",
+                                            "children": [
+                                              {
+                                                "type": "unknown",
+                                                "raw": "apply + attacker(3)",
+                                                "children": [
+                                                  {
+                                                    "type": "unknown",
+                                                    "raw": "apply + attacker(2)",
+                                                    "children": [
+                                                      {
+                                                        "type": "unknown",
+                                                        "raw": "apply + attacker(1)",
+                                                        "children": [
+                                                          {
+                                                            "type": "unknown",
+                                                            "raw": "apply 0 attacker(0)",
+                                                            "children": []
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "premise",
+            "description": "the message compute(2) is received from the attacker at input {18}",
+            "input_index": 18,
+            "fact": null,
+            "clause": 33,
+            "children": [
+              {
+                "type": "unknown",
+                "raw": "apply compute attacker(compute(2))",
+                "children": [
+                  {
+                    "type": "unknown",
+                    "raw": "apply + attacker(2)",
+                    "children": [
+                      {
+                        "type": "unknown",
+                        "raw": "apply + attacker(1)",
+                        "children": [
+                          {
+                            "type": "unknown",
+                            "raw": "apply 0 attacker(0)",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "premise",
+            "description": "the message salt1[] is received from the attacker at input {17}",
+            "input_index": 17,
+            "fact": "attacker(salt1[])",
+            "clause": 33,
+            "children": [
+              {
+                "type": "step",
+                "description": "then the message salt_3 may be sent to the attacker at output {28}",
+                "clause": 35,
+                "fact": "attacker(salt1[])",
+                "children": [
+                  {
+                    "type": "premise",
+                    "description": "the entry passwd(ui_1,hashedpw_3,salt_3) is in a table at get {29}",
+                    "get_index": 29,
+                    "fact": "table(passwd(user1[],hashed(pw1[],salt1[]),salt1[]))",
+                    "clause": 35,
+                    "children": [
+                      {
+                        "type": "step",
+                        "description": "The entry passwd(user1[],hashed(pw1[],salt1[]),salt1[]) may be inserted in a table at insert {2}.",
+                        "clause": 30,
+                        "fact": "table(passwd(user1[],hashed(pw1[],salt1[]),salt1[]))",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "premise",
+                    "description": "the message ui_1 is received from the attacker at input {26}",
+                    "input_index": 26,
+                    "fact": "attacker(user1[])",
+                    "clause": 35,
+                    "children": [
+                      {
+                        "type": "unknown",
+                        "raw": "initial knowledge  attacker(user1[])",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "premise",
+                    "description": "the message seconds(2) is received from the attacker at input {24}",
+                    "input_index": 24,
+                    "fact": "attacker(seconds(2))",
+                    "clause": 35,
+                    "children": [
+                      {
+                        "type": "unknown",
+                        "raw": "apply seconds attacker(seconds(2))",
+                        "children": [
+                          {
+                            "type": "unknown",
+                            "raw": "apply + attacker(2)",
+                            "children": [
+                              {
+                                "type": "unknown",
+                                "raw": "apply + attacker(1)",
+                                "children": [
+                                  {
+                                    "type": "unknown",
+                                    "raw": "apply 0 attacker(0)",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "premise",
+                    "description": "the message hack(1) is received from the attacker at input {23}",
+                    "input_index": 23,
+                    "fact": "attacker(hack(1))",
+                    "clause": 35,
+                    "children": [
+                      {
+                        "type": "unknown",
+                        "raw": "apply hack attacker(hack(1))",
+                        "children": [
+                          {
+                            "type": "unknown",
+                            "raw": "apply + attacker(1)",
+                            "children": [
+                              {
+                                "type": "unknown",
+                                "raw": "apply 0 attacker(0)",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "output_index": 28
+              }
+            ]
+          },
+          {
+            "type": "premise",
+            "description": "the message hashed(pw1[],salt1[]) is received from the attacker at input {16}",
+            "input_index": 16,
+            "fact": "attacker(hashed(pw1[],salt1[]))",
+            "clause": 33,
+            "children": [
+              {
+                "type": "step",
+                "description": "then the message hashedpw_3 may be sent to the attacker at output {27}",
+                "clause": 34,
+                "fact": "attacker(hashed(pw1[],salt1[]))",
+                "children": [
+                  {
+                    "type": "premise",
+                    "description": "the entry passwd(ui_1,hashedpw_3,salt_3) is in a table at get {29}",
+                    "get_index": 29,
+                    "fact": "table(passwd(user1[],hashed(pw1[],salt1[]),salt1[]))",
+                    "clause": 34,
+                    "children": [
+                      {
+                        "type": "step",
+                        "description": "The entry passwd(user1[],hashed(pw1[],salt1[]),salt1[]) may be inserted in a table at insert {2}.",
+                        "clause": 30,
+                        "fact": "table(passwd(user1[],hashed(pw1[],salt1[]),salt1[]))",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "premise",
+                    "description": "the message ui_1 is received from the attacker at input {26}",
+                    "input_index": 26,
+                    "fact": null,
+                    "clause": 34,
+                    "children": [
+                      {
+                        "type": "unknown",
+                        "raw": "initial knowledge  attacker(user1[])",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "premise",
+                    "description": "the message seconds(2) is received from the attacker at input {24}",
+                    "input_index": 24,
+                    "fact": null,
+                    "clause": 34,
+                    "children": [
+                      {
+                        "type": "unknown",
+                        "raw": "apply seconds attacker(seconds(2))",
+                        "children": [
+                          {
+                            "type": "unknown",
+                            "raw": "apply + attacker(2)",
+                            "children": [
+                              {
+                                "type": "unknown",
+                                "raw": "apply + attacker(1)",
+                                "children": [
+                                  {
+                                    "type": "unknown",
+                                    "raw": "apply 0 attacker(0)",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "premise",
+                    "description": "the message hack(1) is received from the attacker at input {23}",
+                    "input_index": 23,
+                    "fact": null,
+                    "clause": 34,
+                    "children": [
+                      {
+                        "type": "unknown",
+                        "raw": "apply hack attacker(hack(1))",
+                        "children": [
+                          {
+                            "type": "unknown",
+                            "raw": "apply + attacker(1)",
+                            "children": [
+                              {
+                                "type": "unknown",
+                                "raw": "apply 0 attacker(0)",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "output_index": 27
+              }
+            ]
+          }
+        ],
+        "output_index": 22
+      }
+    ]
+  }
+}

@@ -24,14 +24,16 @@ import sys
 from pathlib import Path
 
 
-def run_proverif(proverif_path: str, pv_file: str) -> str:
+def run_proverif(proverif_path: str, pv_file: str, lib_file: str = None) -> str:
     """Lance ProVerif et retourne stdout (+ stderr en cas d'erreur)."""
     cmd = [
         proverif_path,
         "-set", "explainDerivation", "false",
         "-set", "verboseClauses", "explained",
-        pv_file,
     ]
+    if lib_file:
+        cmd += ["-lib", lib_file]
+    cmd.append(pv_file)
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, check=False)
     except FileNotFoundError:
@@ -172,6 +174,9 @@ def main():
     parser.add_argument("pv_file", help="Fichier .pv à analyser")
     parser.add_argument("--proverif", default="proverif",
                         help="Chemin vers l'exécutable proverif (défaut : proverif)")
+    parser.add_argument("--lib", default=None,
+                        help="Bibliothèque ProVerif (.pvl) à charger via l'option "
+                             "-lib de proverif (optionnel).")
     parser.add_argument("--out", default=None,
                         help="Fichier de sortie (défaut : <pv_file>_annotated.txt)")
     args = parser.parse_args()
@@ -181,7 +186,7 @@ def main():
         sys.exit(f"Erreur : fichier introuvable : {pv_path}")
 
 #    print(f"[*] Exécution de ProVerif sur {pv_path} ...")
-    raw_output = run_proverif(args.proverif, str(pv_path))
+    raw_output = run_proverif(args.proverif, str(pv_path), lib_file=args.lib)
 
  #   print("[*] Analyse des clauses et annotation des dérivations ...")
     annotated = process_output(raw_output)

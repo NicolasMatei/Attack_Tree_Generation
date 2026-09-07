@@ -24,52 +24,6 @@
               {
                 "io": "input",
                 "pi_id": 1,
-                "term": "enc(nonce[],sk[])",
-                "relation": "and",
-                "children": [
-                  {
-                    "io": "output",
-                    "pi_id": 12,
-                    "term": "enc(nonce[],sk[])",
-                    "relation": "and",
-                    "children": [
-                      {
-                        "io": "input",
-                        "pi_id": 10,
-                        "term": "secretcondition[]",
-                        "relation": "and",
-                        "children": [
-                          {
-                            "io": "output",
-                            "pi_id": 8,
-                            "term": "secretcondition[]",
-                            "relation": "and",
-                            "children": []
-                          }
-                        ]
-                      },
-                      {
-                        "io": "input",
-                        "pi_id": 9,
-                        "term": "nonce[]",
-                        "relation": "and",
-                        "children": [
-                          {
-                            "io": "output",
-                            "pi_id": 17,
-                            "term": "nonce[]",
-                            "relation": "and",
-                            "children": []
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "io": "input",
-                "pi_id": 1,
                 "term": "hash(nonce[],seed[])",
                 "relation": "and",
                 "children": [
@@ -97,6 +51,52 @@
                       {
                         "io": "input",
                         "pi_id": 13,
+                        "term": "nonce[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 17,
+                            "term": "nonce[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "io": "input",
+                "pi_id": 1,
+                "term": "enc(nonce[],sk[])",
+                "relation": "and",
+                "children": [
+                  {
+                    "io": "output",
+                    "pi_id": 12,
+                    "term": "enc(nonce[],sk[])",
+                    "relation": "and",
+                    "children": [
+                      {
+                        "io": "input",
+                        "pi_id": 10,
+                        "term": "secretcondition[]",
+                        "relation": "and",
+                        "children": [
+                          {
+                            "io": "output",
+                            "pi_id": 8,
+                            "term": "secretcondition[]",
+                            "relation": "and",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "io": "input",
+                        "pi_id": 9,
                         "term": "nonce[]",
                         "relation": "and",
                         "children": [

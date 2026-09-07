@@ -9,28 +9,28 @@
       {
         "type": "step",
         "description": "then the message success[] may be sent to the attacker at output {3}",
-        "clause": 18,
+        "clause": 19,
         "fact": "attacker(success[])",
         "children": [
           {
             "type": "premise",
-            "description": "If the message enc(nonce[],sk[]) is received from the attacker at input {1}",
+            "description": "the message hash(nonce[],seed[]) is received from the attacker at input {1}",
             "input_index": 1,
-            "fact": "attacker(enc(nonce[],sk[]))",
-            "clause": 18,
+            "fact": "attacker(hash(nonce[],seed[]))",
+            "clause": 19,
             "children": [
               {
                 "type": "step",
-                "description": "then the message enc(x_4,sk[]) may be sent to the attacker at output {12}",
-                "clause": 22,
-                "fact": "attacker(enc(nonce[],sk[]))",
+                "description": "then the message hash(x_4,seed[]) may be sent to the attacker at output {16}",
+                "clause": 23,
+                "fact": "attacker(hash(nonce[],seed[]))",
                 "children": [
                   {
                     "type": "premise",
-                    "description": "the message secretcondition[] is received from the attacker at input {10}",
-                    "input_index": 10,
+                    "description": "the message secretcondition[] is received from the attacker at input {14}",
+                    "input_index": 14,
                     "fact": "attacker(secretcondition[])",
-                    "clause": 22,
+                    "clause": 23,
                     "children": [
                       {
                         "type": "step",
@@ -43,10 +43,10 @@
                   },
                   {
                     "type": "premise",
-                    "description": "If the message x_4 is received from the attacker at input {9}",
-                    "input_index": 9,
+                    "description": "the message x_4 is received from the attacker at input {13}",
+                    "input_index": 13,
                     "fact": "attacker(nonce[])",
-                    "clause": 22,
+                    "clause": 23,
                     "children": [
                       {
                         "type": "step",
@@ -58,7 +58,7 @@
                     ]
                   }
                 ],
-                "output_index": 12
+                "output_index": 16
               }
             ]
           }

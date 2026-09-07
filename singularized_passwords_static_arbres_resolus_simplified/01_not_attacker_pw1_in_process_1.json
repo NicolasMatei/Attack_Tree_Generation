@@ -1,0 +1,459 @@
+{
+  "index": 1,
+  "query": "not attacker(pw1[]) in process 1.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "attacker(pw1[])",
+    "children": [
+      {
+        "pi_id": null,
+        "io": "attacker_step",
+        "term": "pw1[]",
+        "children": [
+          {
+            "pi_id": 39,
+            "io": "output",
+            "term": "singularized(pw1[],singularization1[])",
+            "children": [
+              {
+                "pi_id": 36,
+                "io": "input",
+                "term": null,
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "apply seconds seconds(10)",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "attacker_reasoning",
+                        "term": "apply + 10",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply + 9",
+                            "children": [
+                              {
+                                "pi_id": null,
+                                "io": "attacker_reasoning",
+                                "term": "apply + 8",
+                                "children": [
+                                  {
+                                    "pi_id": null,
+                                    "io": "attacker_reasoning",
+                                    "term": "apply + 7",
+                                    "children": [
+                                      {
+                                        "pi_id": null,
+                                        "io": "attacker_reasoning",
+                                        "term": "apply + 6",
+                                        "children": [
+                                          {
+                                            "pi_id": null,
+                                            "io": "attacker_reasoning",
+                                            "term": "apply + 5",
+                                            "children": [
+                                              {
+                                                "pi_id": null,
+                                                "io": "attacker_reasoning",
+                                                "term": "apply + 4",
+                                                "children": [
+                                                  {
+                                                    "pi_id": null,
+                                                    "io": "attacker_reasoning",
+                                                    "term": "apply + 3",
+                                                    "children": [
+                                                      {
+                                                        "pi_id": null,
+                                                        "io": "attacker_reasoning",
+                                                        "term": "apply + 2",
+                                                        "children": [
+                                                          {
+                                                            "pi_id": null,
+                                                            "io": "attacker_reasoning",
+                                                            "term": "apply + 1",
+                                                            "children": [
+                                                              {
+                                                                "pi_id": null,
+                                                                "io": "attacker_reasoning",
+                                                                "term": "apply 0 0",
+                                                                "children": []
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "pi_id": 35,
+                "io": "input",
+                "term": null,
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "apply compute compute(4)",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "attacker_reasoning",
+                        "term": "apply + 4",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply + 3",
+                            "children": [
+                              {
+                                "pi_id": null,
+                                "io": "attacker_reasoning",
+                                "term": "apply + 2",
+                                "children": [
+                                  {
+                                    "pi_id": null,
+                                    "io": "attacker_reasoning",
+                                    "term": "apply + 1",
+                                    "children": [
+                                      {
+                                        "pi_id": null,
+                                        "io": "attacker_reasoning",
+                                        "term": "apply 0 0",
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "pi_id": 34,
+                "io": "input",
+                "term": "salt1[]",
+                "children": [
+                  {
+                    "pi_id": 45,
+                    "io": "output",
+                    "term": "salt1[]",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "premise",
+                        "term": "table(passwd(user1[],hashed(singularized(pw1[],singularization1[]),salt1[]),salt1[]))",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_step",
+                            "term": "table(passwd(user1[],hashed(singularized(pw1[],singularization1[]),salt1[]),salt1[]))",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "pi_id": 43,
+                        "io": "input",
+                        "term": "user1[]",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "initial knowledge  user1[]",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "pi_id": 41,
+                        "io": "input",
+                        "term": "seconds(2)",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply seconds seconds(2)",
+                            "children": [
+                              {
+                                "pi_id": null,
+                                "io": "attacker_reasoning",
+                                "term": "apply + 2",
+                                "children": [
+                                  {
+                                    "pi_id": null,
+                                    "io": "attacker_reasoning",
+                                    "term": "apply + 1",
+                                    "children": [
+                                      {
+                                        "pi_id": null,
+                                        "io": "attacker_reasoning",
+                                        "term": "apply 0 0",
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "pi_id": 40,
+                        "io": "input",
+                        "term": "hack(1)",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply hack hack(1)",
+                            "children": [
+                              {
+                                "pi_id": null,
+                                "io": "attacker_reasoning",
+                                "term": "apply + 1",
+                                "children": [
+                                  {
+                                    "pi_id": null,
+                                    "io": "attacker_reasoning",
+                                    "term": "apply 0 0",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "pi_id": 33,
+                "io": "input",
+                "term": "hashed(singularized(pw1[],singularization1[]),salt1[])",
+                "children": [
+                  {
+                    "pi_id": 44,
+                    "io": "output",
+                    "term": "hashed(singularized(pw1[],singularization1[]),salt1[])",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "premise",
+                        "term": "table(passwd(user1[],hashed(singularized(pw1[],singularization1[]),salt1[]),salt1[]))",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_step",
+                            "term": "table(passwd(user1[],hashed(singularized(pw1[],singularization1[]),salt1[]),salt1[]))",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "pi_id": 43,
+                        "io": "input",
+                        "term": "user1[]",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "initial knowledge  user1[]",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "pi_id": 41,
+                        "io": "input",
+                        "term": "seconds(2)",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply seconds seconds(2)",
+                            "children": [
+                              {
+                                "pi_id": null,
+                                "io": "attacker_reasoning",
+                                "term": "apply + 2",
+                                "children": [
+                                  {
+                                    "pi_id": null,
+                                    "io": "attacker_reasoning",
+                                    "term": "apply + 1",
+                                    "children": [
+                                      {
+                                        "pi_id": null,
+                                        "io": "attacker_reasoning",
+                                        "term": "apply 0 0",
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "pi_id": 40,
+                        "io": "input",
+                        "term": "hack(1)",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply hack hack(1)",
+                            "children": [
+                              {
+                                "pi_id": null,
+                                "io": "attacker_reasoning",
+                                "term": "apply + 1",
+                                "children": [
+                                  {
+                                    "pi_id": null,
+                                    "io": "attacker_reasoning",
+                                    "term": "apply 0 0",
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "pi_id": 51,
+            "io": "output",
+            "term": "singularization1[]",
+            "children": [
+              {
+                "pi_id": null,
+                "io": "premise",
+                "term": "table(singularizations(user1[],singularization1[]))",
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_step",
+                    "term": "table(singularizations(user1[],singularization1[]))",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "pi_id": 50,
+                "io": "input",
+                "term": null,
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "initial knowledge  user1[]",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "pi_id": 48,
+                "io": "input",
+                "term": null,
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "apply seconds seconds(2)",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "attacker_reasoning",
+                        "term": "apply + 2",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply + 1",
+                            "children": [
+                              {
+                                "pi_id": null,
+                                "io": "attacker_reasoning",
+                                "term": "apply 0 0",
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "pi_id": 47,
+                "io": "input",
+                "term": null,
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "apply hack hack(1)",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "attacker_reasoning",
+                        "term": "apply + 1",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply 0 0",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "index": 2,
+  "query": "not attacker(hashed(singularized(pw1[],singularization1[]),salt1[])) in process 1.",
+  "has_derivation": true,
+  "derivation": {
+    "type": "goal",
+    "fact": "attacker(hashed(singularized(pw1[],singularization1[]),salt1[]))",
+    "children": [
+      {
+        "pi_id": 44,
+        "io": "output",
+        "term": "hashed(singularized(pw1[],singularization1[]),salt1[])",
+        "children": [
+          {
+            "pi_id": null,
+            "io": "premise",
+            "term": "table(passwd(user1[],hashed(singularized(pw1[],singularization1[]),salt1[]),salt1[]))",
+            "children": [
+              {
+                "pi_id": null,
+                "io": "attacker_step",
+                "term": "table(passwd(user1[],hashed(singularized(pw1[],singularization1[]),salt1[]),salt1[]))",
+                "children": []
+              }
+            ]
+          },
+          {
+            "pi_id": 43,
+            "io": "input",
+            "term": null,
+            "children": [
+              {
+                "pi_id": null,
+                "io": "attacker_reasoning",
+                "term": "initial knowledge  user1[]",
+                "children": []
+              }
+            ]
+          },
+          {
+            "pi_id": 41,
+            "io": "input",
+            "term": null,
+            "children": [
+              {
+                "pi_id": null,
+                "io": "attacker_reasoning",
+                "term": "apply seconds seconds(2)",
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "apply + 2",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "attacker_reasoning",
+                        "term": "apply + 1",
+                        "children": [
+                          {
+                            "pi_id": null,
+                            "io": "attacker_reasoning",
+                            "term": "apply 0 0",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "pi_id": 40,
+            "io": "input",
+            "term": null,
+            "children": [
+              {
+                "pi_id": null,
+                "io": "attacker_reasoning",
+                "term": "apply hack hack(1)",
+                "children": [
+                  {
+                    "pi_id": null,
+                    "io": "attacker_reasoning",
+                    "term": "apply + 1",
+                    "children": [
+                      {
+                        "pi_id": null,
+                        "io": "attacker_reasoning",
+                        "term": "apply 0 0",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

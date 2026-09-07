@@ -99,6 +99,17 @@ def parse_args() -> argparse.Namespace:
         help="Ignore la 4ème étape, optionnelle, de génération des PDF.",
     )
     parser.add_argument(
+        "--lib",
+        type=Path,
+        default=None,
+        metavar="LIB.pvl",
+        help=(
+            "Bibliothèque ProVerif (.pvl) à charger via l'option -lib de "
+            "proverif, transmise à l'étape 1 (--classical ou --randomized). "
+            "Optionnel."
+        ),
+    )
+    parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -127,6 +138,8 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
     if args.randomized is not None and args.randomized < 1:
         parser.error("--randomized N nécessite un entier N >= 1.")
+    if args.lib is not None and not args.lib.is_file():
+        parser.error(f"--lib : fichier introuvable : {args.lib}")
     return args
 
 
@@ -202,6 +215,10 @@ def main() -> None:
     else:
         proverif_mode_desc = f"randomisé (./proverif, {args.randomized} exécutions)"
         proverif_opts = ["--proverif", "./proverif", "-times", str(args.randomized)]
+
+    if args.lib is not None:
+        proverif_opts += ["--lib", str(args.lib)]
+        proverif_mode_desc += f", lib={args.lib}"
 
     print(f"[generate_cag] Mode ProVerif : {proverif_mode_desc}")
 
